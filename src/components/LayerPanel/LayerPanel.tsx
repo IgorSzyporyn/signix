@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import { useStore } from 'laco-react'
+import React from 'react'
 import styled from 'styled-components'
 import MinusCircleIcon from '../../icons/MinusCircleIcon/MinusCircleIcon'
 import PlusCircleIcon from '../../icons/PlusCircleIcon/PlusCircleIcon'
+import getItemFromLayerStoreById from '../../stores/layer/getItemFromLayerStoreById'
+import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
+import LayerStore from '../../stores/LayerStore'
 import ModelInterface from '../../types/ModelInterface'
-import LayerPanelGroup from '../LayerPanelGroup/LayerPanelGroup'
 import LayerPanelProperties from '../LayerPanelProperties/LayerPanelProperties'
 import LayerPanelTitle from '../LayerPanelTitle/LayerPanelTitle'
 
@@ -17,7 +20,7 @@ const Wrapper = styled.div``
 const Heading = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--half-gutter);
 `
 
 const Title = styled.div`
@@ -25,50 +28,37 @@ const Title = styled.div`
   margin-left: 1rem;
 `
 
-type BodyProps = {
-  expanded: boolean
-}
-
-const Body = styled.div`
-  font-size: 1.2rem;
-
-  ${({ expanded }: BodyProps) => {
-    return expanded ? null : 'display: none;'
-  }}
-`
+const Body = styled.div``
 
 const LayerPanel = ({ model, children }: LayerPanelProps) => {
-  const [expanded, setExpanded] = useState(false)
+  useStore(LayerStore)
+
+  const expanded = getItemFromLayerStoreById(model.id!)
+
+  const iconProps = {
+    width: '1.2rem',
+    height: '1.2rem',
+    style: { marginTop: '-0.1rem' }
+  }
 
   return (
     <Wrapper>
-      <Heading>
+      <Heading
+        onClick={() => {
+          updateItemInLayerStore(!expanded, model.id!)
+        }}
+      >
         {expanded ? (
-          <MinusCircleIcon
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-            width={12}
-            height={12}
-          />
+          <MinusCircleIcon {...iconProps} />
         ) : (
-          <PlusCircleIcon
-            onClick={() => {
-              setExpanded(!expanded)
-            }}
-            width={12}
-            height={12}
-          />
+          <PlusCircleIcon {...iconProps} />
         )}
         <Title>
           <LayerPanelTitle model={model} />
         </Title>
       </Heading>
-      <Body expanded={expanded}>
+      <Body hidden={!expanded}>
         <LayerPanelProperties model={model}>{children}</LayerPanelProperties>
-        {model.items && model.items.length > 0 && (
-          <LayerPanelGroup model={model} />
-        )}
       </Body>
     </Wrapper>
   )

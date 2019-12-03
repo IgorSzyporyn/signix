@@ -4,7 +4,6 @@ import ModelInterface from '../../types/ModelInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
-import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 
 const HorizontalFieldContainer = styled.div`
   display: flex;
@@ -26,49 +25,38 @@ const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   console.log('changing')
 }
 
-const handleDisableChange = (checked: boolean, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    dimension: { ...model.dimension, disabled: checked }
-  }
-
-  console.log(newModel)
-
-  updateItemInModelStore(newModel)
+const handleDisableChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  console.log('changing')
 }
 
-type LayerPropertyDimensionProps = {
+type LayerPropertyPositionProps = {
   model: ModelInterface
 }
 
-const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
+const LayerPropertyPosition = ({ model }: LayerPropertyPositionProps) => {
   const { dimension } = model
 
   return (
-    <PropertiesPanel id={`${model.id!}-dimension`} title="Dimensions">
+    <PropertiesPanel id={`${model.id!}-position`} title="Position">
       <FieldCheckbox
         title="Disable"
         inline={true}
-        onChange={e => {
-          handleDisableChange(e.target.checked, model)
-        }}
+        onChange={handleDisableChange}
       />
       <HorizontalFieldContainer>
         <FieldInput
           title="Width"
           value={dimension!.width}
           onChange={handleWidthChange}
-          disabled={dimension!.disabled}
         />
         <FieldInput
           title="Height"
           value={dimension!.height}
           onChange={handleHeightChange}
-          disabled={dimension!.disabled}
         />
       </HorizontalFieldContainer>
     </PropertiesPanel>
   )
 }
 
-export default LayerPropertyDimension
+export default LayerPropertyPosition

@@ -23,4 +23,7 @@ const defaultStore = initDefaultValues(defaultModel)
 
 const ModelStore = new Store(defaultStore)
 
+const clone: any = window
+clone.A = ModelStore
+
 export default ModelStore

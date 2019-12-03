@@ -1,47 +1,44 @@
 import React from 'react'
 import styled from 'styled-components'
 import ModelInterface from '../../types/ModelInterface'
-import LayerPropertyDimension from '../LayerPropertyDimension/LayerPropertyDimension'
 import LayerPropertyColor from '../LayerPropertyColor/LayerPropertyColor'
-import ModelColorInterface from '../../types/ModelColorInterface'
-import ModelDimensionInterface from '../../types/ModelDimensionInterface'
+import LayerPropertyDimension from '../LayerPropertyDimension/LayerPropertyDimension'
+import LayerPropertyItems from '../LayerPropertyItems/LayerPropertyItems'
+import LayerPropertyPosition from '../LayerPropertyPosition/LayerPropertyPosition'
 
 const Wrapper = styled.div`
   margin-bottom: var(--half-gutter);
-  margin-left: 2.3rem;
+  margin-left: var(--spacing);
 `
 
-const Items = styled.div``
+const Items = styled.div`
+  & > div {
+    margin-bottom: var(--half-gutter);
+  }
+`
 
 type LayerPanelPropertiesProps = {
   model: ModelInterface
   children?: React.ReactNode
 }
 
-const handleDimensionChange = (dimension: ModelDimensionInterface) => {
-  console.log(dimension)
-}
-
-const handleColorChange = (color: ModelColorInterface) => {
-  console.log(color)
-}
-
 const LayerPanelProperties = ({
   children,
   model
 }: LayerPanelPropertiesProps) => {
-  const { color, dimension } = model
-
   return (
     <Wrapper>
       <Items>
-        <LayerPropertyDimension
-          dimension={dimension}
-          onChange={handleDimensionChange}
-        />
-        <LayerPropertyColor color={color} onChange={handleColorChange} />
+        <LayerPropertyDimension model={model} />
+        <LayerPropertyColor model={model} />
+        <LayerPropertyPosition model={model} />
       </Items>
       <Items>{children}</Items>
+      {model.items && model.items.length > 0 && (
+        <Items>
+          <LayerPropertyItems model={model} />
+        </Items>
+      )}
     </Wrapper>
   )
 }

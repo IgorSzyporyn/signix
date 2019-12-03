@@ -3,7 +3,7 @@ import '../../baseline.scss'
 import BackgroundModel from '../../models/BackgroundModel'
 import ImageModel from '../../models/ImageModel'
 import TextModel from '../../models/TextModel'
-import LayerBackground from '../LayerBackground/LayerBackground'
+import LayerPropertiesBackground from '../LayerPropertiesBackground/LayerPropertiesBackground'
 import LayerPanel from './LayerPanel'
 
 export default {
@@ -23,6 +23,6 @@ const model = {
 
 export const Default = () => (
   <LayerPanel model={model}>
-    <LayerBackground model={model} />
+    <LayerPropertiesBackground model={model} />
   </LayerPanel>
 )

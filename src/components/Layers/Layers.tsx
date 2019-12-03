@@ -1,8 +1,6 @@
-import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import CollapseIcon from '../../icons/CollapseIcon/CollapseIcon'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import LayerItem from '../LayerItem/LayerItem'
 import ModelInterface from '../../types/ModelInterface'
 
@@ -47,9 +45,11 @@ const Main = styled.main`
   padding: var(--gutter) 0;
 `
 
-const Layers = () => {
-  const { model }: ModelStoreInterface = useStore(ModelStore)
+type LayersProps = {
+  model: ModelInterface
+}
 
+const Layers = ({ model }: LayersProps) => {
   return (
     <Wrapper>
       <Header>

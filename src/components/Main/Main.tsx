@@ -8,9 +8,11 @@ import { useStore } from 'laco-react'
 import Toolbox from '../Toolbox/Toolbox'
 import Canvas from '../Canvas/Canvas'
 import Layers from '../Layers/Layers'
+import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
+  display: flex;
 `
 
 const PaneContainerSecondary = styled.section`
@@ -22,6 +24,7 @@ const PaneContainerSecondary = styled.section`
 const ToolboxContainer = styled.section`
   background-color: var(--gray);
   min-height: 100%;
+  width: 23rem;
 `
 
 const CanvasContainer = styled.section`
@@ -30,10 +33,12 @@ const CanvasContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-grow: 1;
 `
 
 const Main = () => {
   const settings: SettingsStoreInterface = useStore(SettingsStore)
+  const { model }: ModelStoreInterface = useStore(ModelStore)
 
   return (
     <SplitPane
@@ -44,27 +49,19 @@ const Main = () => {
       primary="second"
     >
       <PaneContainerPrimary>
-        <SplitPane
-          split="vertical"
-          maxSize={settings.toolbox.maxWidth}
-          minSize={settings.toolbox.minWidth}
-          defaultSize={settings.toolbox.width}
-          primary="first"
+        <ToolboxContainer>
+          <Toolbox view={settings.toolbox.view} />
+        </ToolboxContainer>
+        <CanvasContainer
+          style={{
+            backgroundColor: settings.canvas.backgroundColor
+          }}
         >
-          <ToolboxContainer>
-            <Toolbox view={settings.toolbox.view} />
-          </ToolboxContainer>
-          <CanvasContainer
-            style={{
-              backgroundColor: settings.canvas.backgroundColor
-            }}
-          >
-            <Canvas />
-          </CanvasContainer>
-        </SplitPane>
+          <Canvas />
+        </CanvasContainer>
       </PaneContainerPrimary>
       <PaneContainerSecondary>
-        <Layers />
+        <Layers model={model} />
       </PaneContainerSecondary>
     </SplitPane>
   )

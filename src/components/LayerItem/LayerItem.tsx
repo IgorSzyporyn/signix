@@ -1,10 +1,10 @@
 import React from 'react'
 import LayerProps from '../../types/LayerProps'
-import LayerBackground from '../LayerBackground/LayerBackground'
-import LayerGroup from '../LayerGroup/LayerGroup'
-import LayerImage from '../LayerImage/LayerImage'
 import LayerPanel from '../LayerPanel/LayerPanel'
-import LayerText from '../LayerText/LayerText'
+import LayerPropertiesBackground from '../LayerPropertiesBackground/LayerPropertiesBackground'
+import LayerPropertiesGroup from '../LayerPropertiesGroup/LayerPropertiesGroup'
+import LayerPropertiesImage from '../LayerPropertiesImage/LayerPropertiesImage'
+import LayerPropertiesText from '../LayerPropertiesText/LayerPropertiesText'
 
 const getComponent = (props: LayerProps) => {
   const { model } = props
@@ -12,20 +12,20 @@ const getComponent = (props: LayerProps) => {
 
   switch (model.type) {
     case 'background':
-      Component = <LayerBackground {...props} />
+      Component = <LayerPropertiesBackground {...props} />
       break
     case 'group':
-      Component = <LayerGroup {...props} />
+      Component = <LayerPropertiesGroup {...props} />
       break
     case 'text':
     case 'textstatic':
     case 'textdynamic':
-      Component = <LayerText {...props} />
+      Component = <LayerPropertiesText {...props} />
       break
     case 'image':
     case 'imagestatic':
     case 'imagedynamic':
-      Component = <LayerImage {...props} />
+      Component = <LayerPropertiesImage {...props} />
       break
     default:
       Component = null

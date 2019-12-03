@@ -1,5 +1,6 @@
 import React from 'react'
 import LayerPropertyColor from './LayerPropertyColor'
+import BackgroundModel from '../../models/BackgroundModel'
 import '../../baseline.scss'
 
 export default {
@@ -8,5 +9,5 @@ export default {
 }
 
 export const Default = () => (
-  <LayerPropertyColor color={{ foreground: 'white', background: 'black' }} />
+  <LayerPropertyColor model={{ ...BackgroundModel }} />
 )

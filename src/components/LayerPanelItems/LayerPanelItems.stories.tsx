@@ -3,15 +3,15 @@ import '../../baseline.scss'
 import GroupModel from '../../models/GroupModel'
 import ImageModel from '../../models/ImageModel'
 import TextModel from '../../models/TextModel'
-import LayerPanelGroup from './LayerPanelGroup'
+import LayerPanelItems from './LayerPanelItems'
 
 export default {
-  component: LayerPanelGroup,
-  title: 'Components|LayerPanelGroup'
+  component: LayerPanelItems,
+  title: 'Components|LayerPanelItems'
 }
 
 export const Default = () => (
-  <LayerPanelGroup
+  <LayerPanelItems
     model={{
       ...GroupModel,
       name: 'Group',

@@ -4,6 +4,7 @@ import BackgroundModel from '../../models/BackgroundModel'
 import GroupModel from '../../models/GroupModel'
 import ImageModel from '../../models/ImageModel'
 import TextModel from '../../models/TextModel'
+import initModel from '../../stores/model/initModel'
 import LayerItem from './LayerItem'
 
 export default {
@@ -11,17 +12,31 @@ export default {
   title: 'Components|LayerItem'
 }
 
-export const WithBackgroundModel = () => (
-  <LayerItem model={{ ...BackgroundModel, name: 'Background' }} />
+export const UsingBackgroundModel = () => (
+  <LayerItem model={initModel({ ...BackgroundModel, name: 'Background' })} />
 )
 
-export const WithTextModel = () => (
-  <LayerItem model={{ ...TextModel, name: 'Text' }} />
-)
-
-export const WithGroupModel = () => (
+export const UsingBackgroundModelWithItems = () => (
   <LayerItem
-    model={{
+    model={initModel({
+      ...BackgroundModel,
+      name: 'Background',
+      items: [
+        { ...TextModel, name: 'Text1' },
+        { ...TextModel, name: 'Text2' },
+        { ...ImageModel, name: 'Image' }
+      ]
+    })}
+  />
+)
+
+export const UsingTextModel = () => (
+  <LayerItem model={initModel({ ...TextModel, name: 'Text' })} />
+)
+
+export const UsingGroupModelWithItems = () => (
+  <LayerItem
+    model={initModel({
       ...GroupModel,
       name: 'Group',
       items: [
@@ -29,6 +44,6 @@ export const WithGroupModel = () => (
         { ...TextModel, name: 'Text2' },
         { ...ImageModel, name: 'Image' }
       ]
-    }}
+    })}
   />
 )

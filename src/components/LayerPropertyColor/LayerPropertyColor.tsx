@@ -1,18 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
-import ModelColorInterface from '../../types/ModelColorInterface'
-
-const Wrapper = styled.div``
+import ModelInterface from '../../types/ModelInterface'
+import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 
 type LayerPropertyColorProps = {
-  color?: ModelColorInterface
-  onChange?: (color: ModelColorInterface) => void
+  model: ModelInterface
 }
 
-const LayerPropertyColor = ({ color }: LayerPropertyColorProps) => (
-  <Wrapper>
-    <div>LayerPropertyColor</div>
-  </Wrapper>
-)
+const LayerPropertyColor = ({ model }: LayerPropertyColorProps) => {
+  const { color } = model
+
+  return (
+    <PropertiesPanel id={`${model.id!}-color`} title="Color"></PropertiesPanel>
+  )
+}
 
 export default LayerPropertyColor

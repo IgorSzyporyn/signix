@@ -1,5 +1,6 @@
 import React from 'react'
 import LayerPropertyDimension from './LayerPropertyDimension'
+import BackgroundModel from '../../models/BackgroundModel'
 import '../../baseline.scss'
 
 export default {
@@ -8,8 +9,5 @@ export default {
 }
 
 export const Default = () => (
-  <LayerPropertyDimension
-    dimension={{ disabled: false, width: 0, height: 0 }}
-    id="test"
-  />
+  <LayerPropertyDimension model={{ ...BackgroundModel }} />
 )

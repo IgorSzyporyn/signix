@@ -3,8 +3,8 @@ import SettingsInterface from '../../types/SettingsInterface'
 const defaultSettings: SettingsInterface = {
   toolbox: {
     view: 'list',
-    width: 250,
-    minWidth: 250,
+    width: 200,
+    minWidth: 200,
     maxWidth: 450
   },
   canvas: {
