@@ -18,12 +18,22 @@ const HorizontalFieldContainer = styled.div`
   }
 `
 
-const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log('changing')
+const handleWidthChange = (value: string, model: ModelInterface) => {
+  const newModel = {
+    ...model,
+    dimension: { ...model.dimension, width: +value }
+  }
+
+  updateItemInModelStore(newModel)
 }
 
-const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  console.log('changing')
+const handleHeightChange = (value: string, model: ModelInterface) => {
+  const newModel = {
+    ...model,
+    dimension: { ...model.dimension, height: +value }
+  }
+
+  updateItemInModelStore(newModel)
 }
 
 const handleDisableChange = (checked: boolean, model: ModelInterface) => {
@@ -31,8 +41,6 @@ const handleDisableChange = (checked: boolean, model: ModelInterface) => {
     ...model,
     dimension: { ...model.dimension, disabled: checked }
   }
-
-  console.log(newModel)
 
   updateItemInModelStore(newModel)
 }
@@ -57,13 +65,17 @@ const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
         <FieldInput
           title="Width"
           value={dimension!.width}
-          onChange={handleWidthChange}
+          onChange={e => {
+            handleWidthChange(e.target.value, model)
+          }}
           disabled={dimension!.disabled}
         />
         <FieldInput
           title="Height"
           value={dimension!.height}
-          onChange={handleHeightChange}
+          onChange={e => {
+            handleHeightChange(e.target.value, model)
+          }}
           disabled={dimension!.disabled}
         />
       </HorizontalFieldContainer>

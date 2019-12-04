@@ -1,43 +1,47 @@
 import ModelInterface from '../../types/ModelInterface'
 import ModelStore from '../ModelStore'
 import findModelById from './findModelById'
+import merge from 'deepmerge'
 
-const updateItemInModelStore = (item: ModelInterface) => {
+const validateItem = (item: ModelInterface) => {
+  if (!item.id) {
+    return false
+  }
+
+  if (!findModelById(item.id)) {
+    return false
+  }
+
+  return true
+}
+
+const updateItemInModelStore = (updateItem: ModelInterface) => {
+  const valid = validateItem(updateItem)
+
+  if (!valid) {
+    return false
+  }
+
   const store = ModelStore.get()
-  let model = { ...store.model }
+  const sourceItem = { ...updateItem }
+  const modelItem = { ...findModelById(sourceItem.id!)! }
 
-  const source = findModelById(model, item.id)
+  const sourceItems = [...(sourceItem.items || [])]
 
-  if (!source) {
-    console.warn('Could not find model with given id')
-    return false
+  delete sourceItem.items
+  delete modelItem.items
+
+  const item = merge(modelItem, sourceItem)
+  item.items = sourceItems
+
+  let root = store.model
+
+  if (!item.parentId) {
+    root = item
+  } else {
   }
 
-  if (!source.parentId) {
-    model = { ...source }
-
-    return true
-  }
-
-  const parentSource = findModelById(model, item.parentId)
-
-  if (!parentSource) {
-    console.warn('Looking for parent model without an id')
-    return false
-  }
-
-  if (parentSource.items) {
-    parentSource.items.some((parentItem, index, root) => {
-      if (parentItem.id === source.id) {
-        root[index] = { ...item }
-        return true
-      } else {
-        return false
-      }
-    })
-  }
-
-  ModelStore.set(() => ({ model }))
+  ModelStore.set(() => ({ model: root }))
 
   return true
 }

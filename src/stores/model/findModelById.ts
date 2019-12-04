@@ -1,4 +1,5 @@
 import ModelInterface from '../../types/ModelInterface'
+import ModelStore from '../ModelStore'
 
 const searchItemsForModelById = (id: string, items: ModelInterface[]) => {
   let found: ModelInterface | null = null
@@ -18,11 +19,8 @@ const searchItemsForModelById = (id: string, items: ModelInterface[]) => {
   return found
 }
 
-const findModelById = (model: ModelInterface | null, id?: string) => {
-  if (model === null || !id) {
-    return null
-  }
-
+const findModelById = (id: string) => {
+  const { model } = ModelStore.get()
   let found: ModelInterface | null = null
 
   if (model.id === id) {

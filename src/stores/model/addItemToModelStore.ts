@@ -11,7 +11,7 @@ const addItemToModelStore = (source: ModelInterface, parentId: string) => {
   if (!parentId) {
     ModelStore.set(() => ({ model: item }))
   } else {
-    const parentModel = findModelById(model, parentId)
+    const parentModel = findModelById(parentId)
 
     if (parentModel && parentModel.items) {
       parentModel.items.push(item)

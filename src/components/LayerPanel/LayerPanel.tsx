@@ -37,8 +37,7 @@ const LayerPanel = ({ model, children }: LayerPanelProps) => {
 
   const iconProps = {
     width: '1.2rem',
-    height: '1.2rem',
-    style: { marginTop: '-0.1rem' }
+    height: '1.2rem'
   }
 
   return (
