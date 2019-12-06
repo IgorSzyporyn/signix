@@ -1,12 +1,13 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
+import { CancellablePromiseType } from './cancellablePromise'
 
-const useCancellablePromises = () => {
-  const pendingPromises = useRef([])
+const useCancellablePromises = <T>() => {
+  const pendingPromises = useRef<CancellablePromiseType<T>[]>([])
 
-  const appendPendingPromise = promise =>
+  const appendPendingPromise = (promise: CancellablePromiseType<T>) =>
     (pendingPromises.current = [...pendingPromises.current, promise])
 
-  const removePendingPromise = promise =>
+  const removePendingPromise = (promise: CancellablePromiseType<T>) =>
     (pendingPromises.current = pendingPromises.current.filter(
       p => p !== promise
     ))

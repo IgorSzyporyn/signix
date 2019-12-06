@@ -1,6 +1,7 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
+import useClickPreventionOnDoubleClick from '../../hooks/useClickPreventionOnDoubleClick'
 import ChevronIcon from '../../icons/ChevronIcon/ChevronIcon'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
@@ -79,31 +80,37 @@ type LayerItemProps = {
 
 const LayerItem = (props: LayerItemProps) => {
   const { model } = props
-  const { id } = model
+  const { id, items } = model
+
+  const hasItems = items && items.length > 0
+  const level = model.level || 0
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
   const { active }: ModelStoreInterface = useStore(ModelStore)
+
+  const isActive = active === id
+  const iconRotation = expanded ? '90' : '0'
+
+  const [handleClick, handleDoubleClick] = useClickPreventionOnDoubleClick(
+    () => {
+      updateActiveInModelStore(isActive ? undefined : id)
+    },
+    () => {
+      console.log('doubleclick')
+    }
+  )
 
   if (expanded === undefined) {
     expanded = true
   }
 
-  const hasItems = model.items && model.items.length > 0
-  const isActive = active === model.id
-
   return (
     <Wrapper>
       <Heading
-        onClick={() => {
-          console.log('single click')
-          updateActiveInModelStore(isActive ? undefined : model.id)
-        }}
-        onDoubleClick={e => {
-          console.log('doubleclick')
-          e.stopPropagation()
-        }}
+        onClick={handleClick}
+        onDoubleClick={handleDoubleClick}
         isActive={isActive}
-        level={model.level || 0}
+        level={level}
       >
         {hasItems && (
           <ExpandIconContainer
@@ -111,7 +118,7 @@ const LayerItem = (props: LayerItemProps) => {
               updateItemInLayerStore(!expanded, id!)
             }}
           >
-            <ChevronIcon rotate={expanded ? '90' : '0'} />
+            <ChevronIcon rotate={iconRotation} />
           </ExpandIconContainer>
         )}
         <Title group={hasItems}>
@@ -120,7 +127,7 @@ const LayerItem = (props: LayerItemProps) => {
       </Heading>
       {hasItems && (
         <Body hidden={!expanded}>
-          <LayerItems items={model.items as ModelInterface[]} />
+          <LayerItems items={items as ModelInterface[]} />
         </Body>
       )}
     </Wrapper>
