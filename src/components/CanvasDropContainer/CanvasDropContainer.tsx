@@ -8,13 +8,13 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   transition: background-color 300ms ease-in-out, opacity 300ms ease-in-out;
-  border: 2px dashed var(--drag-drop-ready);
+  border: 2px dashed var(--color-drag-drop-ready);
   box-sizing: border-box;
   opacity: 0;
 
   ${({ isActive }: DropContainerProps) => {
     if (isActive) {
-      return `border: 2px solid var(--drag-drop-ready);`
+      return `border: 2px solid var(--color-drag-drop-ready);`
     } else {
       return null
     }

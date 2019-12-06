@@ -1,7 +1,7 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import ChevronIcon from '../../icons/ChevronIcon/ChevronIcon'
+import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 
@@ -38,7 +38,10 @@ const PropertiesPanel = ({ title, children, id }: PropertiesPanelProps) => {
           updateItemInLayerStore(!expanded, id!)
         }}
       >
-        <ChevronIcon width="1rem" height="1rem" rotate={expanded ? 90 : 0} />
+        <ChevronRightOutlinedIcon
+          style={{ width: '1rem', height: '1rem' }}
+          rotate={expanded ? 90 : 0}
+        />
         <Title>{title}</Title>
       </Heading>
       <Body hidden={!expanded}>{children}</Body>

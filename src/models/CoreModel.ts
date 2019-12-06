@@ -19,7 +19,8 @@ const CoreModel: ModelInterface = {
     foreground: 'transparent'
   },
   value: '',
-  items: []
+  items: [],
+  group: false
 }
 
 export default CoreModel

@@ -3,12 +3,12 @@ import SettingsInterface from '../../types/SettingsInterface'
 const defaultSettings: SettingsInterface = {
   toolbox: {
     view: 'list',
-    width: 200,
-    minWidth: 200,
+    width: 240,
+    minWidth: 240,
     maxWidth: 450
   },
   canvas: {
-    backgroundColor: '#ccc'
+    backgroundColor: 'var(--color-dark)'
   },
   layers: {
     width: 350,

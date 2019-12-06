@@ -4,9 +4,10 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Segoe UI',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Segoe UI',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  font-family: roboto, sans-serif;
   font-size: 1.6rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,55 +15,60 @@ body {
 
 h1 {
   font-size: 2.2rem;
-  margin: 1.4em 0;
+  margin: 0;
 }
 
 h2 {
   font-size: 1.7rem;
   font-weight: 900;
-  margin: 1.3em 0;
+  margin: 0;
 }
 
 h3 {
   font-size: 1.6rem;
   font-weight: 500;
-  margin: 1.2em 0;
+  margin: 0;
 }
 
 
 h4 {
   font-size: 1.4rem;
-  font-weight: 500;
-  margin: 1.2em 0;
+  font-weight: 400;
+  margin: 0;
 }
 
 h5 {
   font-size: 1.2rem;
   font-weight: 500;
-  margin: 1.2em 0;
+  margin: 0;
 }
 
 h6 {
   font-size: 1.072rem;
   font-weight: 400;
+  margin: 0;
 }
 
 :root {
-  --gutter: 1.6rem;
-  --half-gutter: 0.8rem;
-  --quarter-gutter: 0.4rem;
-  --spacing: 2rem;
-  --blue: #2e76c9;
-  --darkblue: #1e5391;
-  --lightgray: #f5f5f5;
-  --gray: #f9f9f9;
-  --darkgray: #e6e5e6;
-  --darkergray: #dcdcdc;
-  --darkestgray: #868686;
-  --textgray: #313131;
-  --white: #ffffff;
-  --black: #000000;
-  --accept: #00ad2b;
-  --drag-accept: #021580;
-  --drag-drop-ready: #00ad2b;
+  --quarter-gutter: 0.2rem;
+  --half-gutter: 0.4rem;
+  --gutter: 0.8rem;
+  --spacing: 1.6rem;
+  --double-spacing: 3.2rem;
+
+  --color-black: #000000;
+  --color-darkest: #111518;
+  --color-darker: #191d1f;
+  --color-dark: #1c2022;
+  --color-light: #525557;
+  --color-lighter: #a4a6a7;
+  --color-lightest: #f7f8f8;
+  --color-white: #ffffff;
+
+  --color-blue: #2e76c9;
+  --color-darkslate: #2e454b;
+
+  --color-drag-accept: #021580;
+  --color-drag-drop-ready: #00ad2b;
+
 }

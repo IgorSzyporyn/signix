@@ -9,8 +9,6 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
-import { useStore } from 'laco-react'
-import ModelStore from '../stores/ModelStore'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,

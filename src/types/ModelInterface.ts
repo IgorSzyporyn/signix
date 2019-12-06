@@ -9,6 +9,7 @@ type ModelInterface = {
   parentId?: string
   name?: string
   level?: number
+  group?: boolean
   items: ModelInterfacePartial[]
   type: ModelTypes
   color: ModelColorInterface

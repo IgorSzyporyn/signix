@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import ToolbarItem from '../ToolbarItem/ToolbarItem'
-import OpenIcon from '../../icons/OpenIcon/OpenIcon'
-import SaveIcon from '../../icons/SaveIcon/SaveIcon'
-import DocumentIcon from '../../icons/DocumentIcon/DocumentIcon'
 
 const Wrapper = styled.ul`
   display: flex;
@@ -27,19 +24,13 @@ const ItemContainer = styled.li`
 const Toolbar = () => (
   <Wrapper>
     <ItemContainer>
-      <ToolbarItem text="New">
-        <DocumentIcon />
-      </ToolbarItem>
+      <ToolbarItem text="New"></ToolbarItem>
     </ItemContainer>
     <ItemContainer>
-      <ToolbarItem text="Save">
-        <SaveIcon />
-      </ToolbarItem>
+      <ToolbarItem text="Save"></ToolbarItem>
     </ItemContainer>
     <ItemContainer>
-      <ToolbarItem text="Open">
-        <OpenIcon />
-      </ToolbarItem>
+      <ToolbarItem text="Open"></ToolbarItem>
     </ItemContainer>
   </Wrapper>
 )

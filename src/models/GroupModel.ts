@@ -4,6 +4,7 @@ import CoreModel from './CoreModel'
 const GroupModel: ModelInterface = {
   ...CoreModel,
   type: 'group',
+  group: true,
   dimension: {
     ...CoreModel.dimension,
     width: 250,

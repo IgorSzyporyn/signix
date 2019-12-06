@@ -1,0 +1,45 @@
+.Resizer {
+  background-clip: padding-box;
+  background: padding-box var(--color-darkest);
+  box-sizing: border-box;
+  z-index: 1;
+
+  /********** VERTICAL **********/
+  &.vertical {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    cursor: col-resize;
+    margin: 0 -5px;
+    width: 11px;
+  }
+
+  /********** HORIZONTAL **********/
+  &.horizontal {
+    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    border-top: 5px solid rgba(255, 255, 255, 0);
+    cursor: row-resize;
+    height: 11px;
+    margin: -5px 0;
+    width: 100%;
+
+    &:hover {
+      border-top: 5px solid rgba(0, 0, 0, 0.5);
+      border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  /************ STATES ************/
+  &:hover {
+    transition: all 2s ease;
+    border-left: 5px solid rgba(0, 0, 0, 0.5);
+    border-right: 5px solid rgba(0, 0, 0, 0.5);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      border-color: transparent;
+    }
+  }
+}

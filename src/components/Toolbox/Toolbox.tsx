@@ -1,20 +1,17 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import styled from 'styled-components'
-import GridViewIcon from '../../icons/GridViewIcon/GridViewIcon'
-import ListViewIcon from '../../icons/ListViewIcon/ListViewIcon'
+import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
+import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItems from '../ToolboxItems/ToolboxItems'
+import getIconSize from '../../utils/getIconSize'
 
-const Wrapper = styled.div`
-  padding: var(--half-gutter) var(--half-gutter);
-`
+const Wrapper = styled.div``
 
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.1rem solid var(--black);
-  padding: 0 var(--half-gutter);
 `
 
 const Title = styled.h2`
@@ -22,11 +19,9 @@ const Title = styled.h2`
 `
 
 const ViewIcons = styled.div`
-  height: 3.2rem;
   display: flex;
 
   & > svg {
-    width: 1.3rem;
     margin-right: var(--half-gutter);
     cursor: pointer;
 
@@ -36,9 +31,7 @@ const ViewIcons = styled.div`
   }
 `
 
-const Main = styled.main`
-  padding: var(--gutter) 0;
-`
+const Main = styled.main``
 
 const handleSetGridView = (
   view: ToolboxViewTypes,
@@ -64,6 +57,14 @@ type ToolboxProps = {
   view?: ToolboxViewTypes
 }
 
+const getIconStyle = (
+  view: ToolboxViewTypes,
+  currentView: ToolboxViewTypes
+) => ({
+  ...getIconSize('normal'),
+  color: view === currentView ? 'var(--color-blue)' : 'currentColor'
+})
+
 const Toolbox = (props: ToolboxProps) => {
   const [view, setView] = useState<ToolboxViewTypes>(props.view || 'list')
 
@@ -72,17 +73,17 @@ const Toolbox = (props: ToolboxProps) => {
       <Header>
         <Title>Toolbox</Title>
         <ViewIcons>
-          <ListViewIcon
+          <FormatListBulletedOutlinedIcon
             onClick={() => {
               handleSetListView(view, setView)
             }}
-            fill={view === 'list' ? 'var(--blue)' : 'currentColor'}
+            style={getIconStyle('list', view)}
           />
-          <GridViewIcon
+          <AppsOutlinedIcon
             onClick={() => {
               handleSetGridView(view, setView)
             }}
-            fill={view === 'grid' ? 'var(--blue)' : 'currentColor'}
+            style={getIconStyle('grid', view)}
           />
         </ViewIcons>
       </Header>

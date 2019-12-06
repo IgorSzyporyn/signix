@@ -21,7 +21,7 @@ const initModel = (
     model.name = `${model.type}-${model.id}`
   }
 
-  if (!model.items) {
+  if (!model.items && model.group) {
     model.items = []
   }
 

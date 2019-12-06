@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   right: 0;
   left: -1.6rem;
   width: 0.4rem;
-  background-color: var(--darkergray);
 `
 
 const PropertyBar = () => <Wrapper />

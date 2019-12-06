@@ -6,6 +6,7 @@ import addItemToModelStore from '../../stores/model/addItemToModelStore'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
+import getIconSize from '../../utils/getIconSize'
 
 type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
 
@@ -23,13 +24,9 @@ const TitleContainer = styled.div`
 `
 
 const IconContainer = styled.div`
-  margin: 0 var(--half-gutter);
   display: flex;
   align-items: center;
-
-  & > svg {
-    width: 3.2rem;
-  }
+  margin-right: var(--gutter);
 `
 
 const Title = styled.h4`
@@ -63,9 +60,17 @@ const ToolboxItem = ({
     })
   })
 
+  const iconStyle = {
+    ...getIconSize('large')
+  }
+
   return (
     <Wrapper ref={drag} view={view} isDragging={isDragging}>
-      {Icon && <IconContainer title={title}>{<Icon />}</IconContainer>}
+      {Icon && (
+        <IconContainer title={title}>
+          {<Icon style={iconStyle} />}
+        </IconContainer>
+      )}
       {view === 'list' && (
         <TitleContainer>
           <Title>{title}</Title>

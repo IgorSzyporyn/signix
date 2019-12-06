@@ -1,78 +1,56 @@
 import { useStore } from 'laco-react'
-import React from 'react'
+import React, { MouseEvent } from 'react'
 import styled from 'styled-components'
-import useClickPreventionOnDoubleClick from '../../hooks/useClickPreventionOnDoubleClick'
-import ChevronIcon from '../../icons/ChevronIcon/ChevronIcon'
+import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import ModelInterface from '../../types/ModelInterface'
+import getIconSize from '../../utils/getIconSize'
+import LayerIcon from '../LayerIcon/LayerIcon'
 import LayerItems from '../LayerItems/LayerItems'
-import LayerTitle from '../LayerTitle/LayerTitle'
 
 const Wrapper = styled.li`
   user-select: none;
 `
 
-type HeadingProps = {
-  isActive: boolean
-  level: number
-}
-
 const Heading = styled.div`
   display: flex;
   align-items: center;
-  padding: var(--half-gutter) var(--half-gutter);
   position: relative;
+  font-size: 1.4rem;
+  font-weight: 400;
+  border-left: var(--quarter-gutter) solid transparent;
+  padding: var(--gutter) var(--gutter) var(--gutter) var(--spacing);
 
-  ${({ isActive, level }: HeadingProps) => {
-    return isActive
-      ? `
-        &:after {
-          content: '';
-          background-color: var(--darkgray);
-          position: absolute;
-          top: 0;
-          left: -${level * 1.6}rem;
-          right: 0;
-          bottom: 0;
-          z-index: 10;
-          border-radius: 0.3rem;
-        }
-      `
-      : null
-  }}
-`
-
-const ExpandIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: var(--half-gutter);
-  z-index: 20;
-
-  & > svg {
-    width: var(--half-gutter);
-    height: var(--half-gutter);
+  &[data-active='true'] {
+    color: var(--color-lightest);
+    border-left-color: var(--color-blue);
+    background-color: var(--color-darkslate);
   }
 `
 
-type TitleProps = {
-  group: boolean
+const Title = styled.span``
+
+const Body = styled.div``
+
+const _handleClick = (e: MouseEvent<HTMLDivElement>) => {
+  const { currentTarget } = e
+  const { dataset } = currentTarget
+  const { active, expanded, id, level } = dataset
+
+  const isActive = active === 'true'
+  const isExpanded = expanded === 'true'
+
+  if (!isActive) {
+    updateActiveInModelStore(isActive ? undefined : id)
+  }
+
+  if (level !== '0') {
+    updateItemInLayerStore(!isExpanded, id)
+  }
 }
-
-const Title = styled.div`
-  flex-grow: 1;
-  z-index: 20;
-
-  ${({ group }: TitleProps) => {
-    return group ? null : `margin-left: var(--gutter);`
-  }}
-`
-
-const Body = styled.div`
-  padding-left: var(--gutter);
-`
 
 type LayerItemProps = {
   model: ModelInterface
@@ -80,7 +58,7 @@ type LayerItemProps = {
 
 const LayerItem = (props: LayerItemProps) => {
   const { model } = props
-  const { id, items } = model
+  const { id, items, group } = model
 
   const hasItems = items && items.length > 0
   const level = model.level || 0
@@ -89,41 +67,43 @@ const LayerItem = (props: LayerItemProps) => {
   const { active }: ModelStoreInterface = useStore(ModelStore)
 
   const isActive = active === id
-  const iconRotation = expanded ? '90' : '0'
 
-  const [handleClick, handleDoubleClick] = useClickPreventionOnDoubleClick(
-    () => {
-      updateActiveInModelStore(isActive ? undefined : id)
-    },
-    () => {
-      console.log('doubleclick')
-    }
-  )
-
-  if (expanded === undefined) {
+  if (expanded === undefined && level === 0) {
     expanded = true
+  }
+
+  const expandIconStyle = {
+    ...getIconSize('normal'),
+    transform: `rotate(${expanded ? '90deg' : '0deg'})`,
+    marginLeft: 'calc(-1 * var(--spacing))',
+    marginRight: 'var(--half-gutter)'
+  }
+
+  const layerIconProps = {
+    hasItems,
+    isActive,
+    type: model.type,
+    style: {
+      ...getIconSize('medium'),
+      marginRight: 'var(--gutter)',
+      marginLeft: group ? 'calc(-1 * var(--half-gutter))' : 0
+    }
   }
 
   return (
     <Wrapper>
       <Heading
-        onClick={handleClick}
-        onDoubleClick={handleDoubleClick}
-        isActive={isActive}
-        level={level}
+        onClick={_handleClick}
+        data-level={level}
+        data-expanded={expanded}
+        data-active={isActive}
+        data-id={id}
       >
-        {hasItems && (
-          <ExpandIconContainer
-            onClick={() => {
-              updateItemInLayerStore(!expanded, id!)
-            }}
-          >
-            <ChevronIcon rotate={iconRotation} />
-          </ExpandIconContainer>
+        {group && level > 0 && (
+          <ChevronRightOutlinedIcon style={expandIconStyle} />
         )}
-        <Title group={hasItems}>
-          <LayerTitle model={model} />
-        </Title>
+        <LayerIcon {...layerIconProps} />
+        <Title>{model.name}</Title>
       </Heading>
       {hasItems && (
         <Body hidden={!expanded}>

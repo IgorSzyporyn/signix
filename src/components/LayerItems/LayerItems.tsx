@@ -13,14 +13,9 @@ const createLayerItems = (items: ModelInterface[]) => {
   let children: React.ReactNode = []
 
   if (items && items.length) {
-    children = items.map(item => {
-      return (
-        <LayerItem
-          key={`layer-item-${item.id}}`}
-          model={item as ModelInterface}
-        />
-      )
-    })
+    children = items.map(item => (
+      <LayerItem key={`layer-item-${item.id}}`} model={item} />
+    ))
   }
 
   return children
@@ -31,7 +26,9 @@ type LayerItemsProps = {
 }
 
 const LayerItems = ({ items }: LayerItemsProps) => {
-  return <Wrapper>{createLayerItems(items)}</Wrapper>
+  const layerItems = createLayerItems(items)
+
+  return <Wrapper>{layerItems}</Wrapper>
 }
 
 export default LayerItems

@@ -4,6 +4,7 @@ import CoreModel from './CoreModel'
 const BackgroundModel: ModelInterface = {
   ...CoreModel,
   type: 'background',
+  group: true,
   dimension: {
     ...CoreModel.dimension,
     width: 640,

@@ -17,23 +17,22 @@ const PaneContainerPrimary = styled.div`
 
 const PaneContainerSecondary = styled.section`
   min-height: 100%;
-  border-left: 0.1rem solid var(--darkergray);
-  background-color: var(--gray);
+  background-color: var(--color-darker);
 `
 
 const ToolboxContainer = styled.section`
-  background-color: var(--gray);
   min-height: 100%;
-  width: 23rem;
+  width: 24rem;
+  background-color: var(--color-darker);
 `
 
 const CanvasContainer = styled.section`
-  border-left: 0.1rem solid var(--darkergray);
   min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  background-color: var(--color-dark);
 `
 
 const Main = () => {

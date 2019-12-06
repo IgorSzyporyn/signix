@@ -42,7 +42,7 @@ const Wrapper = styled.div`
     font-size: 1.2rem;
     padding: var(--quarter-gutter) var(--half-gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--darkestgray);
+    border: 1px solid var(--color-light);
     margin: 0;
     box-sizing: border-box;
   }
@@ -57,17 +57,16 @@ const Wrapper = styled.div`
   }
 
   & button {
-    background-color: var(--white);
     font-size: 1.2rem;
     padding: var(--quarter-gutter) var(--half-gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--darkestgray);
+    border: 1px solid var(--color-light);
     margin: 0;
     box-sizing: border-box;
     width: 100%;
 
     &[active='true'] {
-      background-color: var(--darkgray);
+      background-color: var(--color-blue);
     }
   }
 `

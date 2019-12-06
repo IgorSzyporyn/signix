@@ -4,7 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import styled from 'styled-components'
 import Main from './components/Main/Main'
 import Toolbar from './components/Toolbar/Toolbar'
-import './resizer.css'
+import './resizer.scss'
 import initModelStore from './stores/model/initModelStore'
 import ModelInterfacePartial from './types/ModelInterfacePartial'
 
@@ -12,13 +12,12 @@ const Root = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--darkgray);
+  background-color: var(--color-darkest);
+  color: var(--color-lighter);
 `
 
 const HeaderContainer = styled.header`
   padding: 1rem var(--gutter);
-  background-color: var(--gray);
-  border-bottom: 1px solid var(--darkgray);
   display: none;
 `
 

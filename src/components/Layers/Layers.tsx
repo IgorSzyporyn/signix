@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import CollapseIcon from '../../icons/CollapseIcon/CollapseIcon'
 import LayerItem from '../LayerItem/LayerItem'
 import ModelInterface from '../../types/ModelInterface'
 
 const Wrapper = styled.div`
-  padding: var(--half-gutter) var(--half-gutter);
   overflow-y: scroll;
   position: absolute;
   left: 0;
@@ -18,20 +16,17 @@ const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.1rem solid var(--black);
   padding: 0 var(--half-gutter);
 `
 
-const Title = styled.h2`
+const Title = styled.h4`
   margin: 0;
 `
 
 const ToolIcons = styled.div`
-  height: 3.2rem;
   display: flex;
 
   & > svg {
-    width: 1.3rem;
     margin-right: var(--half-gutter);
     cursor: pointer;
 
@@ -44,7 +39,7 @@ const ToolIcons = styled.div`
 const Main = styled.ul`
   list-style: none;
   margin: 0;
-  padding: var(--gutter) var(--half-gutter);
+  padding: 0;
 `
 
 type LayersProps = {
@@ -56,9 +51,7 @@ const Layers = ({ model }: LayersProps) => {
     <Wrapper>
       <Header>
         <Title>Layers</Title>
-        <ToolIcons>
-          <CollapseIcon />
-        </ToolIcons>
+        <ToolIcons></ToolIcons>
       </Header>
       <Main>
         <LayerItem model={model} />

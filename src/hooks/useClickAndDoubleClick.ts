@@ -1,24 +1,26 @@
 // https://medium.com/trabe/prevent-click-events-on-double-click-with-react-with-and-without-hooks-6bf3697abc40
-
+import React from 'react'
 import useCancellablePromises from '../utils/useCancellablePromises'
 import cancellablePromise from '../utils/cancellablePromise'
-import { delay, noop } from '../utils/utilities'
+import { delay } from '../utils/utilities'
 
-const useClickPreventionOnDoubleClick = (
-  onClick: typeof noop,
-  onDoubleClick: typeof noop
+const useClickAndDoubleClick = <T = HTMLElement>(
+  onClick: (e: React.MouseEvent<T>) => void,
+  onDoubleClick: (e: React.MouseEvent<T>) => void
 ) => {
   const api = useCancellablePromises()
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<T>) => {
     api.clearPendingPromises()
-    const waitForClick = cancellablePromise(delay(300))
+    const waitForClick = cancellablePromise(delay(220))
     api.appendPendingPromise(waitForClick)
 
     return waitForClick.promise
       .then(() => {
         api.removePendingPromise(waitForClick)
-        onClick()
+        // @TODO - wont persist!
+        e.persist()
+        onClick(e)
       })
       .catch(errorInfo => {
         api.removePendingPromise(waitForClick)
@@ -28,12 +30,13 @@ const useClickPreventionOnDoubleClick = (
       })
   }
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (e: React.MouseEvent<T>) => {
     api.clearPendingPromises()
-    onDoubleClick()
+    e.persist()
+    onDoubleClick(e)
   }
 
   return [handleClick, handleDoubleClick]
 }
 
-export default useClickPreventionOnDoubleClick
+export default useClickAndDoubleClick
