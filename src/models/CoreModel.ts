@@ -18,7 +18,8 @@ const CoreModel: ModelInterface = {
     background: 'transparent',
     foreground: 'transparent'
   },
-  rotation: 0
+  value: '',
+  items: []
 }
 
 export default CoreModel

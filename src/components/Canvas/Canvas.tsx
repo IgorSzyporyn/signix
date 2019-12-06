@@ -1,7 +1,6 @@
-import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
+import ModelInterface from '../../types/ModelInterface'
 import CanvasItem from '../CanvasItem/CanvasItem'
 
 const Wrapper = styled.div`
@@ -11,9 +10,13 @@ const Wrapper = styled.div`
   align-items: center;
 `
 
-const Canvas = () => {
-  const { model }: ModelStoreInterface = useStore(ModelStore)
+type CanvasProps = {
+  model: ModelInterface
+  active?: string
+}
 
+const Canvas = ({ model, active }: CanvasProps) => {
+  console.log('rendering canvas - active is ', active)
   return (
     <Wrapper>
       <CanvasItem model={model} />

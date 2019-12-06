@@ -38,7 +38,7 @@ const CanvasContainer = styled.section`
 
 const Main = () => {
   const settings: SettingsStoreInterface = useStore(SettingsStore)
-  const { model }: ModelStoreInterface = useStore(ModelStore)
+  const { model, active }: ModelStoreInterface = useStore(ModelStore)
 
   return (
     <SplitPane
@@ -57,7 +57,7 @@ const Main = () => {
             backgroundColor: settings.canvas.backgroundColor
           }}
         >
-          <Canvas />
+          <Canvas model={model} active={active} />
         </CanvasContainer>
       </PaneContainerPrimary>
       <PaneContainerSecondary>

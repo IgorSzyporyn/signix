@@ -19,6 +19,7 @@ const Wrapper = styled.div`
       return null
     }
   }}
+
   ${({ canDrop }: DropContainerProps) => {
     if (canDrop) {
       return `opacity: 1;`
@@ -26,11 +27,20 @@ const Wrapper = styled.div`
       return null
     }
   }}
+
+${({ level }: DropContainerProps) => {
+  if (level) {
+    return `z-index: ${level};`
+  } else {
+    return null
+  }
+}}
 `
 
 type DropContainerProps = {
   isActive: boolean
   canDrop: boolean
+  level?: number
 }
 
 const CanvasDropContainer = React.forwardRef<

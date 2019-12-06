@@ -2,9 +2,8 @@ import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import ChevronIcon from '../../icons/ChevronIcon/ChevronIcon'
-import getItemFromLayerStoreById from '../../stores/layer/getItemFromLayerStoreById'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
-import LayerStore from '../../stores/LayerStore'
+import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 
 const Wrapper = styled.div``
 
@@ -20,7 +19,7 @@ const Title = styled.h5`
 
 const Body = styled.div`
   position: relative;
-  margin-left: var(--spacing);
+  margin-left: var(--gutter);
 `
 
 type PropertiesPanelProps = {
@@ -30,9 +29,7 @@ type PropertiesPanelProps = {
 }
 
 const PropertiesPanel = ({ title, children, id }: PropertiesPanelProps) => {
-  useStore(LayerStore)
-
-  const expanded = getItemFromLayerStoreById(id)
+  const { [id]: expanded }: LayerStoreInterface = useStore(LayerStore)
 
   return (
     <Wrapper>

@@ -37,12 +37,8 @@ const Wrapper = styled.div`
       }
     }}
   }
-`
 
-const Label = styled.label`
-  display: block;
-
-  & > input {
+  & input {
     font-size: 1.2rem;
     padding: var(--quarter-gutter) var(--half-gutter);
     border-radius: 0.3rem;
@@ -51,14 +47,33 @@ const Label = styled.label`
     box-sizing: border-box;
   }
 
-  & > input[type='number'],
-  & > input[type='text'] {
+  & input[type='number'],
+  & input[type='text'] {
     width: 100%;
   }
 
-  & > input[type='checkbox'] {
+  & input[type='checkbox'] {
     padding: 0;
   }
+
+  & button {
+    background-color: var(--white);
+    font-size: 1.2rem;
+    padding: var(--quarter-gutter) var(--half-gutter);
+    border-radius: 0.3rem;
+    border: 1px solid var(--darkestgray);
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+
+    &[active='true'] {
+      background-color: var(--darkgray);
+    }
+  }
+`
+
+const Label = styled.label`
+  display: block;
 `
 
 const Title = styled.div`
@@ -67,6 +82,7 @@ const Title = styled.div`
 `
 
 export interface WithFieldProps {
+  active?: 'true' | 'false'
   disabled?: boolean
   hidden?: boolean
   title?: string
@@ -83,10 +99,18 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
 
       return (
         <Wrapper inline={inline} disabled={rest.disabled} hidden={rest.hidden}>
-          <Label htmlFor={id}>
-            <Title>{title}</Title>
+          {title ? (
+            <Label htmlFor={id || safeId}>
+              <Title>{title}</Title>
+              <Component
+                id={id || safeId}
+                name={id || safeId}
+                {...(rest as P)}
+              />
+            </Label>
+          ) : (
             <Component id={id || safeId} name={id || safeId} {...(rest as P)} />
-          </Label>
+          )}
         </Wrapper>
       )
     }

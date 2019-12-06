@@ -1,8 +1,8 @@
 import React from 'react'
-import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
+import { WithCanvasProps } from '../../hoc/withCanvas'
 
-const CanvasText = ({ model, ...props }: WithCanvasProps) => (
-  <div {...props}>{model.value}</div>
-)
+const CanvasText = ({ model, ...props }: WithCanvasProps) => {
+  return <div {...props}>{model.value}</div>
+}
 
-export default withCanvas(CanvasText)
+export default CanvasText

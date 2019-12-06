@@ -1,27 +1,16 @@
 import { Store } from 'laco'
 import ModelInterface from '../types/ModelInterface'
-import defaultModel from './model/defaultModel'
-import initModel from './model/initModel'
+import initModel from '../utils/initModel'
 
 export type ModelStoreInterface = {
   model: ModelInterface
+  active?: string
 }
 
-export const initModelStore = (model: ModelInterface) => {
-  ModelStore.set(() => ({ model: { ...initModel(model) } }))
-}
-
-const initDefaultValues = (model: ModelInterface) => {
-  const store: ModelStoreInterface = {
-    model: initModel(model)
-  }
-
-  return store
-}
-
-const defaultStore = initDefaultValues(defaultModel)
-
-const ModelStore = new Store(defaultStore)
+const ModelStore = new Store({
+  model: initModel({ type: 'background', name: 'Background' }, 'background'),
+  active: undefined
+})
 
 const clone: any = window
 clone.A = ModelStore

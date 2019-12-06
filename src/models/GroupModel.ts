@@ -6,8 +6,8 @@ const GroupModel: ModelInterface = {
   type: 'group',
   dimension: {
     ...CoreModel.dimension,
-    width: 50,
-    height: 50
+    width: 250,
+    height: 250
   },
   items: []
 }

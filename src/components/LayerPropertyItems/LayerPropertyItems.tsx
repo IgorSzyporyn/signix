@@ -1,6 +1,6 @@
 import React from 'react'
 import ModelInterface from '../../types/ModelInterface'
-import LayerPanelItems from '../LayerPanelItems/LayerPanelItems'
+import LayerItems from '../LayerItems/LayerItems'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 
 type LayerPropertyItems = {
@@ -10,7 +10,7 @@ type LayerPropertyItems = {
 const LayerPropertyItems = ({ model }: LayerPropertyItems) => {
   return (
     <PropertiesPanel id={`${model.id!}-items`} title="Items">
-      <LayerPanelItems model={model} />
+      <LayerItems items={model.items as ModelInterface[]} />
     </PropertiesPanel>
   )
 }

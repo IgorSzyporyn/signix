@@ -1,24 +1,29 @@
-import ModelInterface from '../../types/ModelInterface'
-import ModelStore from '../ModelStore'
-import findModelById from './findModelById'
-import initModel from './initModel'
+import ModelInterfacePartial from '../../types/ModelInterfacePartial'
+import initModel from '../../utils/initModel'
+import ModelStore, { ModelStoreInterface } from '../ModelStore'
+import getModelById from './getModelById'
 
-const addItemToModelStore = (source: ModelInterface, parentId: string) => {
+const addItemToModelStore = (
+  source: ModelInterfacePartial,
+  parentId: string
+) => {
   const store = ModelStore.get()
-  const model = { ...store.model }
-  const item = initModel(source, parentId)
+  let root = { ...store.model }
 
   if (!parentId) {
-    ModelStore.set(() => ({ model: item }))
+    // No parentId means we set a new root
+    root = initModel(source, source.type)
   } else {
-    const parentModel = findModelById(parentId)
+    // We are adding an item to another item
+    const parent = getModelById(parentId)
 
-    if (parentModel && parentModel.items) {
-      parentModel.items.push(item)
+    if (parent) {
+      const itemToAdd = initModel(source, source.type, parentId, parent.level)
+      parent.items.push(itemToAdd)
     }
-
-    ModelStore.set(() => ({ model }))
   }
+
+  ModelStore.set((state: ModelStoreInterface) => ({ ...state, model: root }))
 }
 
 export default addItemToModelStore

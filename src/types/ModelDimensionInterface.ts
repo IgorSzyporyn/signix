@@ -1,7 +1,7 @@
 type ModelDimensionInterface = {
-  disabled?: boolean
-  width?: number
-  height?: number
+  disabled: boolean
+  width: number
+  height: number
 }
 
 export default ModelDimensionInterface

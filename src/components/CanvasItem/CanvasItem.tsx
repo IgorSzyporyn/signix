@@ -4,18 +4,29 @@ import CanvasGroup from '../CanvasGroup/CanvasGroup'
 import CanvasImage from '../CanvasImage/CanvasImage'
 import CanvasText from '../CanvasText/CanvasText'
 import CanvasBackground from '../CanvasBackground/CanvasBackground'
+import withCanvas from '../../hoc/withCanvas'
+import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
+import { useStore } from 'laco-react'
+import './CanvasItem.scss'
 
 type CanvasItemProps = {
   model: ModelInterface
 }
 
-const getComponent = ({ model, ...props }: CanvasItemProps) => {
+const getComponent = (
+  { model, ...props }: CanvasItemProps,
+  active?: string
+) => {
   let Component = null
 
   let canvasProps = {
     ...props,
-    className: model.type,
+    className: `canvas-item-${model.type}`,
     model
+  }
+
+  if (active === model.id) {
+    canvasProps.className += ` canvas-item-active`
   }
 
   switch (model.type) {
@@ -43,6 +54,10 @@ const getComponent = ({ model, ...props }: CanvasItemProps) => {
   return Component
 }
 
-const CanvasItem = (props: CanvasItemProps) => getComponent(props)
+const CanvasItem = (props: CanvasItemProps) => {
+  const { active }: ModelStoreInterface = useStore(ModelStore)
 
-export default CanvasItem
+  return getComponent(props, active)
+}
+
+export default withCanvas(CanvasItem)

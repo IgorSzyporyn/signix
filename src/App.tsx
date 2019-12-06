@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import Main from './components/Main/Main'
 import Toolbar from './components/Toolbar/Toolbar'
 import './resizer.css'
-import { initModelStore } from './stores/ModelStore'
-import ModelInterface from './types/ModelInterface'
+import initModelStore from './stores/model/initModelStore'
+import ModelInterfacePartial from './types/ModelInterfacePartial'
 
 const Root = styled.div`
   height: 100vh;
@@ -28,13 +28,13 @@ const MainContainer = styled.main`
 `
 
 type AppProps = {
-  model?: ModelInterface
+  model?: ModelInterfacePartial
 }
 
 const App = ({ model }: AppProps) => {
   useEffect(() => {
     if (model) {
-      initModelStore(model)
+      initModelStore(model, model.type)
     }
   }, [model])
 

@@ -7,8 +7,6 @@ type LayerPropertyColorProps = {
 }
 
 const LayerPropertyColor = ({ model }: LayerPropertyColorProps) => {
-  const { color } = model
-
   return (
     <PropertiesPanel id={`${model.id!}-color`} title="Color"></PropertiesPanel>
   )

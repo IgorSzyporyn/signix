@@ -41,8 +41,10 @@ const ToolIcons = styled.div`
   }
 `
 
-const Main = styled.main`
-  padding: var(--gutter) 0;
+const Main = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: var(--gutter) var(--half-gutter);
 `
 
 type LayersProps = {

@@ -1,6 +1,6 @@
 type ModelColorInterface = {
-  background?: string
-  foreground?: string
+  background: string
+  foreground: string
 }
 
 export default ModelColorInterface

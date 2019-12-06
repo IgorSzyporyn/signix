@@ -4,21 +4,29 @@ import './baseline.scss'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import TextModel from './models/TextModel'
 
 ReactDOM.render(
   <App
     model={{
       type: 'background',
-      color: {
-        background: '#FFF',
-        foreground: '#000'
-      },
-      dimension: {
-        height: 160,
-        width: 800
-      },
-      items: [{ ...TextModel, value: 'Here some text' }]
+      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+      dimension: { disabled: false, width: 800, height: 160 },
+      color: { background: '#FFF000', foreground: '#000' },
+      value: '',
+      id: '_fwj5jm4rz',
+      name: 'Background1',
+      items: [
+        {
+          type: 'text',
+          position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+          dimension: { disabled: false, width: 0, height: 0 },
+          color: { foreground: '#000', background: 'transparent' },
+          value: 'Here some text',
+          id: '_1fnk2m8xp',
+          name: 'Clan Name',
+          parentId: '_fwj5jm4rz'
+        }
+      ]
     }}
   />,
   document.getElementById('root')

@@ -18,12 +18,22 @@ const Wrapper = styled.div`
 type CanvasItemsProps = { model: ModelInterface }
 
 const CanvasItems = ({ model }: CanvasItemsProps) => {
-  const [{ canDrop, isOver }, drop] = useDrop({
+  const [{ canDrop, isOverCurrent }, drop] = useDrop({
     accept: DragAndDropTypes.TOOLBOX,
-    drop: () => ({ id: model.id! }),
+    drop(item, monitor) {
+      const didDrop = monitor.didDrop()
+      const isOverSelf = monitor.isOver({ shallow: true })
+
+      if (didDrop) {
+        return
+      } else if (isOverSelf) {
+        return { id: model.id }
+      }
+    },
     collect: monitor => ({
+      canDrop: monitor.canDrop(),
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
+      isOverCurrent: monitor.isOver({ shallow: true })
     })
   })
 
@@ -31,12 +41,16 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
     <Wrapper>
       {model.items &&
         model.items.map(item => (
-          <CanvasItem key={`canvas-key${item.id}`} model={item} />
+          <CanvasItem
+            key={`canvas-key${item.id}`}
+            model={item as ModelInterface}
+          />
         ))}
       <CanvasDropContainer
         ref={drop}
-        isActive={canDrop && isOver}
+        isActive={canDrop && isOverCurrent}
         canDrop={canDrop}
+        level={model.level}
       />
     </Wrapper>
   )

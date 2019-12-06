@@ -53,7 +53,7 @@ const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
   const { dimension } = model
 
   return (
-    <PropertiesPanel id={`${model.id!}-dimension`} title="Dimensions">
+    <PropertiesPanel id={`${model.id}-dimension`} title="Dimensions">
       <FieldCheckbox
         title="Disable"
         inline={true}
@@ -64,19 +64,19 @@ const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
       <HorizontalFieldContainer>
         <FieldInput
           title="Width"
-          value={dimension!.width}
+          value={dimension.width}
           onChange={e => {
             handleWidthChange(e.target.value, model)
           }}
-          disabled={dimension!.disabled}
+          disabled={dimension.disabled}
         />
         <FieldInput
           title="Height"
-          value={dimension!.height}
+          value={dimension.height}
           onChange={e => {
             handleHeightChange(e.target.value, model)
           }}
-          disabled={dimension!.disabled}
+          disabled={dimension.disabled}
         />
       </HorizontalFieldContainer>
     </PropertiesPanel>

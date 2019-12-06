@@ -9,6 +9,8 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
+import { useStore } from 'laco-react'
+import ModelStore from '../stores/ModelStore'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,
@@ -36,14 +38,10 @@ export interface WithCanvasProps {
 const withCanvas = <P extends object>(Component: React.ComponentType<P>) =>
   class WithCanvasHOC extends React.Component<P & WithCanvasProps> {
     render() {
-      const { children, model, ...rest } = this.props
+      const { model, ...rest } = this.props
       const style = createCanvasStyle(model)
 
-      return (
-        <Component style={style} model={model} {...(rest as P)}>
-          {children}
-        </Component>
-      )
+      return <Component style={style} model={model} {...(rest as P)} />
     }
   }
 
