@@ -1,7 +1,6 @@
 import { useStore } from 'laco-react'
 import React, { MouseEvent } from 'react'
 import styled from 'styled-components'
-import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
@@ -16,29 +15,63 @@ const Wrapper = styled.li`
 `
 
 const Heading = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
   font-size: 1.4rem;
   font-weight: 400;
   border-left: var(--quarter-gutter) solid transparent;
-  padding: var(--gutter) var(--gutter) var(--gutter) var(--spacing);
+  padding: var(--gutter) var(--gutter) var(--gutter)
+    calc(var(--spacing) + var(--half-gutter));
 
   &[data-active='true'] {
-    color: var(--color-lightest);
-    border-left-color: var(--color-blue);
+    color: var(--color-white);
+    border-left-color: var(--color-lightblue);
     background-color: var(--color-darkslate);
   }
+
+  &:hover {
+    &:not([data-active='true']) {
+      background-color: var(--color-darkest);
+    }
+  }
+`
+
+type WithLevelProps = {
+  level: number
+}
+
+const HeadingInner = styled.div<WithLevelProps>`
+  display: flex;
+  align-items: center;
+
+  ${({ level }) => {
+    if (level <= 1) {
+      return null
+    }
+
+    return `padding-left: calc(${level - 1} * var(--spacing));`
+  }}
 `
 
 const Title = styled.span``
 
-const Body = styled.div``
+const Body = styled.div`
+  position: relative;
+`
+
+const LayerItemsBar = styled.span<WithLevelProps>`
+  position: absolute;
+  top: 0;
+  ${({ level }) => `left: ${level * 16 - level * 3}px`}
+  right: 0;
+  bottom: 0;
+  width: 0.2rem;
+  background-color: var(--color-light);
+  opacity: 0;
+`
 
 const _handleClick = (e: MouseEvent<HTMLDivElement>) => {
   const { currentTarget } = e
   const { dataset } = currentTarget
-  const { active, expanded, id, level } = dataset
+  const { active, expanded, id, level, group, hasItems } = dataset
 
   const isActive = active === 'true'
   const isExpanded = expanded === 'true'
@@ -47,7 +80,7 @@ const _handleClick = (e: MouseEvent<HTMLDivElement>) => {
     updateActiveInModelStore(isActive ? undefined : id)
   }
 
-  if (level !== '0') {
+  if (level !== '0' && group === 'true' && hasItems === 'true') {
     updateItemInLayerStore(!isExpanded, id)
   }
 }
@@ -60,33 +93,26 @@ const LayerItem = (props: LayerItemProps) => {
   const { model } = props
   const { id, items, group } = model
 
-  const hasItems = items && items.length > 0
-  const level = model.level || 0
-
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
   const { active }: ModelStoreInterface = useStore(ModelStore)
 
+  const hasItems = items && items.length > 0
+  const level = model.level || 0
   const isActive = active === id
 
   if (expanded === undefined && level === 0) {
     expanded = true
   }
 
-  const expandIconStyle = {
-    ...getIconSize('normal'),
-    transform: `rotate(${expanded ? '90deg' : '0deg'})`,
-    marginLeft: 'calc(-1 * var(--spacing))',
-    marginRight: 'var(--half-gutter)'
-  }
-
   const layerIconProps = {
     hasItems,
     isActive,
     type: model.type,
+    isExpanded: expanded,
+    isGroup: group,
     style: {
       ...getIconSize('medium'),
-      marginRight: 'var(--gutter)',
-      marginLeft: group ? 'calc(-1 * var(--half-gutter))' : 0
+      marginRight: 'calc(0.75 * var(--gutter))'
     }
   }
 
@@ -94,20 +120,22 @@ const LayerItem = (props: LayerItemProps) => {
     <Wrapper>
       <Heading
         onClick={_handleClick}
-        data-level={level}
-        data-expanded={expanded}
         data-active={isActive}
+        data-expanded={expanded}
+        data-group={group}
+        data-has-items={hasItems}
         data-id={id}
+        data-level={level}
       >
-        {group && level > 0 && (
-          <ChevronRightOutlinedIcon style={expandIconStyle} />
-        )}
-        <LayerIcon {...layerIconProps} />
-        <Title>{model.name}</Title>
+        <HeadingInner level={level}>
+          <LayerIcon {...layerIconProps} />
+          <Title>{model.name}</Title>
+        </HeadingInner>
       </Heading>
       {hasItems && (
         <Body hidden={!expanded}>
           <LayerItems items={items as ModelInterface[]} />
+          {level > 0 && <LayerItemsBar level={level} />}
         </Body>
       )}
     </Wrapper>
