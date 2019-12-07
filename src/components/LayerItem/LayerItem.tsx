@@ -65,7 +65,7 @@ const LayerItemsBar = styled.span<WithLevelProps>`
   bottom: 0;
   width: 0.2rem;
   background-color: var(--color-light);
-  opacity: 0;
+  opacity: 0.4;
 `
 
 const _handleClick = (e: MouseEvent<HTMLDivElement>) => {
