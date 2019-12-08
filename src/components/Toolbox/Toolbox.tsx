@@ -1,12 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
-import styled from 'styled-components'
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import styled from 'styled-components'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
-import ToolboxItems from '../ToolboxItems/ToolboxItems'
 import getIconSize from '../../utils/getIconSize'
+import ToolboxItems from '../ToolboxItems/ToolboxItems'
 
-const Wrapper = styled.div``
+const Wrapper = styled.section`
+  background-color: var(--color-darker);
+  min-height: 100%;
+`
 
 const Header = styled.header`
   display: flex;

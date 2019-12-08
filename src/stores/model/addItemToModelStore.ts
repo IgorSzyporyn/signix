@@ -1,7 +1,7 @@
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
 import initModel from '../../utils/initModel'
 import ModelStore, { ModelStoreInterface } from '../ModelStore'
-import getModelById from './getModelById'
+import { searchModelById } from './getModelById'
 
 const addItemToModelStore = (
   source: ModelInterfacePartial,
@@ -15,7 +15,7 @@ const addItemToModelStore = (
     root = initModel(source, source.type)
   } else {
     // We are adding an item to another item
-    const parent = getModelById(parentId)
+    const parent = searchModelById(parentId)
 
     if (parent) {
       const itemToAdd = initModel(source, source.type, parentId, parent.level)

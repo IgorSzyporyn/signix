@@ -32,15 +32,15 @@ const Wrapper = styled.div`
   }
 `
 
-type LayerPropertyPositionTypeProps = WithFieldProps & {
+type PropertyPositionTypeProps = WithFieldProps & {
   type: ModelPositionTypes
   onChange: (type: ModelPositionTypes) => void
 }
 
-const LayerPropertyPositionType = ({
+const PropertyPositionType = ({
   type,
   onChange
-}: LayerPropertyPositionTypeProps) => (
+}: PropertyPositionTypeProps) => (
   <Wrapper>
     <FieldPositionType
       onClick={e => {
@@ -77,4 +77,4 @@ const LayerPropertyPositionType = ({
   </Wrapper>
 )
 
-export default withField(LayerPropertyPositionType)
+export default withField(PropertyPositionType)

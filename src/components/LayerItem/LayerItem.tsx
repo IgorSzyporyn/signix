@@ -1,5 +1,7 @@
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 import { useStore } from 'laco-react'
-import React, { MouseEvent } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
@@ -9,15 +11,15 @@ import ModelInterface from '../../types/ModelInterface'
 import getIconSize from '../../utils/getIconSize'
 import LayerIcon from '../LayerIcon/LayerIcon'
 import LayerItems from '../LayerItems/LayerItems'
+import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
+import MUIcon from '../MUIcon/MUIcon'
 
 const Wrapper = styled.li`
   user-select: none;
 `
 
 const Heading = styled.div`
-  font-size: 1.4rem;
-  font-weight: 400;
-  border-left: var(--quarter-gutter) solid transparent;
+  border-left: var(--half-gutter) solid transparent;
   padding: var(--gutter) var(--gutter) var(--gutter)
     calc(var(--spacing) + var(--half-gutter));
 
@@ -25,6 +27,18 @@ const Heading = styled.div`
     color: var(--color-white);
     border-left-color: var(--color-lightblue);
     background-color: var(--color-darkslate);
+  }
+
+  .layer-title-icon {
+    display: none;
+  }
+
+  &:hover .layer-title-icon {
+    display: flex;
+  }
+
+  &[data-is-editing='true'] .layer-title-icon {
+    display: none;
   }
 
   &:hover {
@@ -41,6 +55,7 @@ type WithLevelProps = {
 const HeadingInner = styled.div<WithLevelProps>`
   display: flex;
   align-items: center;
+  padding-right: var(--spacing);
 
   ${({ level }) => {
     if (level <= 1) {
@@ -51,7 +66,19 @@ const HeadingInner = styled.div<WithLevelProps>`
   }}
 `
 
-const Title = styled.span``
+const LayerTitle = styled.div`
+  flex-grow: 1;
+`
+
+const LayerTitleIcons = styled.div`
+  & > * {
+    margin-right: var(--gutter);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`
 
 const Body = styled.div`
   position: relative;
@@ -64,26 +91,9 @@ const LayerItemsBar = styled.span<WithLevelProps>`
   right: 0;
   bottom: 0;
   width: 0.2rem;
-  background-color: var(--color-light);
-  opacity: 0.4;
+  background-color: var(--color-lightblue);
+  opacity: 0.8;
 `
-
-const _handleClick = (e: MouseEvent<HTMLDivElement>) => {
-  const { currentTarget } = e
-  const { dataset } = currentTarget
-  const { active, expanded, id, level, group, hasItems } = dataset
-
-  const isActive = active === 'true'
-  const isExpanded = expanded === 'true'
-
-  if (!isActive) {
-    updateActiveInModelStore(isActive ? undefined : id)
-  }
-
-  if (level !== '0' && group === 'true' && hasItems === 'true') {
-    updateItemInLayerStore(!isExpanded, id)
-  }
-}
 
 type LayerItemProps = {
   model: ModelInterface
@@ -94,8 +104,9 @@ const LayerItem = (props: LayerItemProps) => {
   const { id, items, group } = model
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
-  const { active }: ModelStoreInterface = useStore(ModelStore)
+  const { active, editing }: ModelStoreInterface = useStore(ModelStore)
 
+  const isEditingAny = !!editing
   const hasItems = items && items.length > 0
   const level = model.level || 0
   const isActive = active === id
@@ -119,17 +130,41 @@ const LayerItem = (props: LayerItemProps) => {
   return (
     <Wrapper>
       <Heading
-        onClick={_handleClick}
+        onClick={() => {
+          if (!isActive && !isEditingAny) {
+            updateActiveInModelStore(isActive ? undefined : id)
+          }
+
+          if (level !== 0 && group && hasItems && !isEditingAny) {
+            updateItemInLayerStore(!expanded, id)
+          }
+        }}
         data-active={isActive}
         data-expanded={expanded}
         data-group={group}
         data-has-items={hasItems}
+        data-is-editing={isEditingAny}
+        data-editing={editing}
         data-id={id}
         data-level={level}
       >
         <HeadingInner level={level}>
           <LayerIcon {...layerIconProps} />
-          <Title>{model.name}</Title>
+          <LayerTitle>
+            <LayerItemTitle
+              disabled={isEditingAny}
+              id={model.id}
+              title={model.name}
+            />
+          </LayerTitle>
+          <LayerTitleIcons className="layer-title-icon">
+            <MUIcon interactive={true} render={p => <EditIcon {...p} />} />
+            <MUIcon
+              hoverColor="var(--color-red)"
+              interactive={true}
+              render={p => <DeleteIcon {...p} />}
+            />
+          </LayerTitleIcons>
         </HeadingInner>
       </Heading>
       {hasItems && (

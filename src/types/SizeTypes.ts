@@ -1,5 +1,6 @@
-type IconSizeTypes =
+type SizeTypes =
   | 'tiny'
+  | 'xsmall'
   | 'small'
   | 'normal'
   | 'medium'
@@ -7,4 +8,4 @@ type IconSizeTypes =
   | 'big'
   | 'huge'
 
-export default IconSizeTypes
+export default SizeTypes

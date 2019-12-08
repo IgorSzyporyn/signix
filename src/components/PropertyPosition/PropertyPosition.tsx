@@ -5,7 +5,7 @@ import ModelInterface from '../../types/ModelInterface'
 import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import ModelPositionTypes from '../../types/ModelPositionTypes'
-import LayerPropertyPositionType from '../LayerPropertyPositionType/LayerPropertyPositionType'
+import PropertyPositionType from '../PropertyPositionType/PropertyPositionType'
 
 const HorizontalFieldContainer = styled.div`
   display: flex;
@@ -68,17 +68,21 @@ const handleTypeChange = (type: ModelPositionTypes, model: ModelInterface) => {
   updateItemInModelStore(newModel)
 }
 
-type LayerPropertyPositionProps = {
+type PropertyPositionProps = {
   model: ModelInterface
 }
 
-const LayerPropertyPosition = ({ model }: LayerPropertyPositionProps) => {
+const PropertyPosition = ({ model }: PropertyPositionProps) => {
   const { position } = model
 
   return (
-    <PropertiesPanel id={`${model.id}-position`} title="Position">
+    <PropertiesPanel
+      id={`${model.id}-position`}
+      title="Position"
+      type="position"
+    >
       <HorizontalFieldContainer>
-        <LayerPropertyPositionType
+        <PropertyPositionType
           title="Position"
           type={position.type}
           onChange={(type: ModelPositionTypes) => handleTypeChange(type, model)}
@@ -120,4 +124,4 @@ const LayerPropertyPosition = ({ model }: LayerPropertyPositionProps) => {
   )
 }
 
-export default LayerPropertyPosition
+export default PropertyPosition

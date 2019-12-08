@@ -5,7 +5,7 @@ import ModelStore, { ModelStoreInterface } from '../ModelStore'
 
 const initModelStore = (model: ModelInterfacePartial, type: ModelTypes) => {
   ModelStore.set((state: ModelStoreInterface) => ({
-    active: undefined,
+    ...state,
     model: initModel(model, type)
   }))
 }

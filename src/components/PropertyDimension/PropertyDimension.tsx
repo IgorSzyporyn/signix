@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
-import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 
 const HorizontalFieldContainer = styled.div`
   display: flex;
@@ -14,6 +14,10 @@ const HorizontalFieldContainer = styled.div`
   }
 
   & > *:first-child {
+    margin-right: var(--gutter);
+  }
+
+  & > *:last-child {
     margin-right: var(--gutter);
   }
 `
@@ -45,15 +49,19 @@ const handleDisableChange = (checked: boolean, model: ModelInterface) => {
   updateItemInModelStore(newModel)
 }
 
-type LayerPropertyDimensionProps = {
+type PropertyDimensionProps = {
   model: ModelInterface
 }
 
-const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
+const PropertyDimension = ({ model }: PropertyDimensionProps) => {
   const { dimension } = model
 
   return (
-    <PropertiesPanel id={`${model.id}-dimension`} title="Dimensions">
+    <PropertiesPanel
+      id={`${model.id}-dimension`}
+      title="Dimensions"
+      type="dimension"
+    >
       <FieldCheckbox
         title="Disable"
         inline={true}
@@ -83,4 +91,4 @@ const LayerPropertyDimension = ({ model }: LayerPropertyDimensionProps) => {
   )
 }
 
-export default LayerPropertyDimension
+export default PropertyDimension

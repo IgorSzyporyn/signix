@@ -5,12 +5,14 @@ import { uniqueId } from '../utils/utilities'
 type WrapperProps = {
   disabled?: boolean
   inline?: boolean
+  nomargin?: string
 }
 
-const Wrapper = styled.div`
-  margin-bottom: var(--half-gutter);
+const Wrapper = styled.div<WrapperProps>`
+  margin-bottom: ${({ nomargin }) =>
+    `${nomargin ? '0' : 'var(--half-gutter)'}`};
 
-  ${({ disabled }: WrapperProps) => {
+  ${({ disabled }) => {
     if (disabled) {
       return `opacity: 0.4;`
     } else {
@@ -19,7 +21,7 @@ const Wrapper = styled.div`
   }}
 
   & > label {
-    ${({ inline }: WrapperProps) => {
+    ${({ inline }) => {
       if (inline) {
         return `
           display: flex;
@@ -39,12 +41,15 @@ const Wrapper = styled.div`
   }
 
   & input {
-    font-size: 1.2rem;
-    padding: var(--quarter-gutter) var(--half-gutter);
+    font-size: 1.4rem;
+    padding: var(--half-gutter) var(--gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-lighter);
+    background-color: var(--color-dark);
+    color: var(--color-lighter);
     margin: 0;
     box-sizing: border-box;
+    outline: none;
   }
 
   & input[type='number'],
@@ -88,16 +93,22 @@ export interface WithFieldProps {
   name?: string
   id?: string
   inline?: boolean
+  nomargin?: string
 }
 
 const withField = <P extends object>(Component: React.ComponentType<P>) =>
   class WithFieldHOC extends React.Component<P & WithFieldProps> {
     render() {
-      const { id, name, title, inline, ...rest } = this.props
+      const { nomargin, id, name, title, inline, ...rest } = this.props
       const safeId = uniqueId()
 
       return (
-        <Wrapper inline={inline} disabled={rest.disabled} hidden={rest.hidden}>
+        <Wrapper
+          nomargin={nomargin}
+          inline={inline}
+          disabled={rest.disabled}
+          hidden={rest.hidden}
+        >
           {title ? (
             <Label htmlFor={id || safeId}>
               <Title>{title}</Title>

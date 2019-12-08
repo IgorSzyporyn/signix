@@ -2,7 +2,7 @@ import ModelInterface from '../../types/ModelInterface'
 import ModelStore from '../ModelStore'
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
 
-const searchItemsForModelById = (
+export const searchItemsForModelById = (
   id: string,
   items: ModelInterfacePartial[]
 ) => {
@@ -23,8 +23,7 @@ const searchItemsForModelById = (
   return found
 }
 
-const getModelById = (id: string) => {
-  const { model } = ModelStore.get()
+const getModelById = (id: string, model: ModelInterface) => {
   let found: ModelInterface | null = null
 
   if (model.id === id) {
@@ -32,6 +31,13 @@ const getModelById = (id: string) => {
   } else if (model.items) {
     found = searchItemsForModelById(id, model.items)
   }
+
+  return found
+}
+
+export const searchModelById = (id: string) => {
+  const { model } = ModelStore.get()
+  const found = getModelById(id, model)
 
   return found
 }

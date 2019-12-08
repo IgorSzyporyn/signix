@@ -2,17 +2,17 @@ import React, { useEffect } from 'react'
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import styled from 'styled-components'
-import Main from './components/Main/Main'
-import Toolbar from './components/Toolbar/Toolbar'
+import Main from './containers/Main/Main'
 import './resizer.scss'
 import initModelStore from './stores/model/initModelStore'
 import ModelInterfacePartial from './types/ModelInterfacePartial'
+import Header from './containers/Header/Header'
 
 const Root = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--color-darkest);
+  background-color: var(--color-pitch);
   color: var(--color-lighter);
 `
 
@@ -41,7 +41,7 @@ const App = ({ model }: AppProps) => {
     <Root>
       <DndProvider backend={HTML5Backend}>
         <HeaderContainer>
-          <Toolbar />
+          <Header />
         </HeaderContainer>
         <MainContainer>
           <Main />

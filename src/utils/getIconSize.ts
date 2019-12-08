@@ -1,6 +1,6 @@
-import IconSizeTypes from '../types/IconSizeTypes'
+import SizeTypes from '../types/SizeTypes'
 
-const getIconSize = (size: IconSizeTypes = 'normal') => {
+const getIconSize = (size: SizeTypes = 'normal') => {
   let iconProps = {
     width: '',
     height: ''
@@ -13,10 +13,16 @@ const getIconSize = (size: IconSizeTypes = 'normal') => {
         height: '0.8rem'
       }
       break
-    case 'small':
+    case 'xsmall':
       iconProps = {
         width: '1rem',
         height: '1rem'
+      }
+      break
+    case 'small':
+      iconProps = {
+        width: '1.2rem',
+        height: '1.2rem'
       }
       break
     case 'normal':
