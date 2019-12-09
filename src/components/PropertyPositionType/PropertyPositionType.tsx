@@ -1,80 +1,103 @@
+import BorderStyleOutlinedIcon from '@material-ui/icons/BorderStyleOutlined'
+import FilterCenterFocusOutlinedIcon from '@material-ui/icons/FilterCenterFocusOutlined'
 import React from 'react'
-import styled from 'styled-components'
-import ModelPositionTypes from '../../types/ModelPositionTypes'
-import FieldPositionType from '../FieldPositionType/FieldPositionType'
 import withField, { WithFieldProps } from '../../hoc/withField'
-
-const Wrapper = styled.div`
-  display: flex;
-
-  & > * {
-    flex-grow: 1;
-
-    &:first-child button {
-      border-top-left-radius: var(--quarter-gutter);
-      border-bottom-left-radius: var(--quarter-gutter);
-      border-right: 0 none;
-    }
-
-    &:last-child button {
-      border-top-right-radius: var(--quarter-gutter);
-      border-bottom-right-radius: var(--quarter-gutter);
-      border-left: 0 none;
-    }
-
-    &:nth-child(2) button {
-      border-right: 0 none;
-    }
-  }
-
-  & button {
-    border-radius: 0;
-  }
-`
+import ModelPositionTypes from '../../types/ModelPositionTypes'
+import FieldButtonGroup from '../FieldButtonGroup/FieldButtonGroup'
+import FieldPositionType from '../FieldPositionType/FieldPositionType'
+import MUIcon from '../MUIcon/MUIcon'
 
 type PropertyPositionTypeProps = WithFieldProps & {
   type: ModelPositionTypes
+  center?: boolean
   onChange: (type: ModelPositionTypes) => void
 }
 
 const PropertyPositionType = ({
   type,
-  onChange
-}: PropertyPositionTypeProps) => (
-  <Wrapper>
-    <FieldPositionType
-      onClick={e => {
-        onChange('top-left')
-      }}
-      active={type === 'top-left' ? 'true' : 'false'}
-    >
-      TL
-    </FieldPositionType>
-    <FieldPositionType
-      onClick={e => {
-        onChange('top-right')
-      }}
-      active={type === 'top-right' ? 'true' : 'false'}
-    >
-      TR
-    </FieldPositionType>
-    <FieldPositionType
-      onClick={e => {
-        onChange('bottom-left')
-      }}
-      active={type === 'bottom-left' ? 'true' : 'false'}
-    >
-      BL
-    </FieldPositionType>
-    <FieldPositionType
-      onClick={e => {
-        onChange('bottom-right')
-      }}
-      active={type === 'bottom-right' ? 'true' : 'false'}
-    >
-      BR
-    </FieldPositionType>
-  </Wrapper>
-)
+  onChange,
+  center,
+  disabled
+}: PropertyPositionTypeProps) => {
+  return (
+    <FieldButtonGroup>
+      <FieldPositionType
+        nomargin="true"
+        onClick={() => {
+          if (!disabled) {
+            onChange('top-left')
+          }
+        }}
+        active={type === 'top-left' ? 'true' : 'false'}
+      >
+        <MUIcon
+          size="medium"
+          render={p => <BorderStyleOutlinedIcon {...p} />}
+        />
+      </FieldPositionType>
+      <FieldPositionType
+        nomargin="true"
+        onClick={() => {
+          if (!disabled) {
+            onChange('top-right')
+          }
+        }}
+        active={type === 'top-right' ? 'true' : 'false'}
+      >
+        <MUIcon
+          size="medium"
+          style={{ transform: 'rotate(90deg)' }}
+          render={p => <BorderStyleOutlinedIcon {...p} />}
+        />
+      </FieldPositionType>
+      {center && (
+        <FieldPositionType
+          nomargin="true"
+          onClick={() => {
+            if (!disabled) {
+              onChange('center')
+            }
+          }}
+          active={type === 'center' ? 'true' : 'false'}
+        >
+          <MUIcon
+            size="medium"
+            render={p => <FilterCenterFocusOutlinedIcon {...p} />}
+          />
+        </FieldPositionType>
+      )}
+      <FieldPositionType
+        nomargin="true"
+        onClick={() => {
+          if (!disabled) {
+            onChange('bottom-left')
+          }
+        }}
+        active={type === 'bottom-left' ? 'true' : 'false'}
+      >
+        <MUIcon
+          size="medium"
+          style={{ transform: 'rotate(270deg)' }}
+          render={p => <BorderStyleOutlinedIcon {...p} />}
+        />
+      </FieldPositionType>
+      <FieldPositionType
+        nomargin="true"
+        onClick={() => {
+          if (!disabled) {
+            onChange('bottom-right')
+          }
+        }}
+        active={type === 'bottom-right' ? 'true' : 'false'}
+      >
+        <MUIcon
+          size="medium"
+          style={{ transform: 'rotate(180deg)' }}
+          render={p => <BorderStyleOutlinedIcon {...p} />}
+        />
+      </FieldPositionType>
+    </FieldButtonGroup>
+  )
+}
 
 export default withField(PropertyPositionType)

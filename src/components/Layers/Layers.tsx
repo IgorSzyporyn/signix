@@ -1,8 +1,8 @@
+import LayersOutlinedIcon from '@material-ui/icons/LayersOutlined'
 import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
-import useComponentSize from '@rehooks/component-size'
 import { useStore } from 'laco-react'
-import React, { useRef } from 'react'
+import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import styled from 'styled-components'
 import setAllItemsInLayerStore from '../../stores/layer/setAllItemsInLayerStore'
@@ -11,18 +11,23 @@ import LayerItem from '../LayerItem/LayerItem'
 import MUIcon from '../MUIcon/MUIcon'
 import ScrollbarThumb from '../ScrollbarThumb/ScrollbarThumb'
 
-import LayersOutlinedIcon from '@material-ui/icons/LayersOutlined'
-
 const Wrapper = styled.section`
   min-height: 100%;
   background-color: var(--color-darker);
+  display: flex;
+  flex-direction: column;
 `
 
 const Header = styled.header`
+  padding-top: var(--spacing);
+  padding-right: calc(var(--spacing) + var(--gutter));
+  padding-left: calc(var(--spacing) + var(--gutter));
+  padding-bottom: var(--spacing);
+`
+
+const HeaderTitle = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--spacing) calc(var(--spacing) + var(--gutter));
 `
 
 const Title = styled.h3`
@@ -47,6 +52,7 @@ const Main = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-grow: 1;
 `
 
 const handleCollapseAll = () => {
@@ -60,38 +66,37 @@ const handleExpandAll = () => {
 const Layers = () => {
   const { model }: ModelStoreInterface = useStore(ModelStore)
 
-  const refWrapper = useRef(null)
-  const refHeader = useRef(null)
-  const wrapperSize = useComponentSize(refWrapper)
-  const headerSize = useComponentSize(refHeader)
-
   // @TODO - useComponentSize will stop firing a re-render at
   // certain points, or save the highest number it encountered
 
   return (
-    <Wrapper ref={refWrapper}>
-      <Header ref={refHeader}>
-        <MUIcon size="medium" render={p => <LayersOutlinedIcon {...p} />} />
-        <Title>Layers</Title>
-        <ToolIcons>
-          <MUIcon
-            size="medium"
-            title="Collapse All"
-            interactive
-            render={p => <UnfoldLessIcon onClick={handleCollapseAll} {...p} />}
-          />
-          <MUIcon
-            size="medium"
-            interactive
-            title="Expand All"
-            render={p => <UnfoldMoreIcon onClick={handleExpandAll} {...p} />}
-          />
-        </ToolIcons>
+    <Wrapper>
+      <Header>
+        <HeaderTitle>
+          <MUIcon size="medium" render={p => <LayersOutlinedIcon {...p} />} />
+          <Title>Layers</Title>
+          <ToolIcons>
+            <MUIcon
+              size="medium"
+              title="Collapse All"
+              interactive
+              render={p => (
+                <UnfoldLessIcon onClick={handleCollapseAll} {...p} />
+              )}
+            />
+            <MUIcon
+              size="medium"
+              interactive
+              title="Expand All"
+              render={p => <UnfoldMoreIcon onClick={handleExpandAll} {...p} />}
+            />
+          </ToolIcons>
+        </HeaderTitle>
       </Header>
       <Main>
         <Scrollbars
           autoHide
-          style={{ height: wrapperSize.height - headerSize.height }}
+          autoHeight
           renderThumbVertical={ScrollbarThumb}
           renderThumbHorizontal={ScrollbarThumb}
         >

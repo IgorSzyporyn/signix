@@ -56,7 +56,7 @@ const PanelItems = styled.div`
 const createTabItems = (
   tabs: string[],
   active: number,
-  setActive: Dispatch<number>
+  onClick: (active: number) => void
 ) =>
   tabs.map((tab, index) => {
     return (
@@ -64,7 +64,7 @@ const createTabItems = (
         active={active === index}
         key={`tabpanel-tab-${index}-${uniqueId()}`}
         onClick={() => {
-          setActive(index)
+          onClick(index)
         }}
       >
         {tab}
@@ -89,15 +89,15 @@ const PanelItem = styled.div``
 type TabPanelProps = {
   tabs: string[]
   panels: Array<React.ReactNode>
+  active: number
+  onClick: (active: number) => void
 }
 
-const TabPanel = ({ tabs, panels }: TabPanelProps) => {
-  const [active, setActive] = useState(0)
-
-  const tabItems = useMemo(() => createTabItems(tabs, active, setActive), [
+const TabPanel = ({ tabs, panels, active, onClick }: TabPanelProps) => {
+  const tabItems = useMemo(() => createTabItems(tabs, active, onClick), [
     tabs,
     active,
-    setActive
+    onClick
   ])
 
   const panelItems = useMemo(() => createPanelItems(panels, active), [

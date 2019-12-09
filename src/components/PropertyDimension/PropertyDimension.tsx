@@ -1,26 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
-
-const HorizontalFieldContainer = styled.div`
-  display: flex;
-
-  & > * {
-    flex-grow: 1;
-  }
-
-  & > *:first-child {
-    margin-right: var(--gutter);
-  }
-
-  & > *:last-child {
-    margin-right: var(--gutter);
-  }
-`
+import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalFieldContainer'
 
 const handleWidthChange = (value: string, model: ModelInterface) => {
   const newModel = {
@@ -57,14 +41,11 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
   const { dimension } = model
 
   return (
-    <PropertiesPanel
-      id={`${model.id}-dimension`}
-      title="Dimensions"
-      type="dimension"
-    >
+    <PropertiesPanel title="Dimensions" type="dimension">
       <FieldCheckbox
         title="Disable"
         inline={true}
+        checked={dimension.disabled}
         onChange={e => {
           handleDisableChange(e.target.checked, model)
         }}
@@ -72,6 +53,7 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
       <HorizontalFieldContainer>
         <FieldInput
           title="Width"
+          type="number"
           value={dimension.width}
           onChange={e => {
             handleWidthChange(e.target.value, model)
@@ -80,6 +62,7 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
         />
         <FieldInput
           title="Height"
+          type="number"
           value={dimension.height}
           onChange={e => {
             handleHeightChange(e.target.value, model)

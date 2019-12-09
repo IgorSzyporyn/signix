@@ -8,13 +8,14 @@ import PropertyStore, {
 } from '../../stores/PropertyStore'
 import MUIcon from '../MUIcon/MUIcon'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  border-bottom: 0.1rem solid var(--color-light);
+`
 
 const Heading = styled.div`
   display: flex;
   align-items: center;
-  padding: var(--gutter) var(--gutter);
-  border-bottom: 0.1rem solid var(--color-light);
+  padding: var(--spacing) 0;
 `
 
 const Title = styled.h4`
@@ -23,24 +24,16 @@ const Title = styled.h4`
 
 const Body = styled.div`
   position: relative;
-  margin-left: var(--gutter);
-  margin-top: var(--spacing);
-  margin-bottom: var(--spacing);
+  padding: 0 calc(var(--spacing) + var(--gutter)) var(--gutter);
 `
 
 type PropertiesPanelProps = {
-  id: string
   title: string
   type: string
   children?: React.ReactNode
 }
 
-const PropertiesPanel = ({
-  type,
-  title,
-  children,
-  id
-}: PropertiesPanelProps) => {
+const PropertiesPanel = ({ type, title, children }: PropertiesPanelProps) => {
   let { [type]: expanded }: PropertyStoreInterface = useStore(PropertyStore)
 
   return (
@@ -51,6 +44,7 @@ const PropertiesPanel = ({
         }}
       >
         <MUIcon
+          size="medium"
           style={{ transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
           render={p => <ChevronRightOutlinedIcon {...p} />}
         />

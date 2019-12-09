@@ -1,21 +1,25 @@
-import ModelTypes from './ModelTypes'
-import ModelPositionInterface from './ModelPositionInterface'
-import ModelDimensionInterface from './ModelDimensionInterface'
+import ModelBackgroundInterface from './ModelBackgroundInterface'
 import ModelColorInterface from './ModelColorInterface'
+import ModelDimensionInterface from './ModelDimensionInterface'
 import ModelInterfacePartial from './ModelInterfacePartial'
+import ModelOptionsInterface from './ModelOptionsInterface'
+import ModelPositionInterface from './ModelPositionInterface'
+import ModelTypes from './ModelTypes'
 
 type ModelInterface = {
-  id?: string
-  parentId?: string
-  name?: string
-  level?: number
   group?: boolean
-  items: ModelInterfacePartial[]
-  type: ModelTypes
+  id?: string
+  level?: number
+  name?: string
+  options?: ModelOptionsInterface[]
+  parentId?: string
+  value?: string[] | string
+  background: ModelBackgroundInterface
   color: ModelColorInterface
   dimension: ModelDimensionInterface
+  items: ModelInterfacePartial[]
   position: ModelPositionInterface
-  value: string[] | string
+  type: ModelTypes
 }
 
 export default ModelInterface

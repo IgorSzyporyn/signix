@@ -15,12 +15,18 @@ const CoreModel: ModelInterface = {
     height: 0
   },
   color: {
-    background: 'transparent',
-    foreground: 'transparent'
+    background: 'rgba(0, 0, 0, 0)',
+    foreground: 'rgba(0, 0, 0, 0)'
   },
   value: '',
   items: [],
-  group: false
+  group: false,
+  background: {
+    disabled: true,
+    image: '',
+    position: 'center'
+  },
+  options: []
 }
 
 export default CoreModel

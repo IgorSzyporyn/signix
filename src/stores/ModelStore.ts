@@ -10,7 +10,7 @@ export type ModelStoreInterface = {
 
 const ModelStore = new Store({
   model: initModel({ type: 'background', name: 'Background' }, 'background'),
-  active: '_u5vy6ym64',
+  active: '_vr8x6ryu0',
   editing: undefined
 })
 

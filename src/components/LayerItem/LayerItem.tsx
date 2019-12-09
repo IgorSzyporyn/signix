@@ -8,11 +8,14 @@ import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import ModelInterface from '../../types/ModelInterface'
-import getIconSize from '../../utils/getIconSize'
-import LayerIcon from '../LayerIcon/LayerIcon'
 import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
+import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
+import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
+import updateEditingInModelStore from '../../stores/model/updateEditingInModelStore'
+import updateActionInSettingsStore from '../../stores/settings/updateActionInSettingsStore'
+import deleteItemInModelStore from '../../stores/model/deleteItemInModelStore'
 
 const Wrapper = styled.li`
   user-select: none;
@@ -68,6 +71,8 @@ const HeadingInner = styled.div<WithLevelProps>`
 
 const LayerTitle = styled.div`
   flex-grow: 1;
+  line-height: 2.7rem;
+  margin-left: var(--half-gutter);
 `
 
 const LayerTitleIcons = styled.div`
@@ -115,28 +120,13 @@ const LayerItem = (props: LayerItemProps) => {
     expanded = true
   }
 
-  const layerIconProps = {
-    hasItems,
-    isActive,
-    type: model.type,
-    isExpanded: expanded,
-    isGroup: group,
-    style: {
-      ...getIconSize('medium'),
-      marginRight: 'calc(0.75 * var(--gutter))'
-    }
-  }
-
   return (
     <Wrapper>
       <Heading
         onClick={() => {
-          if (!isActive && !isEditingAny) {
-            updateActiveInModelStore(isActive ? undefined : id)
-          }
-
-          if (level !== 0 && group && hasItems && !isEditingAny) {
-            updateItemInLayerStore(!expanded, id)
+          if (!isActive) {
+            updateActiveInModelStore(id)
+            updateEditingInModelStore(undefined)
           }
         }}
         data-active={isActive}
@@ -149,21 +139,61 @@ const LayerItem = (props: LayerItemProps) => {
         data-level={level}
       >
         <HeadingInner level={level}>
-          <LayerIcon {...layerIconProps} />
-          <LayerTitle>
+          <ModelTypeIcon
+            onClick={() => {
+              if (level !== 0 && group) {
+                updateItemInLayerStore(!expanded, id)
+              }
+            }}
+            hasItems={hasItems}
+            type={model.type}
+            isExpanded={expanded}
+            size="medium"
+            style={{
+              marginRight: 'calc(0.75 * var(--gutter))'
+            }}
+          />
+          <LayerTitle
+            onDoubleClick={() => {
+              updateActionInSettingsStore({ active: 1 })
+            }}
+          >
             <LayerItemTitle
               disabled={isEditingAny}
-              id={model.id}
               title={model.name}
+              editing={editing === id}
+              onEditEnd={name => {
+                updateItemInModelStore({ name, id })
+                updateEditingInModelStore(undefined)
+              }}
             />
           </LayerTitle>
           <LayerTitleIcons className="layer-title-icon">
-            <MUIcon interactive={true} render={p => <EditIcon {...p} />} />
             <MUIcon
-              hoverColor="var(--color-red)"
               interactive={true}
-              render={p => <DeleteIcon {...p} />}
+              render={p => (
+                <EditIcon
+                  onClick={() => {
+                    updateEditingInModelStore(id)
+                  }}
+                  {...p}
+                />
+              )}
             />
+            {level > 0 && (
+              <MUIcon
+                hoverColor="var(--color-red)"
+                interactive={true}
+                render={p => (
+                  <DeleteIcon
+                    onClick={() => {
+                      deleteItemInModelStore(id)
+                    }}
+                    {...p}
+                  />
+                )}
+              />
+            )}
           </LayerTitleIcons>
         </HeadingInner>
       </Heading>

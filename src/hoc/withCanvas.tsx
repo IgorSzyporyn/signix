@@ -9,6 +9,7 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
+import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,
@@ -17,11 +18,17 @@ type CanvasCSSProperties = Pick<
   | keyof DimensionCSSProperties
 >
 
-const createCanvasStyle = ({ dimension, position, color }: ModelInterface) => {
+const createCanvasStyle = ({
+  dimension,
+  position,
+  color,
+  background
+}: ModelInterface) => {
   const style: CanvasCSSProperties = {
     ...convertDimensionToCSS(dimension),
     ...convertPositionToCSS(position),
-    ...convertColorToCSS(color)
+    ...convertColorToCSS(color),
+    ...convertBackgroundToCSS(background)
   }
 
   return style

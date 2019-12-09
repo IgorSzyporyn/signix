@@ -36,6 +36,7 @@ type MUIconProps = {
   hoverColor?: string
   style?: React.CSSProperties
   size?: SizeTypes
+  onClick?: (e: React.MouseEvent) => void
   render: (props: MUIconRenderProps) => React.ReactNode
 }
 
@@ -45,13 +46,19 @@ const MUIcon = ({
   hoverColor,
   size,
   style,
+  onClick,
   render,
   ...props
 }: MUIconProps) => {
   const iconStyle = getIconStyle({ size, style })
 
   return (
-    <Wrapper title={title} hoverColor={hoverColor} interactive={interactive}>
+    <Wrapper
+      onClick={onClick}
+      title={title}
+      hoverColor={hoverColor}
+      interactive={interactive}
+    >
       {render({ style: iconStyle, ...props })}
     </Wrapper>
   )

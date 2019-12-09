@@ -9,8 +9,7 @@ type WrapperProps = {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  margin-bottom: ${({ nomargin }) =>
-    `${nomargin ? '0' : 'var(--half-gutter)'}`};
+  margin-bottom: ${({ nomargin }) => `${nomargin ? '0' : 'var(--spacing)'}`};
 
   ${({ disabled }) => {
     if (disabled) {
@@ -25,15 +24,16 @@ const Wrapper = styled.div<WrapperProps>`
       if (inline) {
         return `
           display: flex;
+          align-items: center;
 
           & > div:first-of-type {
-            margin-right: var(--quarter-gutter);
+            margin-right: var(--gutter);
           }
         `
       } else {
         return `
           & > div:first-of-type {
-            margin-bottom: var(--quarter-gutter);
+            margin-bottom: var(--half-gutter);
           }
         `
       }
@@ -62,16 +62,25 @@ const Wrapper = styled.div<WrapperProps>`
   }
 
   & button {
-    font-size: 1.2rem;
-    padding: var(--quarter-gutter) var(--half-gutter);
+    font-size: 1.4rem;
+    padding: var(--gutter) var(--gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-lighter);
+    background-color: var(--color-dark);
+    color: var(--color-lighter);
     margin: 0;
     box-sizing: border-box;
     width: 100%;
+    outline: none;
 
     &[active='true'] {
-      background-color: var(--color-blue);
+      background-color: var(--color-lighter);
+      color: var(--color-dark);
+    }
+
+    & > * {
+      display: flex;
+      justify-content: center;
     }
   }
 `
@@ -86,6 +95,8 @@ const Title = styled.div`
 `
 
 export interface WithFieldProps {
+  style?: React.CSSProperties
+  labelStyle?: React.CSSProperties
   active?: 'true' | 'false'
   disabled?: boolean
   hidden?: boolean
@@ -99,7 +110,15 @@ export interface WithFieldProps {
 const withField = <P extends object>(Component: React.ComponentType<P>) =>
   class WithFieldHOC extends React.Component<P & WithFieldProps> {
     render() {
-      const { nomargin, id, name, title, inline, ...rest } = this.props
+      const {
+        labelStyle,
+        nomargin,
+        id,
+        name,
+        title,
+        inline,
+        ...rest
+      } = this.props
       const safeId = uniqueId()
 
       return (
@@ -111,7 +130,7 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
         >
           {title ? (
             <Label htmlFor={id || safeId}>
-              <Title>{title}</Title>
+              <Title style={labelStyle || {}}>{title}</Title>
               <Component
                 id={id || safeId}
                 name={id || safeId}

@@ -5,8 +5,10 @@ export type PropertyStoreInterface = {
 }
 
 const defaultStore: PropertyStoreInterface = {
-  dimension: true,
-  position: true
+  dimension: false,
+  position: false,
+  color: false,
+  backgroundImage: true
 }
 
 const PropertyStore = new Store(defaultStore)

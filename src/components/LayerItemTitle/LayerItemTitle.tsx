@@ -1,8 +1,6 @@
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import getFontSize from '../../utils/getFontSize'
 import FieldInput from '../FieldInput/FieldInput'
 import MUIcon from '../MUIcon/MUIcon'
@@ -24,29 +22,23 @@ const TextContainer = styled.div`
 `
 
 type LayerItemTitleProps = {
-  id?: string
   title?: string
   disabled?: boolean
+  editing?: boolean
+  onEditEnd?: (name?: string) => void
 }
 
-const handleEditingInStore = (id?: string) => {
-  ModelStore.set((state: ModelStoreInterface) => ({ ...state, editing: id }))
-}
-
-const LayerItemTitle = ({ title, id, disabled }: LayerItemTitleProps) => {
-  const [editing, setEditing] = useState(false)
+const LayerItemTitle = ({ title, editing, onEditEnd }: LayerItemTitleProps) => {
   const [name, setName] = useState(title)
 
+  useEffect(() => {
+    if (!editing) {
+      setName(title)
+    }
+  }, [editing, title])
+
   return (
-    <Wrapper
-      onDoubleClick={e => {
-        if (!disabled) {
-          e.stopPropagation()
-          handleEditingInStore(id)
-          setEditing(true)
-        }
-      }}
-    >
+    <Wrapper>
       {editing ? (
         <>
           <InputContainer>
@@ -58,9 +50,7 @@ const LayerItemTitle = ({ title, id, disabled }: LayerItemTitleProps) => {
                 const { value } = currentTarget
 
                 if (keyCode === 13) {
-                  handleEditingInStore(undefined)
-                  updateItemInModelStore({ name: value, id })
-                  setEditing(false)
+                  onEditEnd && onEditEnd(value)
                 }
               }}
               onChange={e => {
@@ -78,9 +68,7 @@ const LayerItemTitle = ({ title, id, disabled }: LayerItemTitleProps) => {
             render={p => (
               <CheckCircleOutlineOutlinedIcon
                 onClick={() => {
-                  handleEditingInStore(undefined)
-                  updateItemInModelStore({ name, id })
-                  setEditing(false)
+                  onEditEnd && onEditEnd(name)
                 }}
                 {...p}
               />

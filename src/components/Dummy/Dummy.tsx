@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div``
 
-const Dummy = () => <Wrapper>Dummy</Wrapper>
+type DummyProps = {}
+
+const Dummy = (props: DummyProps) => <Wrapper>Dummy</Wrapper>
 
 export default Dummy

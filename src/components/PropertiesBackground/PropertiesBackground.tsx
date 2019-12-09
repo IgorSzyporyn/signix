@@ -1,11 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
 import PropertiesPropTypes from '../../types/PropertiesPropTypes'
-
-const Wrapper = styled.div``
+import PropertyBackground from '../PropertyBackground/PropertyBackground'
 
 const PropertiesBackground = (props: PropertiesPropTypes) => (
-  <Wrapper>PropertiesBackground</Wrapper>
+  <>
+    <PropertyBackground {...props} />
+  </>
 )
 
 export default PropertiesBackground

@@ -14,6 +14,9 @@ const defaultSettings: SettingsInterface = {
     width: 350,
     maxWidth: 600,
     minWidth: 300
+  },
+  action: {
+    active: 1
   }
 }
 

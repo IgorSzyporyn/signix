@@ -3,5 +3,6 @@ type ModelPositionTypes =
   | 'top-right'
   | 'bottom-left'
   | 'bottom-right'
+  | 'center'
 
 export default ModelPositionTypes

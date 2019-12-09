@@ -3,6 +3,8 @@ import ModelInterfacePartial from '../types/ModelInterfacePartial'
 import ModelTypes from '../types/ModelTypes'
 import mergeModels from './mergeModels'
 import { uniqueId } from './utilities'
+import initModelItems from './initModelItems'
+import sanitizeColorString from './sanitizeColorString'
 
 const initModel = (
   partial: ModelInterfacePartial,
@@ -12,6 +14,9 @@ const initModel = (
 ) => {
   const source = Models[type]
   const model = mergeModels(source, partial)
+
+  model.color.background = sanitizeColorString(model.color.background)
+  model.color.foreground = sanitizeColorString(model.color.foreground)
 
   if (!model.id) {
     model.id = uniqueId()
@@ -36,9 +41,7 @@ const initModel = (
   }
 
   if (model.items && model.items.length) {
-    model.items = model.items.map(item =>
-      initModel(item, item.type, model.id, model.level)
-    )
+    model.items = initModelItems(model.items, model.type, model.level)
   }
 
   return model

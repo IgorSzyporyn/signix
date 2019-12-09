@@ -1,11 +1,13 @@
-import SettingsToolboxInterface from './SettingsToolboxInterface'
+import SettingsActionInterface from './SettingsActionInterface'
 import SettingsCanvasInterface from './SettingsCanvasInterface'
 import SettingsLayersInterface from './SettingsLayersInterface'
+import SettingsToolboxInterface from './SettingsToolboxInterface'
 
 type SettingsInterface = {
-  toolbox: SettingsToolboxInterface
+  action: SettingsActionInterface
   canvas: SettingsCanvasInterface
   layers: SettingsLayersInterface
+  toolbox: SettingsToolboxInterface
 }
 
 export default SettingsInterface

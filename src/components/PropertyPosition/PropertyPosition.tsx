@@ -1,27 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
 import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import ModelPositionTypes from '../../types/ModelPositionTypes'
 import PropertyPositionType from '../PropertyPositionType/PropertyPositionType'
-
-const HorizontalFieldContainer = styled.div`
-  display: flex;
-
-  & > * {
-    flex-grow: 1;
-  }
-
-  & > *:first-child {
-    margin-right: var(--gutter);
-  }
-
-  & > *:last-child {
-    margin-right: var(--gutter);
-  }
-`
+import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalFieldContainer'
 
 const handleTopChange = (top: string, model: ModelInterface) => {
   const newModel = {
@@ -76,14 +60,10 @@ const PropertyPosition = ({ model }: PropertyPositionProps) => {
   const { position } = model
 
   return (
-    <PropertiesPanel
-      id={`${model.id}-position`}
-      title="Position"
-      type="position"
-    >
+    <PropertiesPanel title="Position" type="position">
       <HorizontalFieldContainer>
         <PropertyPositionType
-          title="Position"
+          title="Alignment"
           type={position.type}
           onChange={(type: ModelPositionTypes) => handleTypeChange(type, model)}
         />

@@ -6,19 +6,25 @@ import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined'
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined'
 import React from 'react'
 import ModelTypes from '../../types/ModelTypes'
+import SizeTypes from '../../types/SizeTypes'
+import MUIcon from '../MUIcon/MUIcon'
 
-const getLayerIcon = ({
-  isActive,
-  hasItems,
-  isExpanded,
-  isGroup,
-  type,
-  ...props
-}: LayerIconProps) => {
+type GetModelTypeIconSettings = {
+  type: ModelTypes
+  hasItems?: boolean
+  isExpanded?: boolean
+}
+
+const getModelTypeIcon = (
+  props: { size?: SizeTypes; style?: React.CSSProperties },
+  settings: GetModelTypeIconSettings
+) => {
+  const { type, isExpanded, hasItems } = settings
   let Component = null
 
   const iconProps = {
-    ...props
+    ...props,
+    style: props.style || {}
   }
 
   switch (type) {
@@ -33,7 +39,7 @@ const getLayerIcon = ({
       } else if (hasItems) {
         Component = <Folder {...iconProps} />
       } else {
-        iconProps.style.fill = 'var(--color-lightorange)'
+        iconProps.style.fill = 'var(--color-lightest)'
         Component = <FolderOutlined {...iconProps} />
       }
       break
@@ -57,19 +63,31 @@ const getLayerIcon = ({
   return Component
 }
 
-type LayerIconProps = {
+type ModelTypeIconProps = {
   type: ModelTypes
-  hasItems: boolean
-  isActive: boolean
-  isExpanded: boolean
-  isGroup?: boolean
-  style: React.CSSProperties
+  hasItems?: boolean
+  isActive?: boolean
+  isExpanded?: boolean
+  size?: SizeTypes
+  style?: React.CSSProperties
+  onClick?: (e: React.MouseEvent) => void
 }
 
-const LayerIcon = (props: LayerIconProps) => {
-  const layerIcon = getLayerIcon(props)
-
-  return <>{layerIcon}</>
+const ModelTypeIcon = ({
+  type,
+  hasItems,
+  isActive,
+  isExpanded,
+  onClick,
+  ...props
+}: ModelTypeIconProps) => {
+  return (
+    <MUIcon
+      {...props}
+      onClick={onClick}
+      render={p => getModelTypeIcon(p, { type, hasItems, isExpanded })}
+    />
+  )
 }
 
-export default LayerIcon
+export default ModelTypeIcon
