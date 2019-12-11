@@ -6,7 +6,7 @@ import addItemToModelStore from '../../stores/model/addItemToModelStore'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
-import getIconSize from '../../utils/getIconSize'
+import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 
 type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
 
@@ -23,28 +23,13 @@ const TitleContainer = styled.div`
   margin-right: var(--half-gutter);
 `
 
-const IconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: var(--gutter);
-`
-
-const Title = styled.h4`
-  margin: 0 0 0.2rem 0;
-`
+const Title = styled.h4``
 
 const Subtitle = styled.h6`
   line-height: 1.2rem;
-  margin: 0;
 `
 
-const ToolboxItem = ({
-  IconComponent: Icon,
-  type,
-  view,
-  title,
-  subtitle
-}: ToolboxItemProps) => {
+const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
   const model = Models[type]
 
   const [{ isDragging }, drag] = useDrag({
@@ -60,17 +45,9 @@ const ToolboxItem = ({
     })
   })
 
-  const iconStyle = {
-    ...getIconSize('large')
-  }
-
   return (
     <Wrapper ref={drag} view={view} isDragging={isDragging}>
-      {Icon && (
-        <IconContainer title={title}>
-          {<Icon style={iconStyle} />}
-        </IconContainer>
-      )}
+      <ModelTypeIcon type={model.type} size="large" hasItems={true} />
       {view === 'list' && (
         <TitleContainer>
           <Title>{title}</Title>

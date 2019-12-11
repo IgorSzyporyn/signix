@@ -71,36 +71,18 @@ const toolboxItems: ToolboxItemProps[] = [
   {
     title: 'Group',
     subtitle: 'Empty group for children',
-    IconComponent: FolderOutlined,
     type: 'group'
   },
   {
     title: 'Text',
     subtitle: 'A simple text entry',
-    IconComponent: TextFieldsOutlinedIcon,
     type: 'text'
   },
   {
     title: 'Image',
     subtitle: 'Static image',
-    IconComponent: ImageOutlinedIcon,
     type: 'image'
   }
-  /*
-    {
-      title: 'Dynamic Text',
-      subtitle: 'User controlled text input',
-      IconComponent: TextFieldsOutlinedIcon,
-      type: 'textdynamic'
-    },
-
-    {
-      title: 'Dynamic Image',
-      subtitle: 'Dynamic image input',
-      IconComponent: ImageOutlinedIcon,
-      type: 'imagedynamic'
-    }
-  */
 ]
 
 type ToolboxItemsProps = {

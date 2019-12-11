@@ -1,40 +1,14 @@
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
+import BuildIcon from '@material-ui/icons/Build'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import styled from 'styled-components'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import getIconSize from '../../utils/getIconSize'
+import MUIcon from '../MUIcon/MUIcon'
+import Panel from '../Panel/Panel'
+import PanelBody from '../PanelBody/PanelBody'
+import PanelHeader from '../PanelHeader/PanelHeader'
 import ToolboxItems from '../ToolboxItems/ToolboxItems'
-
-const Wrapper = styled.section`
-  background-color: var(--color-darker);
-  min-height: 100%;
-`
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
-
-const Title = styled.h2`
-  margin: 0;
-`
-
-const ViewIcons = styled.div`
-  display: flex;
-
-  & > svg {
-    margin-right: var(--half-gutter);
-    cursor: pointer;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-`
-
-const Main = styled.main``
 
 const handleSetGridView = (
   view: ToolboxViewTypes,
@@ -72,28 +46,47 @@ const Toolbox = (props: ToolboxProps) => {
   const [view, setView] = useState<ToolboxViewTypes>(props.view || 'list')
 
   return (
-    <Wrapper>
-      <Header>
-        <Title>Toolbox</Title>
-        <ViewIcons>
-          <FormatListBulletedOutlinedIcon
-            onClick={() => {
-              handleSetListView(view, setView)
-            }}
-            style={getIconStyle('list', view)}
-          />
-          <AppsOutlinedIcon
-            onClick={() => {
-              handleSetGridView(view, setView)
-            }}
-            style={getIconStyle('grid', view)}
-          />
-        </ViewIcons>
-      </Header>
-      <Main>
+    <Panel>
+      <PanelHeader
+        title="Toolbox"
+        icon={<MUIcon size="normal" render={p => <BuildIcon {...p} />} />}
+        actions={
+          <>
+            <MUIcon
+              size="medium"
+              title="List View"
+              interactive
+              render={p => (
+                <FormatListBulletedOutlinedIcon
+                  onClick={() => {
+                    handleSetListView(view, setView)
+                  }}
+                  style={getIconStyle('list', view)}
+                  {...props}
+                />
+              )}
+            />
+            <MUIcon
+              size="medium"
+              interactive
+              title="Grid View"
+              render={p => (
+                <AppsOutlinedIcon
+                  onClick={() => {
+                    handleSetGridView(view, setView)
+                  }}
+                  style={getIconStyle('grid', view)}
+                  {...props}
+                />
+              )}
+            />
+          </>
+        }
+      />
+      <PanelBody>
         <ToolboxItems view={view as ToolboxViewTypes} />
-      </Main>
-    </Wrapper>
+      </PanelBody>
+    </Panel>
   )
 }
 

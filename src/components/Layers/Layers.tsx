@@ -10,13 +10,9 @@ import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import LayerItem from '../LayerItem/LayerItem'
 import MUIcon from '../MUIcon/MUIcon'
 import ScrollbarThumb from '../ScrollbarThumb/ScrollbarThumb'
-
-const Wrapper = styled.section`
-  min-height: 100%;
-  background-color: var(--color-darker);
-  display: flex;
-  flex-direction: column;
-`
+import Panel from '../Panel/Panel'
+import PanelHeader from '../PanelHeader/PanelHeader'
+import PanelBody from '../PanelBody/PanelBody'
 
 const Header = styled.header`
   padding-top: var(--spacing);
@@ -70,12 +66,14 @@ const Layers = () => {
   // certain points, or save the highest number it encountered
 
   return (
-    <Wrapper>
-      <Header>
-        <HeaderTitle>
+    <Panel>
+      <PanelHeader
+        title="Layers"
+        icon={
           <MUIcon size="medium" render={p => <LayersOutlinedIcon {...p} />} />
-          <Title>Layers</Title>
-          <ToolIcons>
+        }
+        actions={
+          <>
             <MUIcon
               size="medium"
               title="Collapse All"
@@ -90,20 +88,13 @@ const Layers = () => {
               title="Expand All"
               render={p => <UnfoldMoreIcon onClick={handleExpandAll} {...p} />}
             />
-          </ToolIcons>
-        </HeaderTitle>
-      </Header>
-      <Main>
-        <Scrollbars
-          autoHide
-          autoHeight
-          renderThumbVertical={ScrollbarThumb}
-          renderThumbHorizontal={ScrollbarThumb}
-        >
-          <LayerItem model={model} />
-        </Scrollbars>
-      </Main>
-    </Wrapper>
+          </>
+        }
+      />
+      <PanelBody noPadding>
+        <LayerItem model={model} />
+      </PanelBody>
+    </Panel>
   )
 }
 

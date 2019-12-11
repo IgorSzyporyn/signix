@@ -17,41 +17,12 @@ import PropertyColor from '../PropertyColor/PropertyColor'
 import PropertiesText from '../PropertiesText/PropertiesText'
 import PropertiesImage from '../PropertiesImage/PropertiesImage'
 import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
+import Panel from '../Panel/Panel'
+import PanelHeader from '../PanelHeader/PanelHeader'
+import PanelBody from '../PanelBody/PanelBody'
 
-const Wrapper = styled.section`
-  min-height: 100%;
-  background-color: var(--color-darker);
-  padding-right: calc(var(--spacing) + var(--gutter));
-  padding-left: calc(var(--spacing) + var(--gutter));
-`
-
-const Header = styled.header`
-  padding-top: var(--spacing);
-
-  padding-bottom: var(--spacing);
-`
-
-const HeaderTitle = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Title = styled.h3`
-  margin-left: var(--gutter);
-  flex-grow: 1;
-`
-
-const ToolIcons = styled.div`
-  display: flex;
-
-  & > svg {
-    margin-right: var(--half-gutter);
-    cursor: pointer;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+const PanelBodyInner = styled.div`
+  padding: 0 calc(var(--spacing) + var(--half-gutter));
 `
 
 const getComponent = (model: ModelInterface, active?: string) => {
@@ -104,10 +75,11 @@ const Properties = () => {
   const activeModel = getModelById(active, model)
 
   return (
-    <Wrapper>
-      <Header>
-        <HeaderTitle>
-          {activeModel ? (
+    <Panel>
+      <PanelHeader
+        title={activeModel ? activeModel.name : 'Properties'}
+        icon={
+          activeModel ? (
             <ModelTypeIcon
               hasItems={activeModel.items && activeModel.items.length > 0}
               size="medium"
@@ -118,10 +90,10 @@ const Properties = () => {
               size="medium"
               render={p => <PermDataSettingOutlinedIcon {...p} />}
             />
-          )}
-
-          <Title>{activeModel ? activeModel.name : 'Properties'}</Title>
-          <ToolIcons>
+          )
+        }
+        actions={
+          <>
             <MUIcon
               size="medium"
               title="Collapse All"
@@ -136,18 +108,20 @@ const Properties = () => {
               title="Expand All"
               render={p => <UnfoldMoreIcon onClick={handleExpandAll} {...p} />}
             />
-          </ToolIcons>
-        </HeaderTitle>
-      </Header>
+          </>
+        }
+      />
       {activeModel !== null && (
-        <div>
-          <PropertyDimension model={activeModel} />
-          {activeModel.level! > 0 && <PropertyPosition model={activeModel} />}
-          <PropertyColor model={activeModel} />
-          {getComponent(activeModel, active)}
-        </div>
+        <PanelBody noPadding>
+          <PanelBodyInner>
+            <PropertyDimension model={activeModel} />
+            {activeModel.level! > 0 && <PropertyPosition model={activeModel} />}
+            <PropertyColor model={activeModel} />
+            {getComponent(activeModel, active)}
+          </PanelBodyInner>
+        </PanelBody>
       )}
-    </Wrapper>
+    </Panel>
   )
 }
 
