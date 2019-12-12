@@ -14,18 +14,6 @@ const PropertyColor = ({ model }: PropertyColorProps) => {
   return (
     <PropertiesPanel title="Colors" type="color">
       <FieldColor
-        inline
-        labelStyle={{ minWidth: '7rem' }}
-        title="Foreground"
-        color={color.foreground}
-        onColorChange={_color => {
-          updateItemInModelStore({
-            id: model.id,
-            color: { ...color, foreground: _color }
-          })
-        }}
-      />
-      <FieldColor
         labelStyle={{ minWidth: '7rem' }}
         inline
         title="Background"
@@ -34,6 +22,18 @@ const PropertyColor = ({ model }: PropertyColorProps) => {
           updateItemInModelStore({
             id: model.id,
             color: { ...color, background: _color }
+          })
+        }}
+      />
+      <FieldColor
+        inline
+        labelStyle={{ minWidth: '7rem' }}
+        title="Foreground"
+        color={color.foreground}
+        onColorChange={_color => {
+          updateItemInModelStore({
+            id: model.id,
+            color: { ...color, foreground: _color }
           })
         }}
       />

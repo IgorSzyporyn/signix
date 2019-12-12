@@ -1,5 +1,7 @@
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
@@ -32,15 +34,15 @@ const Heading = styled.div`
     background-color: var(--color-darkslate);
   }
 
-  .layer-title-icon {
+  .hidden-icons-wrapper {
     display: none;
   }
 
-  &:hover .layer-title-icon {
+  &:hover .hidden-icons-wrapper {
     display: flex;
   }
 
-  &[data-is-editing='true'] .layer-title-icon {
+  &[data-is-editing='true'] .hidden-icons-wrapper {
     display: none;
   }
 
@@ -69,18 +71,23 @@ const HeadingInner = styled.div<WithLevelProps>`
   }}
 `
 
-const LayerTitle = styled.div`
+const TitleWrapper = styled.div`
   flex-grow: 1;
   line-height: 2.7rem;
   margin-left: var(--half-gutter);
 `
 
-const LayerTitleIcons = styled.div`
+type HiddenIconsWrapperProps = {
+  layerIsHidden?: boolean
+}
+
+const HiddenIconsWrapper = styled.div<HiddenIconsWrapperProps>`
   & > * {
     margin-right: var(--gutter);
 
     &:last-child {
-      margin-right: 0;
+      margin-right: ${({ layerIsHidden }) =>
+        layerIsHidden ? ' var(--gutter)' : 0};
     }
   }
 `
@@ -106,7 +113,7 @@ type LayerItemInnerProps = {
 
 const LayerItemInner = (props: LayerItemInnerProps) => {
   const { model } = props
-  const { id, items, group } = model
+  const { id, items, group, hidden } = model
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
   const { active, editing }: ModelStoreInterface = useStore(ModelStore)
@@ -153,7 +160,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
               marginRight: 'calc(0.75 * var(--gutter))'
             }}
           />
-          <LayerTitle
+          <TitleWrapper
             onDoubleClick={() => {
               updateActionInSettingsStore({ active: 1 })
             }}
@@ -167,8 +174,11 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
                 updateEditingInModelStore(undefined)
               }}
             />
-          </LayerTitle>
-          <LayerTitleIcons className="layer-title-icon">
+          </TitleWrapper>
+          <HiddenIconsWrapper
+            layerIsHidden={hidden}
+            className="hidden-icons-wrapper"
+          >
             <MUIcon
               interactive={true}
               render={p => (
@@ -194,7 +204,33 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
                 )}
               />
             )}
-          </LayerTitleIcons>
+            {!hidden && (
+              <MUIcon
+                interactive={true}
+                render={p => (
+                  <VisibilityIcon
+                    onClick={() => {
+                      updateItemInModelStore({ id: model.id, hidden: true })
+                    }}
+                    {...p}
+                  />
+                )}
+              />
+            )}
+          </HiddenIconsWrapper>
+          {hidden && (
+            <MUIcon
+              interactive={true}
+              render={p => (
+                <VisibilityOffIcon
+                  onClick={() => {
+                    updateItemInModelStore({ id: model.id, hidden: false })
+                  }}
+                  {...p}
+                />
+              )}
+            />
+          )}
         </HeadingInner>
       </Heading>
       {hasItems && (

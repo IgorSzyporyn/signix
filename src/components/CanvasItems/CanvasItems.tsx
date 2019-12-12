@@ -38,7 +38,7 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
   })
 
   return (
-    <Wrapper>
+    <>
       {model.items &&
         model.items.map(item => (
           <CanvasItem
@@ -52,7 +52,7 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
         canDrop={canDrop}
         level={model.level}
       />
-    </Wrapper>
+    </>
   )
 }
 

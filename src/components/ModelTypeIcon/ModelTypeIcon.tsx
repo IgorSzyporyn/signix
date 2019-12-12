@@ -4,6 +4,8 @@ import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined'
 import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
 import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined'
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined'
+import FormatItalicIcon from '@material-ui/icons/FormatItalic'
+import TextFormatIcon from '@material-ui/icons/TextFormat'
 import React from 'react'
 import ModelTypes from '../../types/ModelTypes'
 import SizeTypes from '../../types/SizeTypes'
@@ -45,9 +47,12 @@ const getModelTypeIcon = (
       break
     case 'text':
     case 'textstatic':
+      iconProps.style.fill = 'var(--color-disco)'
+      Component = <TextFieldsOutlinedIcon {...iconProps} />
+      break
     case 'textdynamic':
       iconProps.style.fill = 'var(--color-purple)'
-      Component = <TextFieldsOutlinedIcon {...iconProps} />
+      Component = <TextFormatIcon {...iconProps} />
       break
     case 'image':
     case 'imagestatic':

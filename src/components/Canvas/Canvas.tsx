@@ -1,6 +1,7 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
+import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import CanvasItem from '../CanvasItem/CanvasItem'
 
@@ -17,7 +18,11 @@ const Canvas = () => {
   const { model }: ModelStoreInterface = useStore(ModelStore)
 
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        updateActiveInModelStore(undefined)
+      }}
+    >
       <CanvasItem model={model} />
     </Wrapper>
   )

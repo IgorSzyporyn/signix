@@ -26,7 +26,8 @@ const CoreModel: ModelInterface = {
     image: '',
     position: 'center'
   },
-  options: []
+  options: [],
+  hidden: false
 }
 
 export default CoreModel

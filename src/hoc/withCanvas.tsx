@@ -1,5 +1,7 @@
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, MouseEvent } from 'react'
+import updateActiveInModelStore from '../stores/model/updateActiveInModelStore'
 import ModelInterface from '../types/ModelInterface'
+import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
 import convertColorToCSS, {
   ColorCSSProperties
 } from '../utils/convertColorToCSS'
@@ -9,7 +11,6 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
-import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,
@@ -46,7 +47,18 @@ const withCanvas = <P extends object>(Component: React.ComponentType<P>) =>
       const { model, ...rest } = this.props
       const style = createCanvasStyle(model)
 
-      return <Component style={style} model={model} {...(rest as P)} />
+      return (
+        <Component
+          onClick={(e: MouseEvent<HTMLDivElement>) => {
+            e.stopPropagation()
+            updateActiveInModelStore(model.id)
+          }}
+          hidden={model.hidden}
+          style={style}
+          model={model}
+          {...(rest as P)}
+        />
+      )
     }
   }
 

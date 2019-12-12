@@ -1,9 +1,6 @@
 import React from 'react'
 import { useMeasure } from 'react-use'
 import styled from 'styled-components'
-import FolderOutlined from '@material-ui/icons/FolderOutlined'
-import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
@@ -74,9 +71,14 @@ const toolboxItems: ToolboxItemProps[] = [
     type: 'group'
   },
   {
-    title: 'Text',
+    title: 'Static Text',
     subtitle: 'A simple text entry',
-    type: 'text'
+    type: 'textstatic'
+  },
+  {
+    title: 'User Input Text',
+    subtitle: 'A simple text entry',
+    type: 'textdynamic'
   },
   {
     title: 'Image',

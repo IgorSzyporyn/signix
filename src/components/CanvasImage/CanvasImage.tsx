@@ -1,5 +1,5 @@
 import React, { ImgHTMLAttributes } from 'react'
-import { WithCanvasProps } from '../../hoc/withCanvas'
+import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
 
 const CanvasImage = ({ style = {}, model, ...props }: WithCanvasProps) => {
   const dimensions: Pick<
@@ -25,4 +25,4 @@ const CanvasImage = ({ style = {}, model, ...props }: WithCanvasProps) => {
   )
 }
 
-export default CanvasImage
+export default withCanvas(CanvasImage)

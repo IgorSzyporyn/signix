@@ -8,7 +8,9 @@ const defaultStore: PropertyStoreInterface = {
   dimension: false,
   position: false,
   color: false,
-  backgroundImage: true
+  backgroundImage: true,
+  textStatic: true,
+  textDynamic: true
 }
 
 const PropertyStore = new Store(defaultStore)

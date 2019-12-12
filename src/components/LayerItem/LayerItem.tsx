@@ -3,7 +3,15 @@ import styled from 'styled-components'
 import ModelInterface from '../../types/ModelInterface'
 import LayerItemInner from '../LayerItemInner/LayerItemInner'
 
-const Wrapper = styled.div``
+type WrapperProps = {
+  isHidden?: boolean
+}
+
+const Wrapper = styled.div<WrapperProps>`
+  ${({ isHidden }) => {
+    return isHidden ? 'opacity: 0.6;' : null
+  }}
+`
 
 const List = styled.ul`
   margin: 0;
@@ -19,7 +27,7 @@ const LayerItem = (props: LayerItemProps) => {
   const { model } = props
 
   return (
-    <Wrapper>
+    <Wrapper isHidden={model.hidden}>
       {model.level === 0 ? (
         <List>
           <LayerItemInner {...props} />

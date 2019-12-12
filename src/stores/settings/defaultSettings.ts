@@ -16,7 +16,7 @@ const defaultSettings: SettingsInterface = {
     minWidth: 300
   },
   action: {
-    active: 1
+    active: 0
   }
 }
 

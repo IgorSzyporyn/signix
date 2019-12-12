@@ -1,3 +1,4 @@
+import PermDataSettingOutlinedIcon from '@material-ui/icons/PermDataSettingOutlined'
 import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { useStore } from 'laco-react'
@@ -7,19 +8,19 @@ import getModelById from '../../stores/model/getModelById'
 import ModelStore from '../../stores/ModelStore'
 import setAllItemsInPropertyStore from '../../stores/property/setAllItemsInPropertyStore'
 import ModelInterface from '../../types/ModelInterface'
+import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
+import Panel from '../Panel/Panel'
+import PanelBody from '../PanelBody/PanelBody'
+import PanelHeader from '../PanelHeader/PanelHeader'
 import PropertiesBackground from '../PropertiesBackground/PropertiesBackground'
+import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
+import PropertiesImage from '../PropertiesImage/PropertiesImage'
+import PropertiesTextDynamic from '../PropertiesTextDynamic/PropertiesTextDynamic'
+import PropertiesTextStatic from '../PropertiesTextStatic/PropertiesTextStatic'
+import PropertyColor from '../PropertyColor/PropertyColor'
 import PropertyDimension from '../PropertyDimension/PropertyDimension'
 import PropertyPosition from '../PropertyPosition/PropertyPosition'
-import PermDataSettingOutlinedIcon from '@material-ui/icons/PermDataSettingOutlined'
-import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
-import PropertyColor from '../PropertyColor/PropertyColor'
-import PropertiesText from '../PropertiesText/PropertiesText'
-import PropertiesImage from '../PropertiesImage/PropertiesImage'
-import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
-import Panel from '../Panel/Panel'
-import PanelHeader from '../PanelHeader/PanelHeader'
-import PanelBody from '../PanelBody/PanelBody'
 
 const PanelBodyInner = styled.div`
   padding: 0 calc(var(--spacing) + var(--half-gutter));
@@ -29,12 +30,8 @@ const getComponent = (model: ModelInterface, active?: string) => {
   let Component = null
 
   let propertiesProps = {
-    className: `canvas-item-${model.type}`,
+    className: `properties-item-${model.type}`,
     model
-  }
-
-  if (active === model.id) {
-    propertiesProps.className += ` canvas-item-active`
   }
 
   switch (model.type) {
@@ -44,10 +41,11 @@ const getComponent = (model: ModelInterface, active?: string) => {
     case 'group':
       Component = <PropertiesGroup {...propertiesProps} />
       break
-    case 'text':
     case 'textstatic':
+      Component = <PropertiesTextStatic {...propertiesProps} />
+      break
     case 'textdynamic':
-      Component = <PropertiesText {...propertiesProps} />
+      Component = <PropertiesTextDynamic {...propertiesProps} />
       break
     case 'image':
     case 'imagestatic':

@@ -1,5 +1,5 @@
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
-import BuildIcon from '@material-ui/icons/Build'
+import ExtensionIcon from '@material-ui/icons/Extension'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
@@ -49,7 +49,7 @@ const Toolbox = (props: ToolboxProps) => {
     <Panel>
       <PanelHeader
         title="Toolbox"
-        icon={<MUIcon size="normal" render={p => <BuildIcon {...p} />} />}
+        icon={<MUIcon size="normal" render={p => <ExtensionIcon {...p} />} />}
         actions={
           <>
             <MUIcon
