@@ -1,6 +1,7 @@
 import ModelBackgroundInterface from './ModelBackgroundInterface'
 import ModelColorInterface from './ModelColorInterface'
 import ModelDimensionInterface from './ModelDimensionInterface'
+import ModelFontInterface from './ModelFontInterface'
 import ModelInterfacePartial from './ModelInterfacePartial'
 import ModelOptionsInterface from './ModelOptionsInterface'
 import ModelPositionInterface from './ModelPositionInterface'
@@ -15,6 +16,7 @@ type ModelInterface = {
   parentId?: string
   value?: string[] | string
   hidden?: boolean
+  font: ModelFontInterface
   background: ModelBackgroundInterface
   color: ModelColorInterface
   dimension: ModelDimensionInterface

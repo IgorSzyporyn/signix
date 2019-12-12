@@ -18,12 +18,17 @@ import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
 import PropertiesImage from '../PropertiesImage/PropertiesImage'
 import PropertiesTextDynamic from '../PropertiesTextDynamic/PropertiesTextDynamic'
 import PropertiesTextStatic from '../PropertiesTextStatic/PropertiesTextStatic'
-import PropertyColor from '../PropertyColor/PropertyColor'
-import PropertyDimension from '../PropertyDimension/PropertyDimension'
-import PropertyPosition from '../PropertyPosition/PropertyPosition'
+import getFontSize from '../../utils/getFontSize'
 
 const PanelBodyInner = styled.div`
-  padding: 0 calc(var(--spacing) + var(--half-gutter));
+  margin-top: var(--half-gutter);
+  padding: 0 var(--spacing-medium);
+`
+
+const PanelBodyEmpty = styled.div`
+  text-align: center;
+  padding-top: var(--spacing);
+  font-size: ${getFontSize('small')};
 `
 
 const getComponent = (model: ModelInterface, active?: string) => {
@@ -75,6 +80,7 @@ const Properties = () => {
   return (
     <Panel>
       <PanelHeader
+        topMargin
         title={activeModel ? activeModel.name : 'Properties'}
         icon={
           activeModel ? (
@@ -109,15 +115,12 @@ const Properties = () => {
           </>
         }
       />
-      {activeModel !== null && (
+      {activeModel ? (
         <PanelBody noPadding>
-          <PanelBodyInner>
-            <PropertyDimension model={activeModel} />
-            {activeModel.level! > 0 && <PropertyPosition model={activeModel} />}
-            <PropertyColor model={activeModel} />
-            {getComponent(activeModel, active)}
-          </PanelBodyInner>
+          <PanelBodyInner>{getComponent(activeModel, active)}</PanelBodyInner>
         </PanelBody>
+      ) : (
+        <PanelBodyEmpty>No layer selected</PanelBodyEmpty>
       )}
     </Panel>
   )

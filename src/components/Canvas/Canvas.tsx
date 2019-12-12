@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
 import CanvasItem from '../CanvasItem/CanvasItem'
+import TransparencyBackground from '../TransparencyBackground/TransparencyBackground'
 
 const Wrapper = styled.section`
   height: 100%;
@@ -23,7 +24,9 @@ const Canvas = () => {
         updateActiveInModelStore(undefined)
       }}
     >
-      <CanvasItem model={model} />
+      <TransparencyBackground>
+        <CanvasItem model={model} />
+      </TransparencyBackground>
     </Wrapper>
   )
 }

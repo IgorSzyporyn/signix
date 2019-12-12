@@ -1,10 +1,12 @@
 import React from 'react'
 import PropertiesPropTypes from '../../types/PropertiesPropTypes'
-import PropertyTextDynamic from '../PropertyTextDynamic/PropertyTextDynamic'
+import PropertyColor from '../PropertyColor/PropertyColor'
+import PropertyPosition from '../PropertyPosition/PropertyPosition'
 
 const PropertiesTextDynamic = (props: PropertiesPropTypes) => (
   <>
-    <PropertyTextDynamic {...props} />
+    <PropertyPosition {...props} />
+    <PropertyColor {...props} />
   </>
 )
 

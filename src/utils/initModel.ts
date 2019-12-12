@@ -41,7 +41,7 @@ const initModel = (
   }
 
   if (model.items && model.items.length) {
-    model.items = initModelItems(model.items, model.type, model.level)
+    model.items = initModelItems(model.items, model.id, model.level)
   }
 
   return model

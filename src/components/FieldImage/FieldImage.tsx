@@ -20,7 +20,7 @@ const ImageContainer = styled.div<ImageContainerProps>`
       justify-content: center;
       margin-left: var(--spacing);
       padding: var(--quarter-gutter);
-      border: 1px solid var(--color-lighter);
+      border: 0.1rem solid var(--color-lighter);
       border-radius: 0.5rem;
     `
       : null

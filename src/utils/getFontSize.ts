@@ -20,13 +20,13 @@ const getFontSize = (size: SizeTypes = 'normal') => {
       fontSize = '2rem'
       break
     case 'large':
-      fontSize = '3.2rem'
+      fontSize = '2.4rem'
       break
     case 'big':
-      fontSize = '4.8rem'
+      fontSize = '3.2rem'
       break
     case 'huge':
-      fontSize = '6.4rem'
+      fontSize = '4.8rem'
       break
     default:
       break

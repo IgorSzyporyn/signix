@@ -7,37 +7,19 @@ import ModelPositionTypes from '../../types/ModelPositionTypes'
 import PropertyPositionType from '../PropertyPositionType/PropertyPositionType'
 import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalFieldContainer'
 
-const handleTopChange = (top: string, model: ModelInterface) => {
+const handleYChange = (y: string, model: ModelInterface) => {
   const newModel = {
     ...model,
-    position: { ...model.position, top: +top }
+    position: { ...model.position, top: +y, bottom: +y }
   }
 
   updateItemInModelStore(newModel)
 }
 
-const handleBottomChange = (bottom: string, model: ModelInterface) => {
+const handleXChange = (x: string, model: ModelInterface) => {
   const newModel = {
     ...model,
-    position: { ...model.position, bottom: +bottom }
-  }
-
-  updateItemInModelStore(newModel)
-}
-
-const handleLeftChange = (left: string, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    position: { ...model.position, left: +left }
-  }
-
-  updateItemInModelStore(newModel)
-}
-
-const handleRightChange = (right: string, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    position: { ...model.position, right: +right }
+    position: { ...model.position, left: +x, right: +x }
   }
 
   updateItemInModelStore(newModel)
@@ -61,42 +43,24 @@ const PropertyPosition = ({ model }: PropertyPositionProps) => {
 
   return (
     <PropertiesPanel title="Position" type="position">
-      <HorizontalFieldContainer>
-        <PropertyPositionType
-          title="Alignment"
-          type={position.type}
-          onChange={(type: ModelPositionTypes) => handleTypeChange(type, model)}
-        />
-      </HorizontalFieldContainer>
+      <PropertyPositionType
+        title="Alignment"
+        type={position.type}
+        onChange={(type: ModelPositionTypes) => handleTypeChange(type, model)}
+      />
       <HorizontalFieldContainer>
         <FieldInput
-          title="Top"
-          value={position.top}
-          onChange={e => {
-            handleTopChange(e.target.value, model)
-          }}
-        />
-        <FieldInput
-          title="Bottom"
-          value={position.bottom}
-          onChange={e => {
-            handleBottomChange(e.target.value, model)
-          }}
-        />
-      </HorizontalFieldContainer>
-      <HorizontalFieldContainer>
-        <FieldInput
-          title="Left"
+          title="X Offset"
           value={position.left}
           onChange={e => {
-            handleLeftChange(e.target.value, model)
+            handleXChange(e.target.value, model)
           }}
         />
         <FieldInput
-          title="Right"
-          value={position.right}
+          title="Y Offset"
+          value={position.top}
           onChange={e => {
-            handleRightChange(e.target.value, model)
+            handleYChange(e.target.value, model)
           }}
         />
       </HorizontalFieldContainer>

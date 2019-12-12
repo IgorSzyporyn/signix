@@ -3,7 +3,6 @@ import ExtensionIcon from '@material-ui/icons/Extension'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
-import getIconSize from '../../utils/getIconSize'
 import MUIcon from '../MUIcon/MUIcon'
 import Panel from '../Panel/Panel'
 import PanelBody from '../PanelBody/PanelBody'
@@ -34,11 +33,10 @@ type ToolboxProps = {
   view?: ToolboxViewTypes
 }
 
-const getIconStyle = (
+const getViewTypeIconStyle = (
   view: ToolboxViewTypes,
   currentView: ToolboxViewTypes
 ) => ({
-  ...getIconSize('normal'),
   color: view === currentView ? 'var(--color-blue)' : 'currentColor'
 })
 
@@ -49,34 +47,43 @@ const Toolbox = (props: ToolboxProps) => {
     <Panel>
       <PanelHeader
         title="Toolbox"
-        icon={<MUIcon size="normal" render={p => <ExtensionIcon {...p} />} />}
         actions={
           <>
             <MUIcon
-              size="medium"
-              title="List View"
               interactive
+              title="List View"
+              size="medium"
               render={p => (
                 <FormatListBulletedOutlinedIcon
                   onClick={() => {
                     handleSetListView(view, setView)
                   }}
-                  style={getIconStyle('list', view)}
-                  {...props}
+                  {...{
+                    ...p,
+                    style: {
+                      ...(p.style || {}),
+                      ...getViewTypeIconStyle('list', view)
+                    }
+                  }}
                 />
               )}
             />
             <MUIcon
-              size="medium"
               interactive
               title="Grid View"
+              size="medium"
               render={p => (
                 <AppsOutlinedIcon
                   onClick={() => {
                     handleSetGridView(view, setView)
                   }}
-                  style={getIconStyle('grid', view)}
-                  {...props}
+                  {...{
+                    ...p,
+                    style: {
+                      ...(p.style || {}),
+                      ...getViewTypeIconStyle('grid', view)
+                    }
+                  }}
                 />
               )}
             />

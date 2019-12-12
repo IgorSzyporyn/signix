@@ -3,7 +3,8 @@ import TextModel from './TextModel'
 
 const TextDynamicModel: ModelInterface = {
   ...TextModel,
-  type: 'textdynamic'
+  type: 'textdynamic',
+  value: 'User Input Text'
 }
 
 export default TextDynamicModel

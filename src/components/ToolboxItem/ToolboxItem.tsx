@@ -1,8 +1,12 @@
+import { useStore } from 'laco-react'
 import React from 'react'
 import { DragSourceMonitor, useDrag } from 'react-dnd'
 import styled from 'styled-components'
 import Models from '../../models/Models'
 import addItemToModelStore from '../../stores/model/addItemToModelStore'
+import getModelById from '../../stores/model/getModelById'
+import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
+import ModelStore from '../../stores/ModelStore'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
@@ -20,19 +24,19 @@ const Wrapper = styled.div`
 `
 
 const TitleContainer = styled.div`
-  margin-right: var(--half-gutter);
-`
-
-const Title = styled.h4``
-
-const Subtitle = styled.h6`
-  line-height: 1.2rem;
+  margin-left: var(--spacing);
 `
 
 const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
   const model = Models[type]
+  const modelStore = useStore(ModelStore)
+  const modelStoreActiveId = modelStore.active
+  const modelStoreRootModel = modelStore.model
 
   const [{ isDragging }, drag] = useDrag({
+    begin: () => {
+      updateActiveInModelStore(undefined)
+    },
     item: { name: type, type: DragAndDropTypes.TOOLBOX },
     end: (item: { name: string } | undefined, monitor: DragSourceMonitor) => {
       const dropResult = monitor.getDropResult()
@@ -46,12 +50,43 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
   })
 
   return (
-    <Wrapper ref={drag} view={view} isDragging={isDragging}>
-      <ModelTypeIcon type={model.type} size="large" hasItems={true} />
+    <Wrapper
+      ref={drag}
+      view={view}
+      isDragging={isDragging}
+      onDoubleClick={() => {
+        if (modelStoreActiveId) {
+          const activeModel = getModelById(
+            modelStoreActiveId,
+            modelStoreRootModel
+          )
+
+          if (activeModel && activeModel.id) {
+            if (activeModel.group) {
+              addItemToModelStore(model, activeModel.id)
+            } else if (activeModel.parentId) {
+              const activeParentModel = getModelById(
+                activeModel.parentId,
+                modelStoreRootModel
+              )
+
+              if (
+                activeParentModel &&
+                activeParentModel.id &&
+                activeParentModel.group
+              ) {
+                addItemToModelStore(model, activeParentModel.id)
+              }
+            }
+          }
+        }
+      }}
+    >
+      <ModelTypeIcon type={model.type} size="medium" hasItems={true} />
       {view === 'list' && (
         <TitleContainer>
-          <Title>{title}</Title>
-          <Subtitle>{subtitle}</Subtitle>
+          <h4>{title}</h4>
+          <h6>{subtitle}</h6>
         </TitleContainer>
       )}
     </Wrapper>

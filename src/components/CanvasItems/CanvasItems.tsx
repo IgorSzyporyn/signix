@@ -1,19 +1,9 @@
 import React from 'react'
 import { useDrop } from 'react-dnd'
-import styled from 'styled-components'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ModelInterface from '../../types/ModelInterface'
 import CanvasDropContainer from '../CanvasDropContainer/CanvasDropContainer'
 import CanvasItem from '../CanvasItem/CanvasItem'
-
-const Wrapper = styled.div`
-  position: relative;
-  height: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`
 
 type CanvasItemsProps = { model: ModelInterface }
 
@@ -47,6 +37,7 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
           />
         ))}
       <CanvasDropContainer
+        hidden={!canDrop}
         ref={drop}
         isActive={canDrop && isOverCurrent}
         canDrop={canDrop}

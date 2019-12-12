@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Scrollbars from 'react-custom-scrollbars'
 import ScrollbarThumb from '../ScrollbarThumb/ScrollbarThumb'
 
-const Wrapper = styled.div<PanelBodyProps>`
+const Wrapper = styled.main<PanelBodyProps>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -13,9 +13,7 @@ const Wrapper = styled.div<PanelBodyProps>`
     flex-grow: 1;
   }
 
-  padding: 0
-    ${({ noPadding }) =>
-      noPadding ? '0' : 'calc(var(--spacing) + var(--half-gutter))'};
+  padding: 0 ${({ noPadding }) => (noPadding ? '0' : 'var(--spacing-medium)')} 0;
 `
 
 type PanelBodyProps = {

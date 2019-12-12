@@ -1,19 +1,21 @@
 import React from 'react'
 import '../../baseline.scss'
 import TextModel from '../../models/TextModel'
-import CanvasText from './CanvasText'
+import CanvasTextOptions from './CanvasTextOptions'
 
 export default {
-  component: CanvasText,
-  title: 'Components|CanvasText'
+  component: CanvasTextOptions,
+  title: 'Components|CanvasTextOptions'
 }
 
 export const Default = () => (
-  <CanvasText model={{ ...TextModel, value: 'Using Default Model values' }} />
+  <CanvasTextOptions
+    model={{ ...TextModel, value: 'Using Default Model values' }}
+  />
 )
 
 export const WithGreenColor = () => (
-  <CanvasText
+  <CanvasTextOptions
     model={{
       ...TextModel,
       color: { ...TextModel.color, foreground: 'green' },
@@ -23,7 +25,7 @@ export const WithGreenColor = () => (
 )
 
 export const WithPinkBackgroundAndGreenColorSetToTopRight = () => (
-  <CanvasText
+  <CanvasTextOptions
     model={{
       ...TextModel,
       color: { ...TextModel.color, foreground: 'yellow', background: 'red' },

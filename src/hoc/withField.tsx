@@ -44,7 +44,7 @@ const Wrapper = styled.div<WrapperProps>`
     font-size: 1.4rem;
     padding: var(--half-gutter) var(--gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--color-lighter);
+    border: 0.1rem solid var(--color-lighter);
     background-color: var(--color-dark);
     color: var(--color-lighter);
     margin: 0;
@@ -65,7 +65,7 @@ const Wrapper = styled.div<WrapperProps>`
     font-size: 1.4rem;
     padding: var(--gutter) var(--gutter);
     border-radius: 0.3rem;
-    border: 1px solid var(--color-lighter);
+    border: 0.1rem solid var(--color-lighter);
     background-color: var(--color-dark);
     color: var(--color-lighter);
     margin: 0;

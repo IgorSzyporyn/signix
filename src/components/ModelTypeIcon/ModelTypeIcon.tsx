@@ -1,10 +1,12 @@
+import CropOriginalIcon from '@material-ui/icons/CropOriginal'
 import Folder from '@material-ui/icons/Folder'
-import FolderOutlined from '@material-ui/icons/FolderOutlined'
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined'
-import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
-import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined'
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined'
-import FormatItalicIcon from '@material-ui/icons/FormatItalic'
+import FolderOutlined from '@material-ui/icons/FolderOutlined'
+import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined'
+import ImageIcon from '@material-ui/icons/Image'
+import ListIcon from '@material-ui/icons/List'
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
+import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
 import TextFormatIcon from '@material-ui/icons/TextFormat'
 import React from 'react'
 import ModelTypes from '../../types/ModelTypes'
@@ -31,6 +33,7 @@ const getModelTypeIcon = (
 
   switch (type) {
     case 'background':
+      iconProps.style.fill = 'var(--color-piper)'
       Component = <GridOnOutlinedIcon {...iconProps} />
       break
     case 'group':
@@ -47,18 +50,33 @@ const getModelTypeIcon = (
       break
     case 'text':
     case 'textstatic':
-      iconProps.style.fill = 'var(--color-disco)'
+      iconProps.style.fill = 'var(--color-purple)'
       Component = <TextFieldsOutlinedIcon {...iconProps} />
       break
     case 'textdynamic':
       iconProps.style.fill = 'var(--color-purple)'
       Component = <TextFormatIcon {...iconProps} />
       break
+    case 'textoptions':
+      iconProps.style.fill = 'var(--color-purple)'
+      Component = <ListIcon {...iconProps} />
+      break
     case 'image':
     case 'imagestatic':
+      iconProps.style.fill = 'var(--color-persianred)'
+      Component = <CropOriginalIcon {...iconProps} />
+      break
     case 'imagedynamic':
-      iconProps.style.fill = 'var(--color-red)'
-      Component = <ImageOutlinedIcon {...iconProps} />
+      iconProps.style.fill = 'var(--color-persianred)'
+      Component = <ImageIcon {...iconProps} />
+      break
+    case 'imageoptions':
+      iconProps.style.fill = 'var(--color-persianred)'
+      Component = <ListIcon {...iconProps} />
+      break
+    case 'imageoptionsmultiple':
+      iconProps.style.fill = 'var(--color-persianred)'
+      Component = <PhotoLibraryIcon {...iconProps} />
       break
     default:
       Component = null

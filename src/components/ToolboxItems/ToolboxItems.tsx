@@ -5,31 +5,14 @@ import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
 
-const Wrapper = styled.div``
-
 const ListContainer = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 0.6rem 0 0;
   padding: 0;
 `
 
 const ListItem = styled.li`
-  border: 0.1rem solid transparent;
-  transition: box-shadow 75ms ease-in-out;
-
-  & svg {
-    transition: color 75ms ease-in-out;
-  }
-
-  &:hover {
-    border-radius: 3px;
-    cursor: pointer;
-    box-shadow: 2px 2px 7px 0px rgba(15, 15, 15, 0.35);
-
-    & svg {
-      color: var(--color-blue);
-    }
-  }
+  padding: var(--gutter) 0;
 `
 
 type GridContainerProps = {
@@ -53,37 +36,55 @@ const GridContainer = styled.div`
 `
 
 const GridItem = styled.div`
-  border: 0.1rem solid transparent;
   transition: box-shadow 75ms ease-in-out, color 75ms ease-in-out;
 
   &:hover {
     border-radius: 3px;
     cursor: pointer;
     color: var(--color-blue);
-    box-shadow: 1px 1px 7px 0px rgba(15, 15, 15, 0.35);
   }
 `
 
 const toolboxItems: ToolboxItemProps[] = [
   {
     title: 'Group',
-    subtitle: 'Empty group for children',
+    subtitle: 'Can contain other items',
     type: 'group'
   },
   {
-    title: 'Static Text',
-    subtitle: 'A simple text entry',
+    title: 'Text',
+    subtitle: 'Static text entry',
     type: 'textstatic'
   },
   {
-    title: 'User Input Text',
-    subtitle: 'A simple text entry',
+    title: 'Text Input',
+    subtitle: 'User user input text',
     type: 'textdynamic'
+  },
+  {
+    title: 'Text From Options',
+    subtitle: 'User selects from options',
+    type: 'textoptions'
   },
   {
     title: 'Image',
     subtitle: 'Static image',
-    type: 'image'
+    type: 'imagestatic'
+  },
+  {
+    title: 'Image Input',
+    subtitle: 'User provides imag',
+    type: 'imagedynamic'
+  },
+  {
+    title: 'Image From Options',
+    subtitle: 'User selects from options',
+    type: 'imageoptions'
+  },
+  {
+    title: 'Multiple Images from Options',
+    subtitle: 'Static image',
+    type: 'imageoptionsmultiple'
   }
 ]
 
@@ -95,7 +96,7 @@ const ToolboxItems = ({ view }: ToolboxItemsProps) => {
   const [ref, { width }] = useMeasure()
 
   return (
-    <Wrapper ref={ref}>
+    <div ref={ref}>
       {view === 'list' && (
         <ListContainer>
           {toolboxItems.map(toolboxItem => (
@@ -114,7 +115,7 @@ const ToolboxItems = ({ view }: ToolboxItemsProps) => {
           ))}
         </GridContainer>
       )}
-    </Wrapper>
+    </div>
   )
 }
 

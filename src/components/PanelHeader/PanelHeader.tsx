@@ -1,18 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.header`
+type WrapperProps = {
+  topMargin?: boolean
+}
+
+const Wrapper = styled.header<WrapperProps>`
   align-items: center;
   display: flex;
-  padding-bottom: var(--spacing);
-  padding-left: calc(var(--spacing) + var(--half-gutter));
+  padding-left: var(--spacing-medium);
   padding-right: calc(var(--spacing) + var(--gutter));
-  padding-top: var(--spacing);
+  min-height: calc(var(--gutter) * 7);
+  margin-top: ${({ topMargin }) => (topMargin ? 'var(--spacing-small)' : '0')};
 `
 
 const Title = styled.h3`
   flex-grow: 1;
-  margin-left: var(--gutter);
+`
+
+const Icon = styled.div`
+  margin-right: var(--gutter);
 `
 
 const Actions = styled.div`
@@ -32,12 +39,13 @@ type PanelHeaderProps = {
   actions?: React.ReactNode
   icon?: React.ReactNode
   title?: string
+  topMargin?: boolean
 }
 
-const PanelHeader = ({ title, icon, actions }: PanelHeaderProps) => {
+const PanelHeader = ({ topMargin, title, icon, actions }: PanelHeaderProps) => {
   return (
-    <Wrapper>
-      {icon}
+    <Wrapper topMargin={topMargin}>
+      {icon && <Icon>{icon}</Icon>}
       <Title>{title}</Title>
       <Actions>{actions}</Actions>
     </Wrapper>

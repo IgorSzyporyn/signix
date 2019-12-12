@@ -1,7 +1,7 @@
-import React, { useState, Dispatch, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { uniqueId } from '../../utils/utilities'
 import getFontSize from '../../utils/getFontSize'
+import { uniqueId } from '../../utils/utilities'
 
 const Wrapper = styled.section`
   position: absolute;
@@ -24,8 +24,9 @@ type PanelTabProps = {
 const PanelTab = styled.div<PanelTabProps>`
   display: flex;
   align-items: center;
-  padding: var(--spacing) var(--double-spacing);
+  padding: calc(var(--spacing) + 0.5rem) var(--spacing-large);
   font-size: ${getFontSize('xsmall')};
+  cursor: pointer;
 
   ${({ active }) => {
     let style = ``
@@ -34,7 +35,7 @@ const PanelTab = styled.div<PanelTabProps>`
       style = `
         background-color: var(--color-darker);
         color: var(--color-lightest);
-        font-weight: 500;
+        font-weight: 700;
       `
     }
 
@@ -54,13 +55,15 @@ const PanelItems = styled.div`
 `
 
 const createTabItems = (
-  tabs: string[],
+  titles: string[],
+  tabs: React.ReactNode[],
   active: number,
   onClick: (active: number) => void
 ) =>
   tabs.map((tab, index) => {
     return (
       <PanelTab
+        title={titles[index]}
         active={active === index}
         key={`tabpanel-tab-${index}-${uniqueId()}`}
         onClick={() => {
@@ -72,7 +75,7 @@ const createTabItems = (
     )
   })
 
-const createPanelItems = (panels: Array<React.ReactNode>, active: number) =>
+const createPanelItems = (panels: React.ReactNode[], active: number) =>
   panels.map((panel, index) => {
     return (
       <PanelItem
@@ -87,18 +90,26 @@ const createPanelItems = (panels: Array<React.ReactNode>, active: number) =>
 const PanelItem = styled.div``
 
 type TabPanelProps = {
-  tabs: string[]
-  panels: Array<React.ReactNode>
+  titles: string[]
+  tabs: React.ReactNode[]
+  panels: React.ReactNode[]
   active: number
+  tabsStyle?: React.CSSProperties
   onClick: (active: number) => void
 }
 
-const TabPanel = ({ tabs, panels, active, onClick }: TabPanelProps) => {
-  const tabItems = useMemo(() => createTabItems(tabs, active, onClick), [
-    tabs,
-    active,
-    onClick
-  ])
+const TabPanel = ({
+  titles,
+  tabs,
+  tabsStyle = {},
+  panels,
+  active,
+  onClick
+}: TabPanelProps) => {
+  const tabItems = useMemo(
+    () => createTabItems(titles, tabs, active, onClick),
+    [titles, tabs, active, onClick]
+  )
 
   const panelItems = useMemo(() => createPanelItems(panels, active), [
     panels,
@@ -107,7 +118,7 @@ const TabPanel = ({ tabs, panels, active, onClick }: TabPanelProps) => {
 
   return (
     <Wrapper>
-      <PanelTabs>{tabItems}</PanelTabs>
+      <PanelTabs style={tabsStyle}>{tabItems}</PanelTabs>
       <PanelItems>{panelItems}</PanelItems>
     </Wrapper>
   )

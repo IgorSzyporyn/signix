@@ -18,6 +18,10 @@ const CoreModel: ModelInterface = {
     background: 'rgba(0, 0, 0, 0)',
     foreground: 'rgba(0, 0, 0, 0)'
   },
+  font: {
+    size: 24,
+    type: 'Arial'
+  },
   value: '',
   items: [],
   group: false,

@@ -1,15 +1,15 @@
 import React from 'react'
 import '../../baseline.scss'
 import ImageModel from '../../models/ImageModel'
-import CanvasImage from './CanvasImage'
+import CanvasImageOptions from './CanvasImageOptions'
 
 export default {
-  component: CanvasImage,
-  title: 'Components|CanvasImage'
+  component: CanvasImageOptions,
+  title: 'Components|CanvasImageOptions'
 }
 
 export const NoValue = () => (
-  <CanvasImage
+  <CanvasImageOptions
     model={{
       ...ImageModel
     }}
@@ -17,7 +17,7 @@ export const NoValue = () => (
 )
 
 export const SmallSize = () => (
-  <CanvasImage
+  <CanvasImageOptions
     model={{
       ...ImageModel,
       dimension: {
@@ -31,7 +31,7 @@ export const SmallSize = () => (
 )
 
 export const LargeSizeWithBackground = () => (
-  <CanvasImage
+  <CanvasImageOptions
     model={{
       ...ImageModel,
       dimension: {

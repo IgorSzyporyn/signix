@@ -3,14 +3,19 @@ import { ChromePicker, RGBColor } from 'react-color'
 import withField, { WithFieldProps } from '../../hoc/withField'
 import styled from 'styled-components'
 import { useClickAway } from 'react-use'
+import TransparencyBackground from '../TransparencyBackground/TransparencyBackground'
+
+const Wrapper = styled.div`
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--color-lighter);
+  overflow: hidden;
+`
 
 const ActionSquare = styled.div`
   position: relative;
   display: flex;
   height: 2.6rem;
   width: 3.8rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-lighter);
 `
 
 const Picker = styled.div`
@@ -23,7 +28,7 @@ const Picker = styled.div`
     color: var(--color-lighter) !important;
     font-family: inherit !important;
     font-weight: 500;
-    border: 1px solid var(--color-pitch);
+    border: 0.1rem solid var(--color-pitch);
 
     input {
       color: var(--color-lighter) !important;
@@ -53,15 +58,17 @@ const FieldColor = ({ color, onColorChange }: FieldColorProps) => {
   })
 
   return (
-    <div ref={ref}>
-      <ActionSquare
-        onClick={() => {
-          if (!active) {
-            setActive(true)
-          }
-        }}
-        style={{ backgroundColor: pickerColor }}
-      />
+    <Wrapper ref={ref}>
+      <TransparencyBackground size="small">
+        <ActionSquare
+          onClick={() => {
+            if (!active) {
+              setActive(true)
+            }
+          }}
+          style={{ backgroundColor: pickerColor }}
+        />
+      </TransparencyBackground>
       <Picker hidden={!active}>
         <ChromePicker
           color={pickerColor}
@@ -75,7 +82,7 @@ const FieldColor = ({ color, onColorChange }: FieldColorProps) => {
           }}
         />
       </Picker>
-    </div>
+    </Wrapper>
   )
 }
 

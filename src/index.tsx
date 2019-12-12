@@ -11,14 +11,14 @@ ReactDOM.render(
       type: 'background',
       position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
       dimension: { disabled: false, width: 800, height: 160 },
-      color: { background: '#FFF000', foreground: '#000' },
+      color: { background: 'transparent', foreground: 'transparent' },
       value: '',
       items: [
         {
           type: 'textstatic',
           position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
           dimension: { disabled: false, width: 0, height: 0 },
-          color: { foreground: '#000', background: 'transparent' },
+          color: { foreground: '#FF0000', background: 'transparent' },
           value: 'Here some text',
           items: [],
           group: false,
@@ -43,7 +43,7 @@ ReactDOM.render(
       ],
       group: true,
       id: '_fwj5jm4rz',
-      name: 'Background1',
+      name: 'Background',
       level: 0
     }}
   />,

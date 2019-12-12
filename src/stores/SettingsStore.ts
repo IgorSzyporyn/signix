@@ -5,11 +5,11 @@ import initSettings from './settings/initSettings'
 
 export type SettingsStoreInterface = SettingsInterface
 
-export const initSettingsStore = (settings: SettingsInterface) => {
+export const initSettingsStore = (settings: SettingsStoreInterface) => {
   SettingsStore.set(() => ({ settings: { ...initSettings(settings) } }))
 }
 
-const initDefaultValues = (settings: SettingsInterface) => {
+const initDefaultValues = (settings: SettingsStoreInterface) => {
   const store: SettingsStoreInterface = initSettings(settings)
 
   return store

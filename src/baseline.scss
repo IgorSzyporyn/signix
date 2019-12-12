@@ -14,7 +14,7 @@ body {
 }
 
 h1 {
-  font-size: 2.2rem;
+  font-size: 1.9rem;
   margin: 0;
 }
 
@@ -29,7 +29,6 @@ h3 {
   font-weight: 500;
   margin: 0;
 }
-
 
 h4 {
   font-size: 1.4rem;
@@ -53,8 +52,11 @@ h6 {
   --quarter-gutter: 0.2rem;
   --half-gutter: 0.4rem;
   --gutter: 0.8rem;
+  --gutter-large: 1.4rem;
   --spacing: 1.6rem;
-  --double-spacing: 3.2rem;
+  --spacing-small: 1.2rem;
+  --spacing-medium: 2rem;
+  --spacing-large: 3.2rem;
 
   --color-black: #000000;
   --color-pitch: #0d0f11;
@@ -71,7 +73,10 @@ h6 {
   --color-lightblue: #2a69dd;
   --color-yellow: #ffff00;
   --color-green: #46a746;
-  --color-red: #dd5050;
+  --color-red: #e22020;
+  --color-persianred: #cd2c2c;
+  --color-cardinal: #b11647;
+  --color-piper: #cd6a2c;
   --color-purple: #8f4b8f;
   --color-fuscia: #ee1eee;
   --color-disco: #9c2069;
@@ -79,7 +84,9 @@ h6 {
   --color-lightorange: #ffc760;
   --color-darkslate: #2e454b;
 
+  --color-active: #2a69dd;
+
   --color-drag-accept: #021580;
   --color-drag-drop-ready: #00ad2b;
-
+  --color-drag-drop-over: #00f93e;
 }

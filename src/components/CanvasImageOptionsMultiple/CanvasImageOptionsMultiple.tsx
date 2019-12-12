@@ -1,7 +1,11 @@
 import React, { ImgHTMLAttributes } from 'react'
 import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
 
-const CanvasImage = ({ style = {}, model, ...props }: WithCanvasProps) => {
+const CanvasImageOptionsMultiple = ({
+  style = {},
+  model,
+  ...props
+}: WithCanvasProps) => {
   const dimensions: Pick<
     ImgHTMLAttributes<HTMLImageElement>,
     'width' | 'height'
@@ -19,10 +23,14 @@ const CanvasImage = ({ style = {}, model, ...props }: WithCanvasProps) => {
   }
 
   return (
-    <div style={style} {...props}>
-      <img alt={model.type} src={model.value as string} {...dimensions} />
-    </div>
+    <img
+      alt={model.type}
+      src={model.value as string}
+      {...dimensions}
+      style={style}
+      {...props}
+    />
   )
 }
 
-export default withCanvas(CanvasImage)
+export default withCanvas(CanvasImageOptionsMultiple)

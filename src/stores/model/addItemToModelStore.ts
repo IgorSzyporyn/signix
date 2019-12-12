@@ -17,7 +17,9 @@ const addItemToModelStore = (
     // We are adding an item to another item
     const parent = searchModelById(parentId)
 
-    if (parent) {
+    // Make sure we only add items to other items
+    // with the group capability
+    if (parent && parent.group) {
       const itemToAdd = initModel(source, source.type, parentId, parent.level)
       parent.items.push(itemToAdd)
     }

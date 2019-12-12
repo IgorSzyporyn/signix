@@ -26,7 +26,7 @@ const Wrapper = styled.li`
 const Heading = styled.div`
   border-left: var(--half-gutter) solid transparent;
   padding: var(--gutter) var(--gutter) var(--gutter)
-    calc(var(--spacing) + var(--half-gutter));
+    calc(var(--spacing-medium) - 0.2rem);
 
   &[data-active='true'] {
     color: var(--color-white);

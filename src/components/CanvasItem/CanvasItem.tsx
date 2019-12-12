@@ -1,32 +1,39 @@
+import { useStore } from 'laco-react'
 import React from 'react'
-import ModelInterface from '../../types/ModelInterface'
-import CanvasGroup from '../CanvasGroup/CanvasGroup'
-import CanvasImage from '../CanvasImage/CanvasImage'
-import CanvasText from '../CanvasText/CanvasText'
-import CanvasBackground from '../CanvasBackground/CanvasBackground'
 import withCanvas from '../../hoc/withCanvas'
 import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
-import { useStore } from 'laco-react'
-import './CanvasItem.scss'
+import ModelInterface from '../../types/ModelInterface'
+import CanvasBackground from '../CanvasBackground/CanvasBackground'
+import CanvasGroup from '../CanvasGroup/CanvasGroup'
+import CanvasImageDynamic from '../CanvasImageDynamic/CanvasImageDynamic'
+import CanvasImageOptions from '../CanvasImageOptions/CanvasImageOptions'
+import CanvasImageOptionsMultiple from '../CanvasImageOptionsMultiple/CanvasImageOptionsMultiple'
+import CanvasImageStatic from '../CanvasImageStatic/CanvasImageStatic'
+import CanvasTextDynamic from '../CanvasTextDynamic/CanvasTextDynamic'
+import CanvasTextOptions from '../CanvasTextOptions/CanvasTextOptions'
+import CanvasTextStatic from '../CanvasTextStatic/CanvasTextStatic'
 
 type CanvasItemProps = {
   model: ModelInterface
+  style?: React.CSSProperties
 }
 
 const getComponent = (
-  { model, ...props }: CanvasItemProps,
+  { model, style, ...props }: CanvasItemProps,
   active?: string
 ) => {
   let Component = null
+  const canvasStyle: React.CSSProperties = {}
+
+  if (active === model.id) {
+    canvasStyle.outline = '0.1rem solid var(--color-lightblue)'
+  }
 
   let canvasProps = {
     ...props,
     className: `canvas-item-${model.type}`,
-    model
-  }
-
-  if (active === model.id) {
-    canvasProps.className += ` canvas-item-active`
+    model,
+    style: { ...(style || {}), ...canvasStyle }
   }
 
   switch (model.type) {
@@ -38,13 +45,26 @@ const getComponent = (
       break
     case 'text':
     case 'textstatic':
+      Component = <CanvasTextStatic {...canvasProps} />
+      break
     case 'textdynamic':
-      Component = <CanvasText {...canvasProps} />
+      Component = <CanvasTextDynamic {...canvasProps} />
+      break
+    case 'textoptions':
+      Component = <CanvasTextOptions {...canvasProps} />
       break
     case 'image':
     case 'imagestatic':
+      Component = <CanvasImageStatic {...canvasProps} />
+      break
     case 'imagedynamic':
-      Component = <CanvasImage {...canvasProps} />
+      Component = <CanvasImageDynamic {...canvasProps} />
+      break
+    case 'imageoptions':
+      Component = <CanvasImageOptions {...canvasProps} />
+      break
+    case 'imageoptionsmultiple':
+      Component = <CanvasImageOptionsMultiple {...canvasProps} />
       break
     default:
       Component = null
