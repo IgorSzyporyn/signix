@@ -14,7 +14,7 @@ type ModelInterface = {
   name?: string
   options?: ModelOptionsInterface[]
   parentId?: string
-  value?: string[] | string
+  value?: string
   hidden?: boolean
   font: ModelFontInterface
   background: ModelBackgroundInterface

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<DropContainerProps>`
   position: absolute;
   left: 0;
   right: 0;
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   outline: 0.1rem dashed var(--color-drag-drop-ready);
   opacity: 0;
 
-  ${({ isActive }: DropContainerProps) => {
+  ${({ isActive }) => {
     if (isActive) {
       return `outline: 0.1rem solid var(--color-drag-drop-over);`
     } else {
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     }
   }}
 
-  ${({ canDrop }: DropContainerProps) => {
+  ${({ canDrop }) => {
     if (canDrop) {
       return `opacity: 1;`
     } else {
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     }
   }}
 
-${({ level }: DropContainerProps) => {
+${({ level }) => {
   if (level) {
     return `z-index: ${level};`
   } else {

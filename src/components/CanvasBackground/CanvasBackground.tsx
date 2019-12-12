@@ -1,5 +1,5 @@
 import React from 'react'
-import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
+import { WithCanvasProps } from '../../hoc/withCanvas'
 import CanvasItems from '../CanvasItems/CanvasItems'
 
 const CanvasBackground = ({ style, model, ...props }: WithCanvasProps) => (
@@ -8,4 +8,4 @@ const CanvasBackground = ({ style, model, ...props }: WithCanvasProps) => (
   </div>
 )
 
-export default withCanvas(CanvasBackground)
+export default CanvasBackground

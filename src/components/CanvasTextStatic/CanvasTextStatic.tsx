@@ -13,7 +13,7 @@ const CanvasTextStatic = ({ model, ...props }: WithCanvasProps) => {
         updateActiveInModelStore(model.id)
       }}
       {...props}
-      alt={model.value as string}
+      alt={model.value}
       src={`http://localhost:8000/render/text.png?model=${modelAsQuery}`}
     />
   )

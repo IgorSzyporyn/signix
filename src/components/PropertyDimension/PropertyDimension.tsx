@@ -6,33 +6,6 @@ import FieldInput from '../FieldInput/FieldInput'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalFieldContainer'
 
-const handleWidthChange = (value: string, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    dimension: { ...model.dimension, width: +value }
-  }
-
-  updateItemInModelStore(newModel)
-}
-
-const handleHeightChange = (value: string, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    dimension: { ...model.dimension, height: +value }
-  }
-
-  updateItemInModelStore(newModel)
-}
-
-const handleDisableChange = (checked: boolean, model: ModelInterface) => {
-  const newModel = {
-    ...model,
-    dimension: { ...model.dimension, disabled: checked }
-  }
-
-  updateItemInModelStore(newModel)
-}
-
 type PropertyDimensionProps = {
   model: ModelInterface
 }
@@ -47,7 +20,10 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
         inline={true}
         checked={dimension.disabled}
         onChange={e => {
-          handleDisableChange(e.target.checked, model)
+          updateItemInModelStore({
+            ...model,
+            dimension: { ...model.dimension, disabled: e.target.checked }
+          })
         }}
       />
       <HorizontalFieldContainer>
@@ -56,7 +32,10 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
           type="number"
           value={dimension.width}
           onChange={e => {
-            handleWidthChange(e.target.value, model)
+            updateItemInModelStore({
+              ...model,
+              dimension: { ...model.dimension, width: +e.target.value }
+            })
           }}
           disabled={dimension.disabled}
         />
@@ -65,7 +44,10 @@ const PropertyDimension = ({ model }: PropertyDimensionProps) => {
           type="number"
           value={dimension.height}
           onChange={e => {
-            handleHeightChange(e.target.value, model)
+            updateItemInModelStore({
+              ...model,
+              dimension: { ...model.dimension, height: +e.target.value }
+            })
           }}
           disabled={dimension.disabled}
         />

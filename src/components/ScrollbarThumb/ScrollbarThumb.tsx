@@ -1,10 +1,10 @@
 import React from 'react'
 
 type ScrollbarThumbProps = {
-  style: React.CSSProperties
+  style?: React.CSSProperties
 }
 
-const ScrollbarThumb = ({ style, ...props }: ScrollbarThumbProps) => {
+const ScrollbarThumb = ({ style = {}, ...props }: ScrollbarThumbProps) => {
   const viewStyle = {
     backgroundColor: 'var(--color-light)',
     borderRadius: '0.5rem'

@@ -41,7 +41,7 @@ const RGBToString = (rgb: RGBColor) => {
 }
 
 type FieldColorProps = {
-  color: string
+  color?: string
   onColorChange?: (color: string) => void
 } & WithFieldProps &
   InputHTMLAttributes<HTMLInputElement>
@@ -69,19 +69,21 @@ const FieldColor = ({ color, onColorChange }: FieldColorProps) => {
           style={{ backgroundColor: pickerColor }}
         />
       </TransparencyBackground>
-      <Picker hidden={!active}>
-        <ChromePicker
-          color={pickerColor}
-          onChange={_color => {
-            const _colorString = RGBToString(_color.rgb)
-            setPickerColor(_colorString)
-          }}
-          onChangeComplete={_color => {
-            const _colorString = RGBToString(_color.rgb)
-            onColorChange && onColorChange(_colorString)
-          }}
-        />
-      </Picker>
+      {active && (
+        <Picker>
+          <ChromePicker
+            color={pickerColor}
+            onChange={_color => {
+              const _colorString = RGBToString(_color.rgb)
+              setPickerColor(_colorString)
+            }}
+            onChangeComplete={_color => {
+              const _colorString = RGBToString(_color.rgb)
+              onColorChange && onColorChange(_colorString)
+            }}
+          />
+        </Picker>
+      )}
     </Wrapper>
   )
 }

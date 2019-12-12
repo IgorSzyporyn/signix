@@ -33,4 +33,4 @@ const CanvasImageDynamic = ({
   )
 }
 
-export default withCanvas(CanvasImageDynamic)
+export default CanvasImageDynamic

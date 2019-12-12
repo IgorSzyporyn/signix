@@ -1,6 +1,6 @@
 import React, { CSSProperties, MouseEvent } from 'react'
-import styled from 'styled-components'
 import updateActiveInModelStore from '../stores/model/updateActiveInModelStore'
+import updateActionInSettingsStore from '../stores/settings/updateActionInSettingsStore'
 import ModelInterface from '../types/ModelInterface'
 import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
 import convertColorToCSS, {
@@ -12,7 +12,6 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
-import updateActionInSettingsStore from '../stores/settings/updateActionInSettingsStore'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,

@@ -9,7 +9,9 @@ export default {
 
 export const Default = () => <FieldColor />
 
-export const WithTitle = () => <FieldColor title="Here label title" />
+export const WithColorSet = () => (
+  <FieldColor title="Here label title" color="#ff0000" />
+)
 
 export const Disabled = () => (
   <FieldColor disabled={true} title="Disabled field" />
