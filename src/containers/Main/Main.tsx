@@ -2,7 +2,7 @@ import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { useStore } from 'laco-react'
-import React, { useMemo } from 'react'
+import React from 'react'
 import SplitPane from 'react-split-pane'
 import styled from 'styled-components'
 import Canvas from '../../components/Canvas/Canvas'
@@ -14,11 +14,9 @@ import Settings from '../../components/Settings/Settings'
 import TabPanel from '../../components/TabPanel/TabPanel'
 import Toolbox from '../../components/Toolbox/Toolbox'
 import VerticalTabPanel from '../../components/VerticalTabPanel/VerticalTabPanel'
-import AppStore from '../../stores/AppStore'
-import updateActionAreaInAppStore from '../../stores/appStore/updateActionAreaInAppStore'
-import updateMainAreaInAppStore from '../../stores/appStore/updateMainAreaInAppStore'
-import updateUtilityAreaInAppStore from '../../stores/appStore/updateUtilityAreaInAppStore'
-import AppStoreInterface from '../../types/AppStoreInterface'
+import AppTabStore from '../../stores/AppTabStore'
+import AppTabStoreInterface from '../../types/AppTabStoreInterface'
+import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
@@ -44,6 +42,14 @@ const UtilityAreaContainer = styled.div`
 `
 
 const Main = () => {
+  const {
+    actionAreaActiveTab,
+    mainAreaActiveTab,
+    utilityAreaActiveTab
+  }: AppTabStoreInterface = useStore(AppTabStore)
+
+  console.log(actionAreaActiveTab)
+
   return (
     <SplitPane
       split="vertical"
@@ -55,6 +61,10 @@ const Main = () => {
       <PaneContainerPrimary>
         <UtilityAreaContainer>
           <VerticalTabPanel
+            activeTab={utilityAreaActiveTab}
+            changeHandler={utilityAreaActiveTab => {
+              updateActiveTabInAppTabStore({ utilityAreaActiveTab })
+            }}
             titles={['Toolbox', 'Settings', 'Media Explorer']}
             tabs={[
               <MUIcon size="large" render={p => <ExtensionIcon {...p} />} />,
@@ -66,6 +76,10 @@ const Main = () => {
         </UtilityAreaContainer>
         <MainAreaContainer>
           <TabPanel
+            activeTab={mainAreaActiveTab}
+            changeHandler={mainAreaActiveTab => {
+              updateActiveTabInAppTabStore({ mainAreaActiveTab })
+            }}
             titles={['Canvas with the signature items', 'The form user uses']}
             tabs={['Canvas', 'Form']}
             panels={[<Canvas />, <Form />]}
@@ -74,6 +88,10 @@ const Main = () => {
       </PaneContainerPrimary>
       <PaneContainerSecondary>
         <TabPanel
+          activeTab={actionAreaActiveTab}
+          changeHandler={actionAreaActiveTab => {
+            updateActiveTabInAppTabStore({ actionAreaActiveTab })
+          }}
           titles={[
             'Layers of canvas items',
             'Properties of selected item',

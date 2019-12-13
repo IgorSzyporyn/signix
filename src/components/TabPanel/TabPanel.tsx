@@ -57,14 +57,14 @@ const PanelItems = styled.div`
 const createTabItems = (
   titles: string[],
   tabs: React.ReactNode[],
-  active: number,
-  onClick?: (active: number) => void
+  activeTab: number,
+  onClick?: (activeTab: number) => void
 ) =>
   tabs.map((tab, index) => {
     return (
       <PanelTab
         title={titles[index]}
-        active={active === index}
+        active={activeTab === index}
         key={`tabpanel-tab-${index}-${uniqueId()}`}
         onClick={() => {
           onClick && onClick(index)
@@ -75,11 +75,11 @@ const createTabItems = (
     )
   })
 
-const createPanelItems = (panels: React.ReactNode[], active: number) =>
+const createPanelItems = (panels: React.ReactNode[], activeTab: number) =>
   panels.map((panel, index) => {
     return (
       <PanelItem
-        hidden={active !== index}
+        hidden={activeTab !== index}
         key={`tabpanel-panel-${index}-${uniqueId()}`}
       >
         {panel}
@@ -90,25 +90,25 @@ const createPanelItems = (panels: React.ReactNode[], active: number) =>
 const PanelItem = styled.div``
 
 type TabPanelProps = {
-  titles: string[]
-  tabs: React.ReactNode[]
+  activeTab: number
+  changeHandler: (activeTab: number) => void
   panels: React.ReactNode[]
-  active?: number
+  tabs: React.ReactNode[]
   tabsStyle?: React.CSSProperties
+  titles: string[]
 }
 
 const TabPanel = ({
-  titles,
+  activeTab,
+  changeHandler,
+  panels,
   tabs,
   tabsStyle = {},
-  panels,
-  active
+  titles
 }: TabPanelProps) => {
-  const [activeTab, setActiveTab] = useState(active || 0)
-
   const tabItems = useMemo(
-    () => createTabItems(titles, tabs, activeTab, setActiveTab),
-    [titles, tabs, activeTab, setActiveTab]
+    () => createTabItems(titles, tabs, activeTab, changeHandler),
+    [titles, tabs, activeTab, changeHandler]
   )
 
   const panelItems = useMemo(() => createPanelItems(panels, activeTab), [

@@ -8,15 +8,6 @@ const appStoreDefaults: AppStoreInterface = {
     dropReady: '#00ad2b',
     dropOver: '#00f93e'
   },
-  utilityArea: {
-    activeTab: 0
-  },
-  mainArea: {
-    activeTab: 0
-  },
-  actionArea: {
-    activeTab: 0
-  },
   expanded: {},
   activeModelId: undefined,
   editingModelId: undefined

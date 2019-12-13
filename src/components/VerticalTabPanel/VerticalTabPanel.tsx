@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import getFontSize from '../../utils/getFontSize'
 import { uniqueId } from '../../utils/utilities'
@@ -93,25 +93,25 @@ const createPanelItems = (panels: Array<React.ReactNode>, active: number) =>
 const PanelItem = styled.div``
 
 type VerticalTabPanelProps = {
-  titles: string[]
-  tabs: Array<React.ReactNode>
-  panels: Array<React.ReactNode>
-  active?: number
+  activeTab: number
+  changeHandler: (activeTab: number) => void
+  panels: React.ReactNode[]
+  tabs: React.ReactNode[]
   tabsStyle?: React.CSSProperties
+  titles: string[]
 }
 
 const VerticalTabPanel = ({
-  titles,
+  activeTab,
+  changeHandler,
+  panels,
   tabs,
   tabsStyle = {},
-  panels,
-  active
+  titles
 }: VerticalTabPanelProps) => {
-  const [activeTab, setActiveTab] = useState(active || 0)
-
   const tabItems = useMemo(
-    () => createTabItems(titles, tabs, activeTab, setActiveTab),
-    [titles, tabs, activeTab, setActiveTab]
+    () => createTabItems(titles, tabs, activeTab, changeHandler),
+    [titles, tabs, activeTab, changeHandler]
   )
 
   const panelItems = useMemo(() => createPanelItems(panels, activeTab), [

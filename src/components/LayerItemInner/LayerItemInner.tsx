@@ -6,9 +6,9 @@ import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import AppStore from '../../stores/AppStore'
-import updateActionAreaInAppStore from '../../stores/appStore/updateActionAreaInAppStore'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 import updateEditingModelInAppStore from '../../stores/appStore/updateEditingModelInAppStore'
+import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 import deleteItemInModelStore from '../../stores/model/deleteItemInModelStore'
@@ -165,7 +165,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
           />
           <TitleWrapper
             onDoubleClick={() => {
-              updateActionAreaInAppStore({ activeTab: 1 })
+              updateActiveTabInAppTabStore({ actionAreaActiveTab: 1 })
             }}
           >
             <LayerItemTitle

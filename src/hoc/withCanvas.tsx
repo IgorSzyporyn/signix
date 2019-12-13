@@ -1,5 +1,6 @@
 import React, { CSSProperties, MouseEvent } from 'react'
-import updateActionAreaInAppStore from '../stores/appStore/updateActionAreaInAppStore'
+import updateActiveModelInAppStore from '../stores/appStore/updateActiveModelInAppStore'
+import updateActiveTabInAppTabStore from '../stores/appTabStore/updateActiveTabInAppTabStore'
 import ModelInterface from '../types/ModelInterface'
 import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
 import convertColorToCSS, {
@@ -11,7 +12,6 @@ import convertDimensionToCSS, {
 import convertPositionToCSS, {
   PositionCSSProperties
 } from '../utils/convertPositionToCSS'
-import updateActiveModelInAppStore from '../stores/appStore/updateActiveModelInAppStore'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,
@@ -56,7 +56,7 @@ const withCanvas = <P extends object>(Component: React.ComponentType<P>) =>
           }}
           onDoubleClick={(e: MouseEvent<HTMLDivElement>) => {
             e.stopPropagation()
-            updateActionAreaInAppStore({ activeTab: 1 })
+            updateActiveTabInAppTabStore({ actionAreaActiveTab: 1 })
           }}
           hidden={model.hidden}
           style={style}

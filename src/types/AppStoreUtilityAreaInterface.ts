@@ -1,5 +1,3 @@
-type AppStoreUtilityAreaInterface = {
-  activeTab: number
-}
+type AppStoreUtilityAreaInterface = {}
 
 export default AppStoreUtilityAreaInterface
