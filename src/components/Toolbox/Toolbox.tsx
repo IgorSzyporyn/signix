@@ -1,5 +1,4 @@
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
-import ExtensionIcon from '@material-ui/icons/Extension'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'

@@ -1,5 +1,5 @@
 import React from 'react'
-import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
+import { WithCanvasProps } from '../../hoc/withCanvas'
 import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import convertModelToQueryString from '../../utils/convertModelToQueryString'
 
@@ -19,4 +19,4 @@ const CanvasTextDynamic = ({ model, ...props }: WithCanvasProps) => {
   )
 }
 
-export default withCanvas(CanvasTextDynamic)
+export default CanvasTextDynamic

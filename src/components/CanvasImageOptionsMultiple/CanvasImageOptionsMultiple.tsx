@@ -1,5 +1,5 @@
 import React, { ImgHTMLAttributes } from 'react'
-import withCanvas, { WithCanvasProps } from '../../hoc/withCanvas'
+import { WithCanvasProps } from '../../hoc/withCanvas'
 
 const CanvasImageOptionsMultiple = ({
   style = {},
@@ -33,4 +33,4 @@ const CanvasImageOptionsMultiple = ({
   )
 }
 
-export default withCanvas(CanvasImageOptionsMultiple)
+export default CanvasImageOptionsMultiple
