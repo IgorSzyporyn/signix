@@ -11,6 +11,9 @@ import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
+import AppStoreInterface from '../../types/AppStoreInterface'
+import AppStore from '../../stores/AppStore'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
 
 type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
 
@@ -28,10 +31,9 @@ const TitleContainer = styled.div`
 `
 
 const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
-  const model = Models[type]
-  const modelStore = useStore(ModelStore)
-  const modelStoreActiveId = modelStore.active
-  const modelStoreRootModel = modelStore.model
+  const { model: rootModel }: ModelStoreInterface = useStore(ModelStore)
+  const { activeModelId }: AppStoreInterface = useStore(AppStore)
+  const modelTemplate = Models[type]
 
   const [{ isDragging }, drag] = useDrag({
     begin: () => {
@@ -41,7 +43,7 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
     end: (item: { name: string } | undefined, monitor: DragSourceMonitor) => {
       const dropResult = monitor.getDropResult()
       if (item && dropResult) {
-        addItemToModelStore(model, dropResult.id)
+        addItemToModelStore(modelTemplate, dropResult.id)
       }
     },
     collect: monitor => ({
@@ -55,19 +57,16 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
       view={view}
       isDragging={isDragging}
       onDoubleClick={() => {
-        if (modelStoreActiveId) {
-          const activeModel = getModelById(
-            modelStoreActiveId,
-            modelStoreRootModel
-          )
+        if (activeModelId) {
+          const activeModel = getModelById(activeModelId, rootModel)
 
           if (activeModel && activeModel.id) {
             if (activeModel.group) {
-              addItemToModelStore(model, activeModel.id)
+              addItemToModelStore(modelTemplate, activeModel.id)
             } else if (activeModel.parentId) {
               const activeParentModel = getModelById(
                 activeModel.parentId,
-                modelStoreRootModel
+                rootModel
               )
 
               if (
@@ -75,14 +74,14 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
                 activeParentModel.id &&
                 activeParentModel.group
               ) {
-                addItemToModelStore(model, activeParentModel.id)
+                addItemToModelStore(modelTemplate, activeParentModel.id)
               }
             }
           }
         }
       }}
     >
-      <ModelTypeIcon type={model.type} size="medium" hasItems={true} />
+      <ModelTypeIcon type={type} size="medium" hasItems={true} />
       {view === 'list' && (
         <TitleContainer>
           <h4>{title}</h4>

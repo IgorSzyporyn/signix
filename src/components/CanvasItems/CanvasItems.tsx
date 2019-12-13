@@ -29,7 +29,7 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
 
   return (
     <>
-      {model.items &&
+      {model.items.length > 0 &&
         model.items.map(item => (
           <CanvasItem
             key={`canvas-key${item.id}`}

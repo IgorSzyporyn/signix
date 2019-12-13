@@ -2,7 +2,7 @@ import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { useStore } from 'laco-react'
-import React from 'react'
+import React, { useMemo } from 'react'
 import SplitPane from 'react-split-pane'
 import styled from 'styled-components'
 import Canvas from '../../components/Canvas/Canvas'
@@ -44,10 +44,6 @@ const UtilityAreaContainer = styled.div`
 `
 
 const Main = () => {
-  const { actionArea, mainArea, utilityArea }: AppStoreInterface = useStore(
-    AppStore
-  )
-
   return (
     <SplitPane
       split="vertical"
@@ -59,7 +55,6 @@ const Main = () => {
       <PaneContainerPrimary>
         <UtilityAreaContainer>
           <VerticalTabPanel
-            active={utilityArea.activeTab}
             titles={['Toolbox', 'Settings', 'Media Explorer']}
             tabs={[
               <MUIcon size="large" render={p => <ExtensionIcon {...p} />} />,
@@ -67,26 +62,18 @@ const Main = () => {
               <MUIcon size="large" render={p => <ExploreIcon {...p} />} />
             ]}
             panels={[<Toolbox />, <Settings />, <div />]}
-            onClick={activeTab => {
-              updateUtilityAreaInAppStore({ activeTab })
-            }}
           />
         </UtilityAreaContainer>
         <MainAreaContainer>
           <TabPanel
-            active={mainArea.activeTab}
             titles={['Canvas with the signature items', 'The form user uses']}
             tabs={['Canvas', 'Form']}
             panels={[<Canvas />, <Form />]}
-            onClick={activeTab => {
-              updateMainAreaInAppStore({ activeTab })
-            }}
           />
         </MainAreaContainer>
       </PaneContainerPrimary>
       <PaneContainerSecondary>
         <TabPanel
-          active={actionArea.activeTab}
           titles={[
             'Layers of canvas items',
             'Properties of selected item',
@@ -94,9 +81,6 @@ const Main = () => {
           ]}
           tabs={['Layers', 'Properties', 'API']}
           panels={[<Layers />, <Properties />, <div>Here API Interface</div>]}
-          onClick={activeTab => {
-            updateActionAreaInAppStore({ activeTab })
-          }}
         />
       </PaneContainerSecondary>
     </SplitPane>

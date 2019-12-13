@@ -1,5 +1,4 @@
 import React from 'react'
-import { useMeasure } from 'react-use'
 import styled from 'styled-components'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
@@ -15,24 +14,11 @@ const ListItem = styled.li`
   padding: var(--gutter) 0;
 `
 
-type GridContainerProps = {
-  width: number
-}
-
 const GridContainer = styled.div`
   padding-top: var(--half-gutter);
   display: grid;
   grid-gap: var(--half-gutter);
-
-  ${({ width }: GridContainerProps) => {
-    if (width > 340) {
-      return `grid-template-columns: 1fr 1fr 1fr 1fr 1fr;`
-    } else if (width > 270) {
-      return `grid-template-columns: 1fr 1fr 1fr 1fr;`
-    } else {
-      return `grid-template-columns: 1fr 1fr 1fr;`
-    }
-  }}
+  grid-template-columns: 1fr 1fr 1fr;
 `
 
 const GridItem = styled.div`
@@ -93,10 +79,8 @@ type ToolboxItemsProps = {
 }
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {
-  const [ref, { width }] = useMeasure()
-
   return (
-    <div ref={ref}>
+    <div>
       {view === 'list' && (
         <ListContainer>
           {toolboxItems.map(toolboxItem => (
@@ -107,7 +91,7 @@ const ToolboxItems = ({ view }: ToolboxItemsProps) => {
         </ListContainer>
       )}
       {view === 'grid' && (
-        <GridContainer width={width}>
+        <GridContainer>
           {toolboxItems.map(toolboxItem => (
             <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
               <ToolboxItem {...toolboxItem} view="grid" />

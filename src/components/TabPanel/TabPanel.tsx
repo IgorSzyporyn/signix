@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import getFontSize from '../../utils/getFontSize'
 import { uniqueId } from '../../utils/utilities'
@@ -93,9 +93,8 @@ type TabPanelProps = {
   titles: string[]
   tabs: React.ReactNode[]
   panels: React.ReactNode[]
-  active: number
+  active?: number
   tabsStyle?: React.CSSProperties
-  onClick?: (active: number) => void
 }
 
 const TabPanel = ({
@@ -103,17 +102,18 @@ const TabPanel = ({
   tabs,
   tabsStyle = {},
   panels,
-  active,
-  onClick
+  active
 }: TabPanelProps) => {
+  const [activeTab, setActiveTab] = useState(active || 0)
+
   const tabItems = useMemo(
-    () => createTabItems(titles, tabs, active, onClick),
-    [titles, tabs, active, onClick]
+    () => createTabItems(titles, tabs, activeTab, setActiveTab),
+    [titles, tabs, activeTab, setActiveTab]
   )
 
-  const panelItems = useMemo(() => createPanelItems(panels, active), [
+  const panelItems = useMemo(() => createPanelItems(panels, activeTab), [
     panels,
-    active
+    activeTab
   ])
 
   return (

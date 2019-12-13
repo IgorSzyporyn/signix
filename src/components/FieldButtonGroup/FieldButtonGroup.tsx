@@ -29,8 +29,8 @@ type FieldButtonGroupProps = {
   children?: React.ReactNode
 }
 
-const FieldButtonGroup = ({ children }: FieldButtonGroupProps) => (
-  <Wrapper>{children}</Wrapper>
-)
+const FieldButtonGroup = ({ children }: FieldButtonGroupProps) => {
+  return <Wrapper>{children}</Wrapper>
+}
 
 export default FieldButtonGroup

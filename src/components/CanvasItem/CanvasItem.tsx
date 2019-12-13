@@ -21,18 +21,17 @@ type CanvasItemProps = {
 
 const getComponent = (
   { model, style, ...props }: CanvasItemProps,
-  active?: string
+  activeModelId?: string
 ) => {
   let Component = null
   const canvasStyle: React.CSSProperties = {}
 
-  if (active === model.id) {
+  if (activeModelId === model.id) {
     canvasStyle.outline = '0.1rem solid var(--color-lightblue)'
   }
 
   let canvasProps = {
     ...props,
-    className: `canvas-item-${model.type}`,
     model,
     style: { ...(style || {}), ...canvasStyle }
   }

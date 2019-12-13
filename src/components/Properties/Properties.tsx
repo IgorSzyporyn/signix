@@ -30,10 +30,10 @@ const PanelBodyEmpty = styled.div`
 `
 
 const Properties = () => {
-  const { model }: ModelStoreInterface = useStore(ModelStore)
+  const { model: rootModel }: ModelStoreInterface = useStore(ModelStore)
   const appStore: AppStoreInterface = useStore(AppStore)
 
-  const activeModel = getModelById(appStore.activeModelId, model)
+  const activeModel = getModelById(appStore.activeModelId, rootModel)
 
   return (
     <Panel>

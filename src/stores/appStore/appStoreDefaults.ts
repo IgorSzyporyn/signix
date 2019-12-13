@@ -1,9 +1,6 @@
 import AppStoreInterface from '../../types/AppStoreInterface'
 
 const appStoreDefaults: AppStoreInterface = {
-  toolbox: {
-    view: 'list'
-  },
   canvas: {
     background: '#1c2022',
     active: '#2a69dd',

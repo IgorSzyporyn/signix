@@ -4,7 +4,8 @@ import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModel
 import convertModelToQueryString from '../../utils/convertModelToQueryString'
 
 const CanvasTextDynamic = ({ model, ...props }: WithCanvasProps) => {
-  const modelAsQuery = convertModelToQueryString(model)
+  const { font, color, value } = model
+  const textQuery = convertModelToQueryString({ font, color, value })
 
   return (
     <img
@@ -14,7 +15,7 @@ const CanvasTextDynamic = ({ model, ...props }: WithCanvasProps) => {
       }}
       {...props}
       alt={model.value}
-      src={`http://localhost:8000/render/text.png?model=${modelAsQuery}`}
+      src={`http://localhost:8000/render/text.png?model=${textQuery}`}
     />
   )
 }

@@ -29,9 +29,6 @@ const CoreModel: ModelInterface = {
     position: 'center'
   },
   options: [],
-  group: false,
-  hidden: false,
-  unique: false,
   value: ''
 }
 

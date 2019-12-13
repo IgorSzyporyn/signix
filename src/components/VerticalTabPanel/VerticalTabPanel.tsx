@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import getFontSize from '../../utils/getFontSize'
 import { uniqueId } from '../../utils/utilities'
@@ -98,7 +98,6 @@ type VerticalTabPanelProps = {
   panels: Array<React.ReactNode>
   active?: number
   tabsStyle?: React.CSSProperties
-  onClick?: (active: number) => void
 }
 
 const VerticalTabPanel = ({
@@ -106,17 +105,18 @@ const VerticalTabPanel = ({
   tabs,
   tabsStyle = {},
   panels,
-  active,
-  onClick
+  active
 }: VerticalTabPanelProps) => {
+  const [activeTab, setActiveTab] = useState(active || 0)
+
   const tabItems = useMemo(
-    () => createTabItems(titles, tabs, active || 0, onClick),
-    [titles, tabs, active, onClick]
+    () => createTabItems(titles, tabs, activeTab, setActiveTab),
+    [titles, tabs, activeTab, setActiveTab]
   )
 
-  const panelItems = useMemo(() => createPanelItems(panels, active || 0), [
+  const panelItems = useMemo(() => createPanelItems(panels, activeTab), [
     panels,
-    active
+    activeTab
   ])
 
   return (

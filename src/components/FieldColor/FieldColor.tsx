@@ -1,8 +1,8 @@
-import React, { InputHTMLAttributes, useState, useRef } from 'react'
+import React, { InputHTMLAttributes, useRef, useState } from 'react'
 import { ChromePicker, RGBColor } from 'react-color'
-import withField, { WithFieldProps } from '../../hoc/withField'
-import styled from 'styled-components'
 import { useClickAway } from 'react-use'
+import styled from 'styled-components'
+import withField, { WithFieldProps } from '../../hoc/withField'
 import TransparencyBackground from '../TransparencyBackground/TransparencyBackground'
 
 const Wrapper = styled.div`

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div<DropContainerProps>`
+const Wrapper = styled.div<CanvasDropContainerProps>`
   position: absolute;
   left: 0;
   right: 0;
@@ -36,7 +36,7 @@ ${({ level }) => {
 }}
 `
 
-type DropContainerProps = {
+type CanvasDropContainerProps = {
   hidden?: boolean
   isActive: boolean
   canDrop: boolean
@@ -45,7 +45,7 @@ type DropContainerProps = {
 
 const CanvasDropContainer = React.forwardRef<
   HTMLDivElement,
-  DropContainerProps
+  CanvasDropContainerProps
 >((props, ref) => <Wrapper ref={ref} {...props} />)
 
 export default CanvasDropContainer

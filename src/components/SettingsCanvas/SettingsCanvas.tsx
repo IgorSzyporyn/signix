@@ -11,7 +11,7 @@ const SettingsCanvas = (props: SettingsCanvasProps) => {
   const { canvas }: AppStoreInterface = useStore(AppStore)
 
   return (
-    <SettingsPanel title="Canvas" type="canvas">
+    <SettingsPanel title="Canvas" type="utility-settings-canvas">
       <FieldColor
         inline
         labelStyle={{ minWidth: '11rem' }}
