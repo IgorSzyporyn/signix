@@ -5,12 +5,12 @@ import styled from 'styled-components'
 import Models from '../../models/Models'
 import addItemToModelStore from '../../stores/model/addItemToModelStore'
 import getModelById from '../../stores/model/getModelById'
-import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
 import ModelStore from '../../stores/ModelStore'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
+import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 
 type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
 
@@ -35,7 +35,7 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
 
   const [{ isDragging }, drag] = useDrag({
     begin: () => {
-      updateActiveInModelStore(undefined)
+      updateActiveModelInAppStore(undefined)
     },
     item: { name: type, type: DragAndDropTypes.TOOLBOX },
     end: (item: { name: string } | undefined, monitor: DragSourceMonitor) => {

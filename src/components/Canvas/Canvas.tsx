@@ -1,10 +1,11 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
+import ModelStore from '../../stores/ModelStore'
 import CanvasItem from '../CanvasItem/CanvasItem'
 import TransparencyBackground from '../TransparencyBackground/TransparencyBackground'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
+import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 
 const Wrapper = styled.section`
   height: 100%;
@@ -21,7 +22,7 @@ const Canvas = () => {
   return (
     <Wrapper
       onClick={() => {
-        updateActiveInModelStore(undefined)
+        updateActiveModelInAppStore(undefined)
       }}
     >
       <TransparencyBackground>

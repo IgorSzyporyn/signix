@@ -2,8 +2,8 @@ import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import updateExpandedInSettingsStore from '../../stores/settings/updateExpandedInSettingsStore'
-import SettingsStore from '../../stores/SettingsStore'
+import updateExpandedInAppStore from '../../stores/appStore/updateExpandedInAppStore'
+import AppStore from '../../stores/AppStore'
 import MUIcon from '../MUIcon/MUIcon'
 
 const Wrapper = styled.div`
@@ -32,14 +32,14 @@ type SettingsPanelProps = {
 }
 
 const SettingsPanel = ({ type, title, children }: SettingsPanelProps) => {
-  const settingsStore = useStore(SettingsStore)
+  const settingsStore = useStore(AppStore)
   let { [type]: isExpanded } = settingsStore.expanded
 
   return (
     <Wrapper>
       <Heading
         onClick={() => {
-          updateExpandedInSettingsStore(!isExpanded, type!)
+          updateExpandedInAppStore(!isExpanded, type!)
         }}
       >
         <MUIcon

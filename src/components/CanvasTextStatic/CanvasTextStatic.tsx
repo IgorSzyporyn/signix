@@ -1,6 +1,6 @@
 import React from 'react'
 import { WithCanvasProps } from '../../hoc/withCanvas'
-import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
+import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 import convertModelToQueryString from '../../utils/convertModelToQueryString'
 
 const CanvasTextStatic = ({ model, ...props }: WithCanvasProps) => {
@@ -10,7 +10,7 @@ const CanvasTextStatic = ({ model, ...props }: WithCanvasProps) => {
     <img
       onClick={e => {
         e.stopPropagation()
-        updateActiveInModelStore(model.id)
+        updateActiveModelInAppStore(model.id)
       }}
       {...props}
       alt={model.value}

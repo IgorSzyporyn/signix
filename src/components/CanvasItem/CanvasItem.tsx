@@ -1,7 +1,8 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import withCanvas from '../../hoc/withCanvas'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
+import AppStore from '../../stores/AppStore'
+import AppStoreInterface from '../../types/AppStoreInterface'
 import ModelInterface from '../../types/ModelInterface'
 import CanvasBackground from '../CanvasBackground/CanvasBackground'
 import CanvasGroup from '../CanvasGroup/CanvasGroup'
@@ -75,9 +76,9 @@ const getComponent = (
 }
 
 const CanvasItem = (props: CanvasItemProps) => {
-  const { active }: ModelStoreInterface = useStore(ModelStore)
+  const { activeModelId }: AppStoreInterface = useStore(AppStore)
 
-  return getComponent(props, active)
+  return getComponent(props, activeModelId)
 }
 
 export default withCanvas(CanvasItem)

@@ -1,5 +1,6 @@
-import ModelStore, { ModelStoreInterface } from '../ModelStore'
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
+import ModelStore from '../ModelStore'
 
 const searchAndDestroy = (items: ModelInterfacePartial[], id: string) => {
   return items.filter(item => {

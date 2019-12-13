@@ -4,13 +4,14 @@ import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { useStore } from 'laco-react'
 import React from 'react'
 import setAllItemsInLayerStore from '../../stores/layer/setAllItemsInLayerStore'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
+import ModelStore from '../../stores/ModelStore'
 import LayerItem from '../LayerItem/LayerItem'
 import MUIcon from '../MUIcon/MUIcon'
 import Panel from '../Panel/Panel'
 import PanelBody from '../PanelBody/PanelBody'
 import PanelHeader from '../PanelHeader/PanelHeader'
 import styled from 'styled-components'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
 
 const handleCollapseAll = () => {
   setAllItemsInLayerStore(false)

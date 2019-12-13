@@ -3,7 +3,7 @@ import ModelStore from '../ModelStore'
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
 
 export const searchItemsForModelById = (
-  id: string,
+  id: string | undefined,
   items: ModelInterfacePartial[]
 ) => {
   let found: ModelInterfacePartial | null = null
@@ -23,7 +23,7 @@ export const searchItemsForModelById = (
   return found
 }
 
-const getModelById = (id: string, model: ModelInterface) => {
+const getModelById = (id: string | undefined, model: ModelInterface) => {
   let found: ModelInterface | null = null
 
   if (model.id === id) {

@@ -1,3 +1,4 @@
+import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
 import { useStore } from 'laco-react'
@@ -5,6 +6,7 @@ import React from 'react'
 import SplitPane from 'react-split-pane'
 import styled from 'styled-components'
 import Canvas from '../../components/Canvas/Canvas'
+import Form from '../../components/Form/Form'
 import Layers from '../../components/Layers/Layers'
 import MUIcon from '../../components/MUIcon/MUIcon'
 import Properties from '../../components/Properties/Properties'
@@ -12,14 +14,11 @@ import Settings from '../../components/Settings/Settings'
 import TabPanel from '../../components/TabPanel/TabPanel'
 import Toolbox from '../../components/Toolbox/Toolbox'
 import VerticalTabPanel from '../../components/VerticalTabPanel/VerticalTabPanel'
-import updateActionInSettingsStore from '../../stores/settings/updateActionInSettingsStore'
-import updateMainInSettingsStore from '../../stores/settings/updateMainInSetttngsStore'
-import updateUtilityInSettingsStore from '../../stores/settings/updateUtilityInSetttngsStore'
-import ExploreIcon from '@material-ui/icons/Explore'
-import SettingsStore, {
-  SettingsStoreInterface
-} from '../../stores/SettingsStore'
-import Form from '../../components/Form/Form'
+import AppStore from '../../stores/AppStore'
+import updateActionAreaInAppStore from '../../stores/appStore/updateActionAreaInAppStore'
+import updateMainAreaInAppStore from '../../stores/appStore/updateMainAreaInAppStore'
+import updateUtilityAreaInAppStore from '../../stores/appStore/updateUtilityAreaInAppStore'
+import AppStoreInterface from '../../types/AppStoreInterface'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
@@ -45,8 +44,8 @@ const UtilityAreaContainer = styled.div`
 `
 
 const Main = () => {
-  const { action, main, utility }: SettingsStoreInterface = useStore(
-    SettingsStore
+  const { actionArea, mainArea, utilityArea }: AppStoreInterface = useStore(
+    AppStore
   )
 
   return (
@@ -60,7 +59,7 @@ const Main = () => {
       <PaneContainerPrimary>
         <UtilityAreaContainer>
           <VerticalTabPanel
-            active={utility.active}
+            active={utilityArea.activeTab}
             titles={['Toolbox', 'Settings', 'Media Explorer']}
             tabs={[
               <MUIcon size="large" render={p => <ExtensionIcon {...p} />} />,
@@ -68,31 +67,31 @@ const Main = () => {
               <MUIcon size="large" render={p => <ExploreIcon {...p} />} />
             ]}
             panels={[<Toolbox />, <Settings />, <div />]}
-            onClick={active => {
-              updateUtilityInSettingsStore({ active })
+            onClick={activeTab => {
+              updateUtilityAreaInAppStore({ activeTab })
             }}
           />
         </UtilityAreaContainer>
         <MainAreaContainer>
           <TabPanel
-            active={main.active}
-            titles={['Canvas with the signature items', 'The forum user uses']}
+            active={mainArea.activeTab}
+            titles={['Canvas with the signature items', 'The form user uses']}
             tabs={['Canvas', 'Form']}
             panels={[<Canvas />, <Form />]}
-            onClick={active => {
-              updateMainInSettingsStore({ active })
+            onClick={activeTab => {
+              updateMainAreaInAppStore({ activeTab })
             }}
           />
         </MainAreaContainer>
       </PaneContainerPrimary>
       <PaneContainerSecondary>
         <TabPanel
-          active={action.active}
+          active={actionArea.activeTab}
           titles={['Layers of canvas items', 'Properties of selected item']}
           tabs={['Layers', 'Properties']}
           panels={[<Layers />, <Properties />]}
-          onClick={active => {
-            updateActionInSettingsStore({ active })
+          onClick={activeTab => {
+            updateActionAreaInAppStore({ activeTab })
           }}
         />
       </PaneContainerSecondary>

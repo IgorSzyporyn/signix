@@ -1,6 +1,7 @@
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
 import mergeModels from '../../utils/mergeModels'
-import ModelStore, { ModelStoreInterface } from '../ModelStore'
+import ModelStore from '../ModelStore'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
 
 const a = (model: ModelInterfacePartial, updateItem: ModelInterfacePartial) => {
   return model.items!.map(item => {

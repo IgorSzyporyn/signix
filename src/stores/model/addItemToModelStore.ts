@@ -1,6 +1,7 @@
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
 import initModel from '../../utils/initModel'
-import ModelStore, { ModelStoreInterface } from '../ModelStore'
+import ModelStore from '../ModelStore'
 import { searchModelById } from './getModelById'
 
 const addItemToModelStore = (

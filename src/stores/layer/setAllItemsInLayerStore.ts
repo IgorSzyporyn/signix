@@ -1,6 +1,7 @@
-import ModelStore, { ModelStoreInterface } from '../ModelStore'
-import LayerStore, { LayerStoreInterface } from '../LayerStore'
 import ModelInterface from '../../types/ModelInterface'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
+import LayerStore, { LayerStoreInterface } from '../LayerStore'
+import ModelStore from '../ModelStore'
 
 const getValuesByTraversing = (
   model: ModelInterface,

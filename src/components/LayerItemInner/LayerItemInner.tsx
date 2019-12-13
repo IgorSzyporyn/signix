@@ -8,16 +8,19 @@ import styled from 'styled-components'
 import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
 import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
 import deleteItemInModelStore from '../../stores/model/deleteItemInModelStore'
-import updateActiveInModelStore from '../../stores/model/updateActiveInModelStore'
-import updateEditingInModelStore from '../../stores/model/updateEditingInModelStore'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
-import ModelStore, { ModelStoreInterface } from '../../stores/ModelStore'
-import updateActionInSettingsStore from '../../stores/settings/updateActionInSettingsStore'
+import ModelStore from '../../stores/ModelStore'
+import updateActionAreaInAppStore from '../../stores/appStore/updateActionAreaInAppStore'
 import ModelInterface from '../../types/ModelInterface'
 import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
+import ModelStoreInterface from '../../types/ModelStoreInterface'
+import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
+import updateEditingModelInAppStore from '../../stores/appStore/updateEditingModelInAppStore'
+import AppStoreInterface from '../../types/AppStoreInterface'
+import AppStore from '../../stores/AppStore'
 
 const Wrapper = styled.li`
   user-select: none;
@@ -116,12 +119,14 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
   const { id, items, group, hidden } = model
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
-  const { active, editing }: ModelStoreInterface = useStore(ModelStore)
+  const { activeModelId, editingModelId }: AppStoreInterface = useStore(
+    AppStore
+  )
 
-  const isEditingAny = !!editing
+  const isEditingAny = !!editingModelId
   const hasItems = items && items.length > 0
   const level = model.level || 0
-  const isActive = active === id
+  const isActive = activeModelId === id
 
   if (expanded === undefined && level === 0) {
     expanded = true
@@ -132,8 +137,8 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
       <Heading
         onClick={() => {
           if (!isActive) {
-            updateActiveInModelStore(id)
-            updateEditingInModelStore(undefined)
+            updateActiveModelInAppStore(id)
+            updateEditingModelInAppStore(undefined)
           }
         }}
         data-active={isActive}
@@ -141,7 +146,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
         data-group={group}
         data-has-items={hasItems}
         data-is-editing={isEditingAny}
-        data-editing={editing}
+        data-editing={editingModelId}
         data-id={id}
         data-level={level}
       >
@@ -162,16 +167,16 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
           />
           <TitleWrapper
             onDoubleClick={() => {
-              updateActionInSettingsStore({ active: 1 })
+              updateActionAreaInAppStore({ activeTab: 1 })
             }}
           >
             <LayerItemTitle
               disabled={isEditingAny}
               title={model.name}
-              editing={editing === id}
+              editing={editingModelId === id}
               onEditEnd={name => {
                 updateItemInModelStore({ name, id })
-                updateEditingInModelStore(undefined)
+                updateEditingModelInAppStore(undefined)
               }}
             />
           </TitleWrapper>
@@ -184,7 +189,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
               render={p => (
                 <EditIcon
                   onClick={() => {
-                    updateEditingInModelStore(id)
+                    updateEditingModelInAppStore(id)
                   }}
                   {...p}
                 />

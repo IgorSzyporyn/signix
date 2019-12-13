@@ -1,4 +1,4 @@
-type SettingsCanvasInterface = {
+type AppStoreCanvasInterface = {
   background: string
   dropAccept: string
   dropReady: string
@@ -6,4 +6,4 @@ type SettingsCanvasInterface = {
   active: string
 }
 
-export default SettingsCanvasInterface
+export default AppStoreCanvasInterface

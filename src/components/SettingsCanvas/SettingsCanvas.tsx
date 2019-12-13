@@ -2,14 +2,14 @@ import React from 'react'
 import SettingsPanel from '../SettingsPanel/SettingsPanel'
 import FieldColor from '../FieldColor/FieldColor'
 import { useStore } from 'laco-react'
-import SettingsStore, {
-  SettingsStoreInterface
-} from '../../stores/SettingsStore'
+import AppStore from '../../stores/AppStore'
+import AppStoreInterface from '../../types/AppStoreInterface'
 
 type SettingsCanvasProps = {}
 
 const SettingsCanvas = (props: SettingsCanvasProps) => {
-  const { canvas }: SettingsStoreInterface = useStore(SettingsStore)
+  const { canvas }: AppStoreInterface = useStore(AppStore)
+
   return (
     <SettingsPanel title="Canvas" type="canvas">
       <FieldColor
