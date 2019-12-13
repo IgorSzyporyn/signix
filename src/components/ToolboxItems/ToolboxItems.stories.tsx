@@ -1,6 +1,6 @@
 import React from 'react'
 import ToolboxItems from './ToolboxItems'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: ToolboxItems,

@@ -1,6 +1,6 @@
 import React from 'react'
 import Properties from './Properties'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Properties,

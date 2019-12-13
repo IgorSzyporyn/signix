@@ -1,6 +1,6 @@
 import React from 'react'
 import PropertyPositionType from './PropertyPositionType'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PropertyPositionType,

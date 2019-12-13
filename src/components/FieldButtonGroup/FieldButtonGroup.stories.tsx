@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldButtonGroup from './FieldButtonGroup'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldButtonGroup,

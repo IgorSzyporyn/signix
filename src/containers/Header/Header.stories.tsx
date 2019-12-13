@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './Header'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Header,

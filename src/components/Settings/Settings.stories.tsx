@@ -1,6 +1,6 @@
 import React from 'react'
 import Settings from './Settings'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Settings,

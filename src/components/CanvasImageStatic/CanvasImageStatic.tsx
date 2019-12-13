@@ -25,7 +25,7 @@ const CanvasImageStatic = ({
   return (
     <img
       alt={model.type}
-      src={model.value as string}
+      src={model.value}
       {...dimensions}
       style={style}
       {...props}

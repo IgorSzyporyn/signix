@@ -16,6 +16,7 @@ type ModelInterface = {
   parentId?: string
   value?: string
   hidden?: boolean
+  unique?: boolean
   font: ModelFontInterface
   background: ModelBackgroundInterface
   color: ModelColorInterface

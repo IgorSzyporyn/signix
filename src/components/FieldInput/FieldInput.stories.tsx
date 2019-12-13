@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldInput from './FieldInput'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldInput,

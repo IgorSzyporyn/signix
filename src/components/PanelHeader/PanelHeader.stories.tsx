@@ -1,6 +1,6 @@
 import React from 'react'
 import PanelHeader from './PanelHeader'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PanelHeader,

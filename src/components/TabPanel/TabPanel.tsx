@@ -58,7 +58,7 @@ const createTabItems = (
   titles: string[],
   tabs: React.ReactNode[],
   active: number,
-  onClick: (active: number) => void
+  onClick?: (active: number) => void
 ) =>
   tabs.map((tab, index) => {
     return (
@@ -67,7 +67,7 @@ const createTabItems = (
         active={active === index}
         key={`tabpanel-tab-${index}-${uniqueId()}`}
         onClick={() => {
-          onClick(index)
+          onClick && onClick(index)
         }}
       >
         {tab}
@@ -95,7 +95,7 @@ type TabPanelProps = {
   panels: React.ReactNode[]
   active: number
   tabsStyle?: React.CSSProperties
-  onClick: (active: number) => void
+  onClick?: (active: number) => void
 }
 
 const TabPanel = ({

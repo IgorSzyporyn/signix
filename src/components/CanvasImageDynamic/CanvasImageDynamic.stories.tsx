@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../baseline.scss'
+import '../../baseline.css'
 import ImageModel from '../../models/ImageModel'
 import CanvasImageDynamic from './CanvasImageDynamic'
 

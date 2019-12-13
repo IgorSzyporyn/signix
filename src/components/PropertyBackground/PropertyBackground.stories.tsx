@@ -1,7 +1,7 @@
 import React from 'react'
 import PropertyBackground from './PropertyBackground'
 import BackgroundModel from '../../models/BackgroundModel'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PropertyBackground,

@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 const ActionSquare = styled.div`
   position: relative;
   display: flex;
-  height: 2.6rem;
-  width: 3.8rem;
+  height: 1.8rem;
+  width: 2.2rem;
 `
 
 const Picker = styled.div`
@@ -28,7 +28,7 @@ const Picker = styled.div`
     color: var(--color-lighter) !important;
     font-family: inherit !important;
     font-weight: 500;
-    border: 0.1rem solid var(--color-pitch);
+    border: 0.2rem solid var(--color-pitch);
 
     input {
       color: var(--color-lighter) !important;

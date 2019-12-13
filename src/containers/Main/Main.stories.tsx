@@ -1,6 +1,6 @@
 import React from 'react'
 import Main from './Main'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Main,

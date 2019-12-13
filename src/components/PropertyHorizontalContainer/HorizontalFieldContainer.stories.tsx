@@ -1,6 +1,6 @@
 import React from 'react'
 import HorizontalFieldContainer from './HorizontalFieldContainer'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: HorizontalFieldContainer,

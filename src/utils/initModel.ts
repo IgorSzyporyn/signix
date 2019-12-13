@@ -5,6 +5,7 @@ import mergeModels from './mergeModels'
 import { uniqueId } from './utilities'
 import initModelItems from './initModelItems'
 import sanitizeColorString from './sanitizeColorString'
+import ModelInterface from '../types/ModelInterface'
 
 const initModel = (
   partial: ModelInterfacePartial,
@@ -44,7 +45,7 @@ const initModel = (
     model.items = initModelItems(model.items, model.id, model.level)
   }
 
-  return model
+  return model as ModelInterface
 }
 
 export default initModel

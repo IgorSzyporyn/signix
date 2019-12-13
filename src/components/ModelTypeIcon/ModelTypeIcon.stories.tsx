@@ -1,6 +1,6 @@
 import React from 'react'
 import ModelTypeIcon from './ModelTypeIcon'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: ModelTypeIcon,

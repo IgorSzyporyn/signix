@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldColor from './FieldColor'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldColor,

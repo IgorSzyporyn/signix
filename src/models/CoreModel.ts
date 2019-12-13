@@ -22,16 +22,17 @@ const CoreModel: ModelInterface = {
     size: 24,
     type: 'Arial'
   },
-  value: '',
   items: [],
-  group: false,
   background: {
     disabled: true,
     image: '',
     position: 'center'
   },
   options: [],
-  hidden: false
+  group: false,
+  hidden: false,
+  unique: false,
+  value: ''
 }
 
 export default CoreModel

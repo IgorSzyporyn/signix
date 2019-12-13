@@ -6,7 +6,7 @@ import PropertyDimension from '../PropertyDimension/PropertyDimension'
 
 const PropertiesBackground = (props: PropertiesPropTypes) => (
   <>
-    <PropertyDimension {...props} />
+    <PropertyDimension disallowDisable={true} {...props} />
     <PropertyColor {...props} />
     <PropertyBackground {...props} />
   </>

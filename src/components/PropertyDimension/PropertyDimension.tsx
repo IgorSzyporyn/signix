@@ -8,24 +8,30 @@ import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalF
 
 type PropertyDimensionProps = {
   model: ModelInterface
+  disallowDisable?: boolean
 }
 
-const PropertyDimension = ({ model }: PropertyDimensionProps) => {
+const PropertyDimension = ({
+  model,
+  disallowDisable
+}: PropertyDimensionProps) => {
   const { dimension } = model
 
   return (
     <PropertiesPanel title="Dimensions" type="dimension">
-      <FieldCheckbox
-        title="Disable"
-        inline={true}
-        checked={dimension.disabled}
-        onChange={e => {
-          updateItemInModelStore({
-            ...model,
-            dimension: { ...model.dimension, disabled: e.target.checked }
-          })
-        }}
-      />
+      {disallowDisable !== true && (
+        <FieldCheckbox
+          title="Disable"
+          inline={true}
+          checked={dimension.disabled}
+          onChange={e => {
+            updateItemInModelStore({
+              ...model,
+              dimension: { ...model.dimension, disabled: e.target.checked }
+            })
+          }}
+        />
+      )}
       <HorizontalFieldContainer>
         <FieldInput
           title="Width"

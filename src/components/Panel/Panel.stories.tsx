@@ -1,6 +1,6 @@
 import React from 'react'
 import Panel from './Panel'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Panel,

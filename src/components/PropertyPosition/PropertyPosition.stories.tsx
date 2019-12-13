@@ -1,7 +1,7 @@
 import React from 'react'
 import PropertyPosition from './PropertyPosition'
 import BackgroundModel from '../../models/BackgroundModel'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PropertyPosition,

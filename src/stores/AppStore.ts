@@ -4,17 +4,10 @@ import appStoreInit from './appStore/appStoreInit'
 import AppStoreInterface from '../types/AppStoreInterface'
 
 export const initAppStore = (values: AppStoreInterface) => {
-  AppStore.set(() => ({ ...appStoreInit(values) }))
+  const initializedValues = appStoreInit(values)
+  AppStore.set(() => initializedValues)
 }
 
-const initDefaultValues = (values: AppStoreInterface) => {
-  const store: AppStoreInterface = appStoreInit(values)
-
-  return store
-}
-
-const defaultStoreValues = initDefaultValues(appStoreDefaults)
-
-const AppStore = new LacoStore(defaultStoreValues)
+const AppStore = new LacoStore({ ...appStoreDefaults })
 
 export default AppStore

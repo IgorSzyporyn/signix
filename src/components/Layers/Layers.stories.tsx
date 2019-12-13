@@ -1,6 +1,6 @@
 import React from 'react'
 import Layers from './Layers'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Layers,

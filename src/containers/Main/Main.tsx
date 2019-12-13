@@ -87,9 +87,13 @@ const Main = () => {
       <PaneContainerSecondary>
         <TabPanel
           active={actionArea.activeTab}
-          titles={['Layers of canvas items', 'Properties of selected item']}
-          tabs={['Layers', 'Properties']}
-          panels={[<Layers />, <Properties />]}
+          titles={[
+            'Layers of canvas items',
+            'Properties of selected item',
+            'Connect to API Interface'
+          ]}
+          tabs={['Layers', 'Properties', 'API']}
+          panels={[<Layers />, <Properties />, <div>Here API Interface</div>]}
           onClick={activeTab => {
             updateActionAreaInAppStore({ activeTab })
           }}

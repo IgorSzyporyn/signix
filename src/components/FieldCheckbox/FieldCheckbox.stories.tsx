@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldCheckbox from './FieldCheckbox'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldCheckbox,

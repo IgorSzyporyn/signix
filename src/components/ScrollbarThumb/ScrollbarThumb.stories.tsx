@@ -1,6 +1,6 @@
 import React from 'react'
 import ScrollbarThumb from './ScrollbarThumb'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: ScrollbarThumb,

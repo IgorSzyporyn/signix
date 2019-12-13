@@ -1,6 +1,6 @@
 import React from 'react'
 import PanelBody from './PanelBody'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PanelBody,

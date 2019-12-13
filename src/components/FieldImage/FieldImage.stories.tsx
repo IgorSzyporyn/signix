@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldImage from './FieldImage'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldImage,

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../baseline.scss'
+import '../../baseline.css'
 import BackgroundModel from '../../models/BackgroundModel'
 import GroupModel from '../../models/GroupModel'
 import ImageModel from '../../models/ImageModel'

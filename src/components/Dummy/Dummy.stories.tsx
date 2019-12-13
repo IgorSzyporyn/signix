@@ -1,6 +1,6 @@
 import React from 'react'
 import Dummy from './Dummy'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Dummy,

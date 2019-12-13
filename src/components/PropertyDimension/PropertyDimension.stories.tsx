@@ -1,7 +1,7 @@
 import React from 'react'
 import PropertyDimension from './PropertyDimension'
 import BackgroundModel from '../../models/BackgroundModel'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: PropertyDimension,

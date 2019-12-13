@@ -9,7 +9,7 @@ const Wrapper = styled.section`
 `
 
 type PanelProps = {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const Panel = ({ children }: PanelProps) => <Wrapper>{children}</Wrapper>

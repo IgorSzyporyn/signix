@@ -1,6 +1,6 @@
 import React from 'react'
 import Form from './Form'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: Form,

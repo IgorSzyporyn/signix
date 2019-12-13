@@ -1,13 +1,10 @@
 html {
+  font-family: 'Roboto', Helvetica, Arial, Verdana, Tahoma, sans-serif;
   font-size: 62.5%;
 }
 
 body {
   margin: 0;
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Segoe UI',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif; */
-  font-family: roboto, sans-serif;
   font-size: 1.6rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

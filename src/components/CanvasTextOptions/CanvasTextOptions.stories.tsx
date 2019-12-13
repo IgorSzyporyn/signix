@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../baseline.scss'
+import '../../baseline.css'
 import TextModel from '../../models/TextModel'
 import CanvasTextOptions from './CanvasTextOptions'
 

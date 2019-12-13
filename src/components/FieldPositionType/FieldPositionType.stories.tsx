@@ -1,6 +1,6 @@
 import React from 'react'
 import FieldPositionType from './FieldPositionType'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: FieldPositionType,

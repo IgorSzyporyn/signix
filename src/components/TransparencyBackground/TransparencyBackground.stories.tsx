@@ -1,6 +1,6 @@
 import React from 'react'
 import TransparencyBackground from './TransparencyBackground'
-import '../../baseline.scss'
+import '../../baseline.css'
 
 export default {
   component: TransparencyBackground,
