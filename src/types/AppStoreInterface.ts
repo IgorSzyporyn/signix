@@ -1,9 +1,9 @@
 import AppStoreCanvasInterface from './AppStoreCanvasInterface'
-import AppStoreExpandedInterface from './AppStoreExpandedInterface'
+import ExpandedInterface from './ExpandedInterface'
 
 type AppStoreInterface = {
   canvas: AppStoreCanvasInterface
-  expanded: AppStoreExpandedInterface
+  expanded: ExpandedInterface
   activeModelId: string | undefined
   editingModelId: string | undefined
 }

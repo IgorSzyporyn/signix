@@ -3,7 +3,7 @@ import appTabStoreDefaults from './appTabStore/appTabStoreDefaults'
 import appTabStoreInit from './appTabStore/appTabStoreInit'
 import AppTabStoreInterface from '../types/AppTabStoreInterface'
 
-export const initAppTabStore = (values: AppTabStoreInterface) => {
+export const initAppTabStore = (values: Partial<AppTabStoreInterface>) => {
   const initializedValues = appTabStoreInit(values)
   AppTabStore.set(() => initializedValues)
 }

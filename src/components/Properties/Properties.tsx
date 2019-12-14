@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import AppStore from '../../stores/AppStore'
 import getModelById from '../../stores/model/getModelById'
 import ModelStore from '../../stores/ModelStore'
-import setAllItemsInPropertyStore from '../../stores/property/setAllItemsInPropertyStore'
+import setAllExpandedItemsInPropertyStore from '../../stores/property/setAllExpandedItemsInPropertyStore'
 import AppStoreInterface from '../../types/AppStoreInterface'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
 import getFontSize from '../../utils/getFontSize'
@@ -64,7 +64,7 @@ const Properties = () => {
                 <UnfoldLessIcon
                   {...p}
                   onClick={() => {
-                    setAllItemsInPropertyStore(false)
+                    setAllExpandedItemsInPropertyStore(false)
                   }}
                 />
               )}
@@ -77,7 +77,7 @@ const Properties = () => {
                 <UnfoldMoreIcon
                   {...p}
                   onClick={() => {
-                    setAllItemsInPropertyStore(true)
+                    setAllExpandedItemsInPropertyStore(true)
                   }}
                 />
               )}

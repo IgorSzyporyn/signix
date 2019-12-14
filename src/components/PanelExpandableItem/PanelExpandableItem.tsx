@@ -1,14 +1,17 @@
 import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined'
-import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import PropertyStore from '../../stores/PropertyStore'
 import MUIcon from '../MUIcon/MUIcon'
-import PropertyStoreInterface from '../../types/PropertyStoreInterface'
-import updateExpandedInPropertyStore from '../../stores/property/updateExpandedInPropertyStore'
 
-const Wrapper = styled.div`
+type WrapperProps = {
+  disabled?: boolean
+}
+
+const Wrapper = styled.div<WrapperProps>`
   border-bottom: 0.1rem solid var(--color-light);
+  ${({ disabled }) => {
+    return disabled ? 'opacity: 0.4;' : null
+  }}
 `
 
 const Heading = styled.div`
@@ -26,33 +29,40 @@ const Body = styled.div`
   padding: 0 calc(var(--spacing) + var(--gutter)) var(--gutter);
 `
 
-type PropertiesPanelProps = {
+type PanelExpandableItemProps = {
+  expanded?: boolean
+  disabled?: boolean
   title: string
-  type: string
   children?: React.ReactNode
+  onExpandedChange?: (expanded: boolean) => void
 }
 
-const PropertiesPanel = ({ type, title, children }: PropertiesPanelProps) => {
-  const { expanded }: PropertyStoreInterface = useStore(PropertyStore)
-  const isExpanded = expanded[type]
-
+const PanelExpandableItem = ({
+  expanded,
+  disabled,
+  title,
+  onExpandedChange,
+  children
+}: PanelExpandableItemProps) => {
   return (
-    <Wrapper>
+    <Wrapper disabled={disabled}>
       <Heading
         onClick={() => {
-          updateExpandedInPropertyStore({ [type]: !isExpanded })
+          if (!disabled) {
+            onExpandedChange && onExpandedChange(!expanded)
+          }
         }}
       >
         <MUIcon
           size="medium"
-          style={{ transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
+          style={{ transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)' }}
           render={p => <ChevronRightOutlinedIcon {...p} />}
         />
         <Title>{title}</Title>
       </Heading>
-      <Body hidden={!isExpanded}>{children}</Body>
+      <Body hidden={!expanded}>{children}</Body>
     </Wrapper>
   )
 }
 
-export default PropertiesPanel
+export default PanelExpandableItem

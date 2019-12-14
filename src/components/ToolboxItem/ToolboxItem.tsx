@@ -78,6 +78,10 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
               }
             }
           }
+        } else {
+          if (rootModel.id) {
+            addItemToModelStore(modelTemplate, rootModel.id)
+          }
         }
       }}
     >

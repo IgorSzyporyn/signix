@@ -17,6 +17,7 @@ import VerticalTabPanel from '../../components/VerticalTabPanel/VerticalTabPanel
 import AppTabStore from '../../stores/AppTabStore'
 import AppTabStoreInterface from '../../types/AppTabStoreInterface'
 import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
+import Query from '../../components/Query/Query'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
@@ -47,8 +48,6 @@ const Main = () => {
     mainAreaActiveTab,
     utilityAreaActiveTab
   }: AppTabStoreInterface = useStore(AppTabStore)
-
-  console.log(actionAreaActiveTab)
 
   return (
     <SplitPane
@@ -95,10 +94,10 @@ const Main = () => {
           titles={[
             'Layers of canvas items',
             'Properties of selected item',
-            'Connect to API Interface'
+            'Connect to API Interfaces'
           ]}
-          tabs={['Layers', 'Properties', 'API']}
-          panels={[<Layers />, <Properties />, <div>Here API Interface</div>]}
+          tabs={['Layers', 'Properties', 'Query']}
+          panels={[<Layers />, <Properties />, <Query />]}
         />
       </PaneContainerSecondary>
     </SplitPane>
