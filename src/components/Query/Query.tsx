@@ -13,6 +13,7 @@ import PanelBody from '../PanelBody/PanelBody'
 import PanelHeader from '../PanelHeader/PanelHeader'
 import QueryData from '../QueryData/QueryData'
 import QueryModel from '../QueryModel/QueryModel'
+import QueryValidator from '../QueryValidator/QueryValidator'
 
 const PanelBodyInner = styled.div`
   margin-top: var(--half-gutter);
@@ -26,7 +27,7 @@ const Query = () => {
     <Panel>
       <PanelHeader
         topMargin
-        title="Query"
+        title="API"
         icon={
           <MUIcon size="medium" render={p => <CloudDownloadIcon {...p} />} />
         }
@@ -49,15 +50,18 @@ const Query = () => {
         <PanelBodyInner>
           <FieldCheckbox
             inline
-            title="Enable Query API"
-            value={enabled}
+            label="Enable API"
+            checked={enabled}
             onChange={e => {
               updateEnabledInQueryStore(e.currentTarget.checked)
               updateAllExpandedInQueryStore(true)
             }}
           />
-          <QueryData disabled={!enabled} />
-          <QueryModel disabled={!enabled} />
+          <div hidden={!enabled}>
+            <QueryValidator />
+            <QueryData />
+            <QueryModel />
+          </div>
         </PanelBodyInner>
       </PanelBody>
     </Panel>

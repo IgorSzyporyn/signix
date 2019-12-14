@@ -1,7 +1,7 @@
 import { Store } from 'laco'
 import PropertyStoreInterface from '../types/PropertyStoreInterface'
-import propertyStoreDefaults from './property/propertyStoreDefaults'
-import propertyStoreInit from './property/propertyStoreInit'
+import propertyStoreDefaults from './propertyStore/propertyStoreDefaults'
+import propertyStoreInit from './propertyStore/propertyStoreInit'
 
 export const initPropertyStore = (values: Partial<PropertyStoreInterface>) => {
   const initializedValues = propertyStoreInit(values)

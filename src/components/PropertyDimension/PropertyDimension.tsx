@@ -21,7 +21,7 @@ const PropertyDimension = ({
     <PropertiesPanel title="Dimensions" type="dimension">
       {disallowDisable !== true && (
         <FieldCheckbox
-          title="Disable"
+          label="Disable"
           inline={true}
           checked={dimension.disabled}
           onChange={e => {
@@ -34,7 +34,7 @@ const PropertyDimension = ({
       )}
       <HorizontalFieldContainer>
         <FieldInput
-          title="Width"
+          label="Width"
           type="number"
           value={dimension.width}
           onChange={e => {
@@ -46,7 +46,7 @@ const PropertyDimension = ({
           disabled={dimension.disabled}
         />
         <FieldInput
-          title="Height"
+          label="Height"
           type="number"
           value={dimension.height}
           onChange={e => {

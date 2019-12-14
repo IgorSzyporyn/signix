@@ -44,20 +44,20 @@ const PropertyPosition = ({ model }: PropertyPositionProps) => {
   return (
     <PropertiesPanel title="Position" type="position">
       <PropertyPositionType
-        title="Alignment"
+        label="Alignment"
         type={position.type}
         onChange={(type: ModelPositionTypes) => handleTypeChange(type, model)}
       />
       <HorizontalFieldContainer>
         <FieldInput
-          title="X Offset"
+          label="X Offset"
           value={position.left}
           onChange={e => {
             handleXChange(e.target.value, model)
           }}
         />
         <FieldInput
-          title="Y Offset"
+          label="Y Offset"
           value={position.top}
           onChange={e => {
             handleYChange(e.target.value, model)

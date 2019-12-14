@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import PropertyStore from '../../stores/PropertyStore'
 import MUIcon from '../MUIcon/MUIcon'
 import PropertyStoreInterface from '../../types/PropertyStoreInterface'
-import updateExpandedInPropertyStore from '../../stores/property/updateExpandedInPropertyStore'
+import updateExpandedInPropertyStore from '../../stores/propertyStore/updateExpandedInPropertyStore'
 
 const Wrapper = styled.div`
   border-bottom: 0.1rem solid var(--color-light);

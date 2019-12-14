@@ -14,7 +14,7 @@ const PropertyTextStatic = ({ model }: PropertyTextStaticProps) => {
   return (
     <PropertiesPanel title="Static Text" type="textStatic">
       <FieldInput
-        title="Text Value"
+        label="Text Value"
         value={value}
         onChange={e => {
           updateItemInModelStore({

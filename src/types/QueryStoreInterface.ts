@@ -5,6 +5,9 @@ import QueryStoreModelInterface from './QueryStoreModelInterface'
 type QueryStoreInterface = {
   enabled: boolean
   expanded: ExpandedInterface
+  valid: boolean
+  tested: boolean
+  validating: boolean
   data: QueryStoreDataInterface
   model: QueryStoreModelInterface
 }

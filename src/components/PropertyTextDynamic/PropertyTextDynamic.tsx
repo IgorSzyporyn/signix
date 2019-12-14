@@ -14,7 +14,7 @@ const PropertyTextDynamic = ({ model }: PropertyTextDynamicProps) => {
   return (
     <PropertiesPanel title="Dynamic Text" type="textDynamic">
       <FieldInput
-        title="Text Value"
+        label="Text Value"
         value={value}
         onChange={e => {
           updateItemInModelStore({

@@ -16,7 +16,7 @@ const PropertyColor = ({ model }: PropertyColorProps) => {
       <FieldColor
         labelStyle={{ minWidth: '7rem' }}
         inline
-        title="Background"
+        label="Background"
         color={color.background}
         onColorChange={_color => {
           updateItemInModelStore({
@@ -28,7 +28,7 @@ const PropertyColor = ({ model }: PropertyColorProps) => {
       <FieldColor
         inline
         labelStyle={{ minWidth: '7rem' }}
-        title="Foreground"
+        label="Foreground"
         color={color.foreground}
         onColorChange={_color => {
           updateItemInModelStore({

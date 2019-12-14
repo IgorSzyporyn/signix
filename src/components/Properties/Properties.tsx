@@ -1,16 +1,15 @@
 import PermDataSettingOutlinedIcon from '@material-ui/icons/PermDataSettingOutlined'
-import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import AppStore from '../../stores/AppStore'
 import getModelById from '../../stores/model/getModelById'
 import ModelStore from '../../stores/ModelStore'
-import setAllExpandedItemsInPropertyStore from '../../stores/property/setAllExpandedItemsInPropertyStore'
+import updateAllExpandedInPropertyStore from '../../stores/propertyStore/updateAllExpandedInPropertyStore'
 import AppStoreInterface from '../../types/AppStoreInterface'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
 import getFontSize from '../../utils/getFontSize'
+import ExpandableActions from '../ExpandableActions/ExpandableActions'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
 import Panel from '../Panel/Panel'
@@ -55,34 +54,14 @@ const Properties = () => {
           )
         }
         actions={
-          <>
-            <MUIcon
-              size="medium"
-              title="Collapse All"
-              interactive
-              render={p => (
-                <UnfoldLessIcon
-                  {...p}
-                  onClick={() => {
-                    setAllExpandedItemsInPropertyStore(false)
-                  }}
-                />
-              )}
-            />
-            <MUIcon
-              size="medium"
-              interactive
-              title="Expand All"
-              render={p => (
-                <UnfoldMoreIcon
-                  {...p}
-                  onClick={() => {
-                    setAllExpandedItemsInPropertyStore(true)
-                  }}
-                />
-              )}
-            />
-          </>
+          <ExpandableActions
+            onCollapseAll={() => {
+              updateAllExpandedInPropertyStore(false)
+            }}
+            onExpandAll={() => {
+              updateAllExpandedInPropertyStore(true)
+            }}
+          />
         }
       />
       {activeModel ? (

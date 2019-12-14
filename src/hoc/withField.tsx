@@ -100,11 +100,12 @@ export interface WithFieldProps {
   active?: 'true' | 'false'
   disabled?: boolean
   hidden?: boolean
-  title?: string
+  label?: string
   name?: string
   id?: string
   inline?: boolean
   nomargin?: string
+  title?: string
 }
 
 const withField = <P extends object>(Component: React.ComponentType<P>) =>
@@ -115,11 +116,13 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
         nomargin,
         id,
         name,
-        title,
+        label,
         inline,
         ...rest
       } = this.props
       const safeId = uniqueId()
+
+      const title = rest.title || label || ''
 
       return (
         <Wrapper
@@ -127,18 +130,23 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
           inline={inline}
           disabled={rest.disabled}
           hidden={rest.hidden}
+          title={title}
         >
-          {title ? (
+          {label ? (
             <Label htmlFor={id || safeId}>
-              <Title style={labelStyle || {}}>{title}</Title>
+              <Title style={labelStyle || {}}>{label}</Title>
               <Component
                 id={id || safeId}
-                name={id || safeId}
+                name={name || safeId}
                 {...(rest as P)}
               />
             </Label>
           ) : (
-            <Component id={id || safeId} name={id || safeId} {...(rest as P)} />
+            <Component
+              id={id || safeId}
+              name={name || safeId}
+              {...(rest as P)}
+            />
           )}
         </Wrapper>
       )

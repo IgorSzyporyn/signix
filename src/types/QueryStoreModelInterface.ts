@@ -1,3 +1,5 @@
-type QueryStoreModelInterface = {}
+type QueryStoreModelInterface = {
+  url: string
+}
 
 export default QueryStoreModelInterface

@@ -70,7 +70,7 @@ h6 {
   --color-lightblue: #2a69dd;
   --color-yellow: #ffff00;
   --color-green: #46a746;
-  --color-red: #e22020;
+  --color-red: #bd2323;
   --color-persianred: #cd2c2c;
   --color-cardinal: #b11647;
   --color-piper: #cd6a2c;
@@ -82,6 +82,9 @@ h6 {
   --color-darkslate: #2e454b;
 
   --color-active: #2a69dd;
+  --color-success: #00ad2b;
+  --color-failure: #bd2323;
+  --color-warning: #ffa500;
 
   --color-drag-accept: #021580;
   --color-drag-drop-ready: #00ad2b;

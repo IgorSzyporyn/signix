@@ -5,7 +5,7 @@ const getFontSize = (size: SizeTypes = 'normal') => {
 
   switch (size) {
     case 'tiny':
-      fontSize = '1rem'
+      fontSize = '1.1rem'
       break
     case 'xsmall':
       fontSize = '1.2rem'

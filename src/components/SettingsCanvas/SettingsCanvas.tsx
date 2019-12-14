@@ -15,25 +15,25 @@ const SettingsCanvas = (props: SettingsCanvasProps) => {
       <FieldColor
         inline
         labelStyle={{ minWidth: '11rem' }}
-        title="Canvas background"
+        label="Canvas background"
         color={canvas.background}
       />
       <FieldColor
         inline
         labelStyle={{ minWidth: '11rem' }}
-        title="Selected outline"
+        label="Selected outline"
         color={canvas.active}
       />
       <FieldColor
         inline
         labelStyle={{ minWidth: '11rem' }}
-        title="Drop available outline"
+        label="Drop available outline"
         color={canvas.dropReady}
       />
       <FieldColor
         inline
         labelStyle={{ minWidth: '11rem' }}
-        title="Drop active outline"
+        label="Drop active outline"
         color={canvas.dropOver}
       />
     </SettingsPanel>

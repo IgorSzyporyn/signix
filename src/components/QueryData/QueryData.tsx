@@ -1,11 +1,12 @@
-import React from 'react'
-import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
-import updateExpandedInQueryStore from '../../stores/queryStore/updateExpandedInQueryStore'
-import QueryStoreInterface from '../../types/QueryStoreInterface'
-import QueryStore from '../../stores/QueryStore'
 import { useStore } from 'laco-react'
+import React from 'react'
+import QueryStore from '../../stores/QueryStore'
+import updateExpandedInQueryStore from '../../stores/queryStore/updateExpandedInQueryStore'
+import updateQueryStore from '../../stores/queryStore/updateQueryStore'
+import QueryStoreInterface from '../../types/QueryStoreInterface'
+import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
-import updateDataInQueryStore from '../../stores/queryStore/updateDataInQueryStore'
+import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
 
 type QueryDataProps = {
   disabled?: boolean
@@ -25,10 +26,49 @@ const QueryData = ({ disabled }: QueryDataProps) => {
       }}
     >
       <FieldInput
-        title="Data Query URL"
+        label="Data Query URL"
         value={data.url}
         onChange={e => {
-          updateDataInQueryStore({ url: e.currentTarget.value })
+          updateQueryStore({
+            tested: false,
+            data: { ...data, url: e.currentTarget.value }
+          })
+        }}
+      />
+      <FieldCheckbox
+        inline
+        label="Query Token Required"
+        title="The query requires a token to fetch data"
+        checked={data.dynamic}
+        onChange={e => {
+          updateQueryStore({
+            tested: false,
+            data: { ...data, dynamic: e.currentTarget.checked }
+          })
+        }}
+      />
+      <FieldInput
+        label="Token Key"
+        title="The name of the token key required to fetch data"
+        hidden={!data.dynamic}
+        value={data.dynamicKey}
+        onChange={e => {
+          updateQueryStore({
+            tested: false,
+            data: { ...data, dynamicKey: e.currentTarget.value }
+          })
+        }}
+      />
+      <FieldInput
+        label="Test Token Key"
+        title="A token key value for testing and validation purposes"
+        hidden={!data.dynamic}
+        value={data.dynamicTestKey}
+        onChange={e => {
+          updateQueryStore({
+            tested: false,
+            data: { ...data, dynamicTestKey: e.currentTarget.value }
+          })
         }}
       />
     </PanelExpandableItem>

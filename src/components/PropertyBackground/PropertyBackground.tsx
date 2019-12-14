@@ -43,13 +43,13 @@ const PropertyBackground = ({ model }: PropertyBackgroundProps) => {
               })
             }}
             inline
-            title="Disable"
+            label="Disable"
             checked={disabled}
           />
           <PropertyPositionType
             center
             disabled={disabled}
-            title="Alignment"
+            label="Alignment"
             type={background.position}
             onChange={(position: ModelPositionTypes) =>
               handlePositionChange(position, model)
@@ -57,7 +57,7 @@ const PropertyBackground = ({ model }: PropertyBackgroundProps) => {
           />
           <FieldImage
             disabled={disabled}
-            title="Image"
+            label="Image"
             value={image}
             onChange={e => {
               updateItemInModelStore({

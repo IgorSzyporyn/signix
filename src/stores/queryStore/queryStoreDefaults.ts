@@ -1,15 +1,23 @@
 import QueryStoreInterface from '../../types/QueryStoreInterface'
 
 const queryStoreDefaults: QueryStoreInterface = {
-  enabled: false,
+  enabled: true,
+  valid: false,
+  validating: false,
+  tested: false,
   expanded: {
-    queryData: false,
-    queryModel: false
+    queryData: true,
+    queryModel: true
   },
   data: {
-    url: ''
+    url: '',
+    dynamic: false,
+    dynamicKey: '',
+    dynamicTestKey: ''
   },
-  model: {}
+  model: {
+    url: ''
+  }
 }
 
 export default queryStoreDefaults

@@ -1,7 +1,7 @@
 import PropertyStore from '../PropertyStore'
 import PropertyStoreInterface from '../../types/PropertyStoreInterface'
 
-const setAllExpandedItemsInPropertyStore = (setExpanded: boolean) => {
+const updateAllExpandedInPropertyStore = (setExpanded: boolean) => {
   const { expanded } = PropertyStore.get()
 
   Object.keys(expanded).forEach(key => {
@@ -11,4 +11,4 @@ const setAllExpandedItemsInPropertyStore = (setExpanded: boolean) => {
   PropertyStore.set((state: PropertyStoreInterface) => ({ ...state, expanded }))
 }
 
-export default setAllExpandedItemsInPropertyStore
+export default updateAllExpandedInPropertyStore

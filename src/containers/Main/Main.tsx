@@ -1,6 +1,7 @@
 import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
+import WarningIcon from '@material-ui/icons/Warning'
 import { useStore } from 'laco-react'
 import React from 'react'
 import SplitPane from 'react-split-pane'
@@ -18,6 +19,8 @@ import AppTabStore from '../../stores/AppTabStore'
 import AppTabStoreInterface from '../../types/AppTabStoreInterface'
 import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
 import Query from '../../components/Query/Query'
+import QueryStoreInterface from '../../types/QueryStoreInterface'
+import QueryStore from '../../stores/QueryStore'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
@@ -48,6 +51,8 @@ const Main = () => {
     mainAreaActiveTab,
     utilityAreaActiveTab
   }: AppTabStoreInterface = useStore(AppTabStore)
+
+  const { valid, tested }: QueryStoreInterface = useStore(QueryStore)
 
   return (
     <SplitPane
@@ -96,7 +101,25 @@ const Main = () => {
             'Properties of selected item',
             'Connect to API Interfaces'
           ]}
-          tabs={['Layers', 'Properties', 'Query']}
+          tabs={[
+            'Layers',
+            'Properties',
+            <div style={{ position: 'relative' }}>
+              {!valid && tested && (
+                <MUIcon
+                  size="small"
+                  style={{
+                    color: 'var(--color-failure)',
+                    position: 'absolute',
+                    top: '-12px',
+                    right: '-22px'
+                  }}
+                  render={p => <WarningIcon {...p} />}
+                />
+              )}
+              <div>API</div>
+            </div>
+          ]}
           panels={[<Layers />, <Properties />, <Query />]}
         />
       </PaneContainerSecondary>
