@@ -8,6 +8,7 @@ import ListIcon from '@material-ui/icons/List'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
 import TextFormatIcon from '@material-ui/icons/TextFormat'
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 import React from 'react'
 import ModelTypes from '../../types/ModelTypes'
 import SizeTypes from '../../types/SizeTypes'
@@ -72,12 +73,33 @@ const getModelTypeIcon = (
       break
     case 'imageoptions':
       iconProps.style.fill = 'var(--color-persianred)'
-      Component = <ListIcon {...iconProps} />
+      Component = <AddPhotoAlternateIcon {...iconProps} />
       break
     case 'imageoptionsmultiple':
       iconProps.style.fill = 'var(--color-persianred)'
       Component = <PhotoLibraryIcon {...iconProps} />
       break
+    case 'textstaticquery':
+      iconProps.style.fill = 'var(--color-lightorange)'
+      Component = <TextFieldsOutlinedIcon {...iconProps} />
+      break
+    case 'textoptionsquery':
+      iconProps.style.fill = 'var(--color-lightorange)'
+      Component = <ListIcon {...iconProps} />
+      break
+    case 'imagestaticquery':
+      iconProps.style.fill = 'var(--color-lightorange)'
+      Component = <CropOriginalIcon {...iconProps} />
+      break
+    case 'imageoptionsquery':
+      iconProps.style.fill = 'var(--color-lightorange)'
+      Component = <AddPhotoAlternateIcon {...iconProps} />
+      break
+    case 'imageoptionsmultiplequery':
+      iconProps.style.fill = 'var(--color-lightorange)'
+      Component = <PhotoLibraryIcon {...iconProps} />
+      break
+
     default:
       Component = null
       break

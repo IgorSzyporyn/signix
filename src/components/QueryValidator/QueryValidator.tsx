@@ -5,14 +5,13 @@ import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import QueryStore from '../../stores/QueryStore'
+import updateQueryStore from '../../stores/queryStore/updateQueryStore'
+import updateValidatingInQueryStore from '../../stores/queryStore/updateValidatingInQueryStore'
 import QueryStoreInterface from '../../types/QueryStoreInterface'
-import validateQueryEntries from '../../utils/validateQueryEntries'
-import MUIcon from '../MUIcon/MUIcon'
 import Button from '../Button/Button'
 import Modal from '../Modal/Modal'
-import updateValidatingInQueryStore from '../../stores/queryStore/updateValidatingInQueryStore'
+import MUIcon from '../MUIcon/MUIcon'
 import QueryValidation from '../QueryValidation/QueryValidation'
-import updateQueryStore from '../../stores/queryStore/updateQueryStore'
 
 type WrapperProps = {
   disabled?: boolean
@@ -36,15 +35,9 @@ type QueryValidatorProps = {
 }
 
 const QueryValidator = ({ disabled }: QueryValidatorProps) => {
-  const {
-    valid,
-    validating,
-    tested,
-    data,
-    model
-  }: QueryStoreInterface = useStore(QueryStore)
-
-  const hasValidQueryEntries = validateQueryEntries(data, model)
+  const { valid, validating, tested }: QueryStoreInterface = useStore(
+    QueryStore
+  )
 
   return (
     <Wrapper disabled={disabled}>
@@ -64,7 +57,7 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
             <MUIcon
               size="large"
               style={{ color: 'var(--color-failure)' }}
-              render={p => <WarningIcon {...p} />}
+              render={p => <ErrorIcon {...p} />}
             />
           )}
         </>
@@ -77,23 +70,13 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
         />
       )}
       <MainContainer>
-        {tested && (
-          <>
-            {valid ? (
-              <div>API Validates</div>
-            ) : (
-              <div>API Does Not Validate</div>
-            )}
-          </>
-        )}
-        {!tested && <div>API Requires Validation</div>}
         <Button
           variant="primary"
           onClick={() => {
             updateValidatingInQueryStore(true)
           }}
         >
-          Validate
+          {tested ? 'Validate & Sync' : 'Requires Validation & Sync'}
         </Button>
       </MainContainer>
       {validating && (

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { uniqueId } from '../utils/utilities'
+import getFontSize from '../utils/getFontSize'
 
 type WrapperProps = {
   disabled?: boolean
@@ -40,8 +41,10 @@ const Wrapper = styled.div<WrapperProps>`
     }}
   }
 
-  & input {
-    font-size: 1.4rem;
+  & input,
+  .FieldInput {
+    min-height: var(--spacing-large);
+    font-size: ${getFontSize('xsmall')};
     padding: var(--half-gutter) var(--gutter);
     border-radius: 0.3rem;
     border: 0.1rem solid var(--color-lighter);
@@ -50,6 +53,12 @@ const Wrapper = styled.div<WrapperProps>`
     margin: 0;
     box-sizing: border-box;
     outline: none;
+
+    &.open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-bottom-color: transparent;
+    }
   }
 
   & input[type='number'],
@@ -62,7 +71,8 @@ const Wrapper = styled.div<WrapperProps>`
   }
 
   & button {
-    font-size: 1.4rem;
+    min-height: var(--spacing-large);
+    font-size: ${getFontSize('xsmall')};
     padding: var(--gutter) var(--gutter);
     border-radius: 0.3rem;
     border: 0.1rem solid var(--color-lighter);

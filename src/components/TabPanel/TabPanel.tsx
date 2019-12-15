@@ -24,7 +24,7 @@ type PanelTabProps = {
 const PanelTab = styled.div<PanelTabProps>`
   display: flex;
   align-items: center;
-  padding: calc(var(--spacing) + 0.5rem) var(--spacing-large);
+  padding: calc(var(--spacing) + 0.5rem) var(--spacing-huge);
   font-size: ${getFontSize('xsmall')};
   cursor: pointer;
 

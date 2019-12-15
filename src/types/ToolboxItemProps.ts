@@ -6,6 +6,7 @@ type ToolboxItemProps = {
   view?: ToolboxViewTypes
   title?: string
   subtitle?: string
+  api?: boolean
 }
 
 export default ToolboxItemProps

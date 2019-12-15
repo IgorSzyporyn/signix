@@ -1,17 +1,22 @@
-import TextModel from './TextModel'
-import TextStaticModel from './TextStaticModel'
-import ModelTypes from '../types/ModelTypes'
 import ModelInterface from '../types/ModelInterface'
-import CoreModel from './CoreModel'
-import TextDynamicModel from './TextDynamicModel'
-import ImageModel from './ImageOptionsModel'
-import ImageStaticModel from './ImageStaticModel'
-import ImageDynamicModel from './ImageDynamicModel'
+import ModelTypes from '../types/ModelTypes'
 import BackgroundModel from './BackgroundModel'
+import CoreModel from './CoreModel'
 import GroupModel from './GroupModel'
+import ImageDynamicModel from './ImageDynamicModel'
+import ImageModel from './ImageModel'
 import ImageOptionsModel from './ImageOptionsModel'
+import ImageOptionsMultipleModel from './ImageOptionsMultipleModel'
+import ImageOptionsMultipleQueryModel from './ImageOptionsMultipleQueryModel'
+import ImageOptionsQueryModel from './ImageOptionsQueryModel'
+import ImageStaticModel from './ImageStaticModel'
+import ImageStaticQueryModel from './ImageStaticQueryModel'
+import TextDynamicModel from './TextDynamicModel'
+import TextModel from './TextModel'
 import TextOptionsModel from './TextOptionsModel'
-import ImageOptionsMultipleModel from './ImageOptionsMultipleMode'
+import TextOptionsQueryModel from './TextOptionsQueryModel'
+import TextStaticModel from './TextStaticModel'
+import TextStaticQueryModel from './TextStaticQueryModel'
 
 type ModelsInterface = {
   [name in ModelTypes]: ModelInterface
@@ -25,11 +30,16 @@ const Models: ModelsInterface = {
   textstatic: TextStaticModel,
   textdynamic: TextDynamicModel,
   textoptions: TextOptionsModel,
+  textstaticquery: TextStaticQueryModel,
+  textoptionsquery: TextOptionsQueryModel,
   image: ImageModel,
   imagestatic: ImageStaticModel,
   imagedynamic: ImageDynamicModel,
   imageoptions: ImageOptionsModel,
-  imageoptionsmultiple: ImageOptionsMultipleModel
+  imageoptionsmultiple: ImageOptionsMultipleModel,
+  imagestaticquery: ImageStaticQueryModel,
+  imageoptionsquery: ImageOptionsQueryModel,
+  imageoptionsmultiplequery: ImageOptionsMultipleQueryModel
 }
 
 export default Models

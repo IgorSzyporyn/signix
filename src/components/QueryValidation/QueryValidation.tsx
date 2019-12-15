@@ -23,7 +23,7 @@ const Wrapper = styled.section`
 `
 
 const Title = styled.h3`
-  margin-bottom: var(--spacing-large);
+  margin-bottom: var(--spacing-huge);
 `
 
 const List = styled.ul`
@@ -45,7 +45,7 @@ const Error = styled.div`
 `
 
 const ButtonContainer = styled.div`
-  margin-top: var(--spacing-large);
+  margin-top: var(--spacing-huge);
   display: flex;
   justify-content: flex-end;
 `

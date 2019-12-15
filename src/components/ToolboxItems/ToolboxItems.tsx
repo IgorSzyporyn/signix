@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
+import { useStore } from 'laco-react'
+import QueryStore from '../../stores/QueryStore'
+import QueryStoreInterface from '../../types/QueryStoreInterface'
 
 const ListContainer = styled.ul`
   list-style: none;
@@ -71,6 +74,36 @@ const toolboxItems: ToolboxItemProps[] = [
     title: 'Multiple Images from Options',
     subtitle: 'Static image',
     type: 'imageoptionsmultiple'
+  },
+  {
+    title: 'API Text',
+    subtitle: '',
+    type: 'textstaticquery',
+    api: true
+  },
+  {
+    title: 'API Text Options',
+    subtitle: '',
+    type: 'textoptionsquery',
+    api: true
+  },
+  {
+    title: 'API Image',
+    subtitle: '',
+    type: 'imagestaticquery',
+    api: true
+  },
+  {
+    title: 'API Image Options',
+    subtitle: '',
+    type: 'imageoptionsquery',
+    api: true
+  },
+  {
+    title: 'API Image Options Multiple',
+    subtitle: '',
+    type: 'imageoptionsmultiplequery',
+    api: true
   }
 ]
 
@@ -79,24 +112,54 @@ type ToolboxItemsProps = {
 }
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {
+  const { valid, enabled }: QueryStoreInterface = useStore(QueryStore)
+
   return (
     <div>
       {view === 'list' && (
         <ListContainer>
-          {toolboxItems.map(toolboxItem => (
-            <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
-              <ToolboxItem {...toolboxItem} view="list" />
-            </ListItem>
-          ))}
+          {toolboxItems.map(toolboxItem => {
+            let item = null
+
+            if (toolboxItem.api && enabled && valid) {
+              item = (
+                <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
+                  <ToolboxItem {...toolboxItem} view="list" />
+                </ListItem>
+              )
+            } else if (!toolboxItem.api) {
+              item = (
+                <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
+                  <ToolboxItem {...toolboxItem} view="list" />
+                </ListItem>
+              )
+            }
+
+            return item
+          })}
         </ListContainer>
       )}
       {view === 'grid' && (
         <GridContainer>
-          {toolboxItems.map(toolboxItem => (
-            <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
-              <ToolboxItem {...toolboxItem} view="grid" />
-            </GridItem>
-          ))}
+          {toolboxItems.map(toolboxItem => {
+            let item = null
+
+            if (toolboxItem.api && enabled && valid) {
+              item = (
+                <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
+                  <ToolboxItem {...toolboxItem} view="grid" />
+                </GridItem>
+              )
+            } else if (!toolboxItem.api) {
+              item = (
+                <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
+                  <ToolboxItem {...toolboxItem} view="grid" />
+                </GridItem>
+              )
+            }
+
+            return item
+          })}
         </GridContainer>
       )}
     </div>

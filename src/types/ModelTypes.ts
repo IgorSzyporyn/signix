@@ -11,5 +11,10 @@ type ModelTypes =
   | 'imagedynamic'
   | 'imageoptions'
   | 'imageoptionsmultiple'
+  | 'imagestaticquery'
+  | 'imageoptionsquery'
+  | 'imageoptionsmultiplequery'
+  | 'textstaticquery'
+  | 'textoptionsquery'
 
 export default ModelTypes

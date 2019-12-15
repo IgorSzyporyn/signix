@@ -1,7 +1,7 @@
 import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
-import WarningIcon from '@material-ui/icons/Warning'
+import ErrorIcon from '@material-ui/icons/Error'
 import { useStore } from 'laco-react'
 import React from 'react'
 import SplitPane from 'react-split-pane'
@@ -114,7 +114,7 @@ const Main = () => {
                     top: '-12px',
                     right: '-22px'
                   }}
-                  render={p => <WarningIcon {...p} />}
+                  render={p => <ErrorIcon {...p} />}
                 />
               )}
               <div>API</div>

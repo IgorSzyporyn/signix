@@ -5,6 +5,7 @@ import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
 import PropertiesImage from '../PropertiesImage/PropertiesImage'
 import PropertiesTextDynamic from '../PropertiesTextDynamic/PropertiesTextDynamic'
 import PropertiesTextStatic from '../PropertiesTextStatic/PropertiesTextStatic'
+import PropertiesTextStaticQuery from '../PropertiesTextStaticQuery/PropertiesTextStaticQuery'
 
 type PropertiesItemProps = {
   model: ModelInterface
@@ -25,6 +26,9 @@ const getComponent = (model: ModelInterface) => {
       break
     case 'textdynamic':
       Component = <PropertiesTextDynamic model={model} />
+      break
+    case 'textstaticquery':
+      Component = <PropertiesTextStaticQuery model={model} />
       break
     case 'image':
     case 'imagestatic':
