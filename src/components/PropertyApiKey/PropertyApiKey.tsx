@@ -22,7 +22,9 @@ const PropertyApiKey = ({ model }: PropertyApiKeyQueryProps) => {
         label="Pick API key for value"
         value={value}
         options={dataKeys as FieldOptionsOptionType[]}
-        onChange={e => {}}
+        onSelection={value => {
+          console.log(value)
+        }}
       />
     </PropertiesPanel>
   )

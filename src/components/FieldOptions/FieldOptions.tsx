@@ -40,6 +40,7 @@ type OptionsType = 'simple' | 'object'
 type FieldOptionsProps = {
   options: FieldOptionsOptionType[]
   searchable?: boolean
+  onSelection?: (value?: string) => void
 } & InputHTMLAttributes<HTMLInputElement>
 
 const FieldOptions = ({ options, searchable, ...props }: FieldOptionsProps) => {
@@ -48,7 +49,9 @@ const FieldOptions = ({ options, searchable, ...props }: FieldOptionsProps) => {
 
   return (
     <Downshift
-      onChange={selection => {}}
+      onChange={(selection?: string) =>
+        props.onSelection && props.onSelection(selection)
+      }
       itemToString={item => (item ? (simpleType ? item : item.value) : '')}
     >
       {({
