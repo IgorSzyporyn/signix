@@ -1,3 +1,3 @@
-type ActionVariantTypes = 'primary' | 'secondary'
+type ActionVariantTypes = 'normal' | 'primary' | 'secondary'
 
 export default ActionVariantTypes

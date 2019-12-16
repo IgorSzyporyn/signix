@@ -13,10 +13,13 @@ import validateModelEndpointIntegrity from '../../utils/validateModelEndpointInt
 import QueryValidationItem from '../QueryValidationItem/QueryValidationItem'
 import getFontSize from '../../utils/getFontSize'
 import Button from '../Button/Button'
+import validateLayerModelIntegrity, {
+  ValidateLayerModelResultItem
+} from '../../utils/validateLayerModelIntegrity'
 
 const Wrapper = styled.section`
   font-size: ${getFontSize('xsmall')};
-  min-width: 40rem;
+  min-width: 48rem;
   padding: var(--spacing);
   display: flex;
   flex-direction: column;
@@ -34,7 +37,7 @@ const List = styled.ul`
 
 const ListItem = styled.li``
 
-const Error = styled.div`
+const ModelIntegrityError = styled.div`
   padding-top: var(--half-gutter);
   padding-bottom: var(--half-gutter);
   padding-left: calc(var(--spacing) + var(--half-gutter));
@@ -44,10 +47,33 @@ const Error = styled.div`
   }
 `
 
+const LayerErrorTitle = styled.div`
+  line-height: 1.4em;
+  font-size: ${getFontSize('tiny')};
+  padding-left: calc(var(--spacing) + var(--half-gutter));
+  margin-bottom: var(--gutter);
+  margin-top: var(--gutter);
+`
+
+const LayerError = styled.div`
+  font-size: ${getFontSize('tiny')};
+  padding-top: var(--half-gutter);
+  padding-bottom: var(--half-gutter);
+  padding-left: calc(var(--spacing) + var(--half-gutter));
+`
+
 const ButtonContainer = styled.div`
   margin-top: var(--spacing-huge);
   display: flex;
   justify-content: flex-end;
+
+  & > * {
+    margin-right: var(--gutter);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 `
 
 type QueryValidationProps = {
@@ -96,6 +122,14 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
     modelEndpointIntegrityErrors,
     setModelEndpointIntegrityErrors
   ] = useState<string[]>([])
+
+  // LAYER STATTE
+  const [layersValid, setLayersValid] = useState(false)
+  const [layersValidating, setLayersValidating] = useState(true)
+
+  const [layersValidErrors, setLayersValidErrors] = useState<
+    ValidateLayerModelResultItem[]
+  >([])
 
   // COMMON VALIDATIONS
   useEffect(() => {
@@ -183,6 +217,22 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modelEndpointFetchValid, dataEndpointWriteValid])
 
+  // LAYER INTEGRITY CHECK
+  useEffect(() => {
+    if (modelEndpointIntegrityValid) {
+      validateLayerModelIntegrity(result => {
+        if (result === true) {
+          setLayersValid(true)
+          setLayersValidating(false)
+        } else {
+          setLayersValid(false)
+          setLayersValidating(false)
+          setLayersValidErrors(result)
+        }
+      })
+    }
+  }, [modelEndpointIntegrityValid])
+
   const valid =
     dataEndpointValid &&
     dataEndpointFetchValid &&
@@ -197,7 +247,8 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
     dataEndpointWriteValidating ||
     modelEndpointValidating ||
     modelEndpointFetchValidating ||
-    modelEndpointIntegrityValidating
+    modelEndpointIntegrityValidating ||
+    layersValidating
 
   return (
     <Wrapper>
@@ -256,14 +307,56 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
           >
             {modelEndpointIntegrityErrors.length > 0 &&
               modelEndpointIntegrityErrors.map(error => (
-                <Error key={`modelEndpointIntegrityError-${uniqueId()}`}>
+                <ModelIntegrityError
+                  key={`modelEndpointIntegrityError-${uniqueId()}`}
+                >
                   - {error}
-                </Error>
+                </ModelIntegrityError>
               ))}
+          </QueryValidationItem>
+        </ListItem>
+        <ListItem>
+          <QueryValidationItem
+            disabled={modelEndpointIntegrityValidating}
+            valid={layersValid}
+            title="Checking Layer API Integrity"
+            validating={layersValidating}
+          >
+            {layersValidErrors.length > 0 && (
+              <>
+                <LayerErrorTitle>
+                  <div>
+                    Note: Errors in layer API integrity does not affect the
+                    validity of the provided API
+                  </div>
+                  <div>
+                    And they can most likely be fixed with our auto fix button
+                  </div>
+                </LayerErrorTitle>
+                {layersValidErrors.map(item => {
+                  return (
+                    <LayerError key={`layerError-${uniqueId()}`}>
+                      {item.error}
+                    </LayerError>
+                  )
+                })}
+              </>
+            )}
           </QueryValidationItem>
         </ListItem>
       </List>
       <ButtonContainer>
+        {!validating && !layersValid && (
+          <Button
+            variant="secondary"
+            disabled={validating}
+            onClick={() => {
+              onValidated && onValidated(valid)
+            }}
+          >
+            Auto Fix Layers
+          </Button>
+        )}
         <Button
           variant="primary"
           disabled={validating}

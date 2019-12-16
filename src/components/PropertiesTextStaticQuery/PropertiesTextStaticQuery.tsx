@@ -8,7 +8,7 @@ const PropertiesTextStaticQuery = (props: PropertiesPropTypes) => (
   <>
     <PropertyPosition {...props} />
     <PropertyColor {...props} />
-    <PropertyApiKey {...props} />
+    <PropertyApiKey type="text" {...props} />
   </>
 )
 

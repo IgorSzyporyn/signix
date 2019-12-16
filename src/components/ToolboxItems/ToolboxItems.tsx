@@ -82,21 +82,9 @@ const toolboxItems: ToolboxItemProps[] = [
     api: true
   },
   {
-    title: 'API Text Options',
-    subtitle: '',
-    type: 'textoptionsquery',
-    api: true
-  },
-  {
     title: 'API Image',
     subtitle: '',
     type: 'imagestaticquery',
-    api: true
-  },
-  {
-    title: 'API Image Options',
-    subtitle: '',
-    type: 'imageoptionsquery',
     api: true
   },
   {

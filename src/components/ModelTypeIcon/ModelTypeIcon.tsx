@@ -83,17 +83,9 @@ const getModelTypeIcon = (
       iconProps.style.fill = 'var(--color-lightorange)'
       Component = <TextFieldsOutlinedIcon {...iconProps} />
       break
-    case 'textoptionsquery':
-      iconProps.style.fill = 'var(--color-lightorange)'
-      Component = <ListIcon {...iconProps} />
-      break
     case 'imagestaticquery':
       iconProps.style.fill = 'var(--color-lightorange)'
       Component = <CropOriginalIcon {...iconProps} />
-      break
-    case 'imageoptionsquery':
-      iconProps.style.fill = 'var(--color-lightorange)'
-      Component = <AddPhotoAlternateIcon {...iconProps} />
       break
     case 'imageoptionsmultiplequery':
       iconProps.style.fill = 'var(--color-lightorange)'

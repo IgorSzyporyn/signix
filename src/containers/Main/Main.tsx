@@ -1,7 +1,6 @@
 import ExploreIcon from '@material-ui/icons/Explore'
 import ExtensionIcon from '@material-ui/icons/Extension'
 import SettingsIcon from '@material-ui/icons/Settings'
-import ErrorIcon from '@material-ui/icons/Error'
 import { useStore } from 'laco-react'
 import React from 'react'
 import SplitPane from 'react-split-pane'
@@ -11,16 +10,14 @@ import Form from '../../components/Form/Form'
 import Layers from '../../components/Layers/Layers'
 import MUIcon from '../../components/MUIcon/MUIcon'
 import Properties from '../../components/Properties/Properties'
+import Query from '../../components/Query/Query'
 import Settings from '../../components/Settings/Settings'
 import TabPanel from '../../components/TabPanel/TabPanel'
 import Toolbox from '../../components/Toolbox/Toolbox'
 import VerticalTabPanel from '../../components/VerticalTabPanel/VerticalTabPanel'
 import AppTabStore from '../../stores/AppTabStore'
-import AppTabStoreInterface from '../../types/AppTabStoreInterface'
 import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
-import Query from '../../components/Query/Query'
-import QueryStoreInterface from '../../types/QueryStoreInterface'
-import QueryStore from '../../stores/QueryStore'
+import AppTabStoreInterface from '../../types/AppTabStoreInterface'
 
 const PaneContainerPrimary = styled.div`
   min-height: 100%;
@@ -51,8 +48,6 @@ const Main = () => {
     mainAreaActiveTab,
     utilityAreaActiveTab
   }: AppTabStoreInterface = useStore(AppTabStore)
-
-  const { valid, tested }: QueryStoreInterface = useStore(QueryStore)
 
   return (
     <SplitPane
@@ -101,25 +96,7 @@ const Main = () => {
             'Properties of selected item',
             'Connect to API Interfaces'
           ]}
-          tabs={[
-            'Layers',
-            'Properties',
-            <div style={{ position: 'relative' }}>
-              {!valid && tested && (
-                <MUIcon
-                  size="small"
-                  style={{
-                    color: 'var(--color-failure)',
-                    position: 'absolute',
-                    top: '-12px',
-                    right: '-22px'
-                  }}
-                  render={p => <ErrorIcon {...p} />}
-                />
-              )}
-              <div>API</div>
-            </div>
-          ]}
+          tabs={['Layers', 'Properties', 'API']}
           panels={[<Layers />, <Properties />, <Query />]}
         />
       </PaneContainerSecondary>

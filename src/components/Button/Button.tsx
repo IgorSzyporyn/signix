@@ -27,8 +27,8 @@ const ButtonWrapper = styled.button<ButtonProps>`
         color = 'var(--color-white)'
         break
       case 'secondary':
-        backgroundColor = 'var(--color-lightblue)'
-        border = '0.1rem solid var(--color-lightblue)'
+        backgroundColor = 'var(--color-green)'
+        border = '0.1rem solid var(--color-green)'
         color = 'var(--color-white)'
         break
       default:

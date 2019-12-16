@@ -23,12 +23,14 @@ const CoreModel: ModelInterface = {
     type: 'Arial'
   },
   items: [],
+  enumeration: [],
   background: {
     disabled: true,
     image: '',
     position: 'center'
   },
   options: [],
+  api: false,
   value: ''
 }
 

@@ -38,7 +38,7 @@ const Actions = styled.div`
 type PanelHeaderProps = {
   actions?: React.ReactNode
   icon?: React.ReactNode
-  title?: string
+  title?: React.ReactNode
   topMargin?: boolean
 }
 

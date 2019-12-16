@@ -1,5 +1,5 @@
 type QueryDataStoreModelInterface = {
-  [key: string]: string[] | number[] | boolean[]
+  [key: string]: Array<string | number | boolean>
 }
 
 export default QueryDataStoreModelInterface

@@ -7,6 +7,8 @@ import QueryStoreInterface from '../../types/QueryStoreInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
+import QueryDataStoreInterface from '../../types/QueryDataStoreInterface'
+import QueryDataStore from '../../stores/QueryDataStore'
 
 type QueryDataProps = {
   disabled?: boolean
@@ -14,6 +16,9 @@ type QueryDataProps = {
 
 const QueryData = ({ disabled }: QueryDataProps) => {
   const { expanded, data }: QueryStoreInterface = useStore(QueryStore)
+  const { data: exampleData }: QueryDataStoreInterface = useStore(
+    QueryDataStore
+  )
   const { queryData: isExpanded } = expanded
 
   return (
@@ -71,6 +76,11 @@ const QueryData = ({ disabled }: QueryDataProps) => {
           })
         }}
       />
+      {exampleData && (
+        <div>
+          <pre>{JSON.stringify(exampleData, null, 2)}</pre>
+        </div>
+      )}
     </PanelExpandableItem>
   )
 }

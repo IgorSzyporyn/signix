@@ -4,7 +4,8 @@ import TextModel from './TextModel'
 const TextStaticQueryModel: ModelInterface = {
   ...TextModel,
   type: 'textstaticquery',
-  value: 'User Input Text'
+  api: true,
+  value: ''
 }
 
 export default TextStaticQueryModel

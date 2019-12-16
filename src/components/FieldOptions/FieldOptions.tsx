@@ -38,17 +38,24 @@ const OptionsListItem = styled.li`
 type OptionsType = 'simple' | 'object'
 
 type FieldOptionsProps = {
+  value?: string
   options: FieldOptionsOptionType[]
   searchable?: boolean
   onSelection?: (value?: string) => void
 } & InputHTMLAttributes<HTMLInputElement>
 
-const FieldOptions = ({ options, searchable, ...props }: FieldOptionsProps) => {
+const FieldOptions = ({
+  value,
+  options,
+  searchable,
+  ...props
+}: FieldOptionsProps) => {
   const optionsType = getOptionsType(options)
   const simpleType = optionsType === 'simple'
 
   return (
     <Downshift
+      selectedItem={value}
       onChange={(selection?: string) =>
         props.onSelection && props.onSelection(selection)
       }

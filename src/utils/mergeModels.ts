@@ -12,6 +12,21 @@ const mergeModels = (
     first.items = []
   }
 
+  if (firstHasItems && !secondHasItems) {
+    first.items = []
+  }
+
+  const firstHasEnumeration = first.enumeration && first.enumeration.length
+  const secondHasEnumeration = second.enumeration && second.enumeration.length
+
+  if (firstHasEnumeration && secondHasEnumeration) {
+    first.enumeration = []
+  }
+
+  if (firstHasEnumeration && !secondHasEnumeration) {
+    first.enumeration = []
+  }
+
   return merge(first, second)
 }
 

@@ -17,15 +17,15 @@ const a = (model: ModelInterfacePartial, updateItem: ModelInterfacePartial) => {
 }
 
 const updateItemInModelStore = (
-  updateItem: Omit<ModelInterfacePartial, 'type'>
+  source: Omit<ModelInterfacePartial, 'type'>
 ) => {
   let { model }: ModelStoreInterface = ModelStore.get()
-  let item = { type: model.type, ...updateItem }
+  let updateItem = { type: model.type, ...source }
 
-  if (model.id === item.id) {
-    model = mergeModels(model, item)
+  if (model.id === updateItem.id) {
+    model = mergeModels(model, updateItem)
   } else {
-    model.items = a(model, item)
+    model.items = a(model, updateItem)
   }
 
   ModelStore.set(() => ({ model }))

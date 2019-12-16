@@ -12,9 +12,7 @@ type ModelTypes =
   | 'imageoptions'
   | 'imageoptionsmultiple'
   | 'imagestaticquery'
-  | 'imageoptionsquery'
   | 'imageoptionsmultiplequery'
   | 'textstaticquery'
-  | 'textoptionsquery'
 
 export default ModelTypes
