@@ -2,6 +2,7 @@ import ModelInterface from '../types/ModelInterface'
 
 const CoreModel: ModelInterface = {
   type: 'core',
+  coreType: 'core',
   position: {
     type: 'top-left',
     top: 0,

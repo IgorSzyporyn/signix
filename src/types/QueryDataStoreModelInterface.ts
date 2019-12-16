@@ -1,5 +1,7 @@
+import ModelEnumerationKeyTypes from './ModelEnumerationKeyTypes'
+
 type QueryDataStoreModelInterface = {
-  [key: string]: Array<string | number | boolean>
+  [key: string]: ModelEnumerationKeyTypes[]
 }
 
 export default QueryDataStoreModelInterface

@@ -1,8 +1,9 @@
-import ModelEnumerationTypes from './ModelEnumerationTypes'
+import ModelCoreTypes from './ModelCoreTypes'
+import ModelEnumerationKeyTypes from './ModelEnumerationKeyTypes'
 
 type ModelEnumerationInterface = {
-  type: ModelEnumerationTypes
-  key: string | number | boolean
+  type: ModelCoreTypes
+  key: ModelEnumerationKeyTypes
   value: string
 }
 

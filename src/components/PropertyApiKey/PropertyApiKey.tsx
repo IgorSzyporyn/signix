@@ -7,16 +7,20 @@ import QueryDataStoreInterface from '../../types/QueryDataStoreInterface'
 import FieldEnumeration from '../FieldEnumeration/FieldEnumeration'
 import FieldOptions from '../FieldOptions/FieldOptions'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
-import ModelEnumerationTypes from '../../types/ModelEnumerationTypes'
+import ModelCoreTypes from '../../types/ModelCoreTypes'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelEnumerationInterface from '../../types/ModelEnumerationInterface'
+import WarningIcon from '@material-ui/icons/Warning'
 import Button from '../Button/Button'
 import styled from 'styled-components'
 import QueryDataStoreModelInterface from '../../types/QueryDataStoreModelInterface'
+import LayerErrorStoreInterface from '../../types/LayerErrorStoreInterface'
+import LayerErrorStore from '../../stores/LayerErrorStore'
+import MUIcon from '../MUIcon/MUIcon'
 
 const createEnum = (
   dataStoreModel: QueryDataStoreModelInterface,
-  type: ModelEnumerationTypes,
+  type: ModelCoreTypes,
   value?: string
 ) => {
   let enumeration: ModelEnumerationInterface[] = []
@@ -35,6 +39,10 @@ const createEnum = (
   return enumeration
 }
 
+const TitleContainer = styled.div`
+  display: flex;
+`
+
 const ConfirmContainer = styled.div`
   margin-bottom: var(--spacing);
 `
@@ -47,6 +55,10 @@ const ConfirmButtons = styled.div`
   & > *:first-child {
     margin-right: var(--gutter);
   }
+`
+
+const ErrorContainer = styled.div`
+  margin-bottom: var(--spacing);
 `
 
 const EnumerationContainer = styled.div``
@@ -64,11 +76,14 @@ type PropertyApiKeyEnumerationState = {
 }
 
 type PropertyApiKeyQueryProps = {
-  type: ModelEnumerationTypes
+  type: ModelCoreTypes
   model: ModelInterface
 }
 
 const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
+  const { [model.id!]: errors }: LayerErrorStoreInterface = useStore(
+    LayerErrorStore
+  )
   const { dataKeys, model: dataStoreModel }: QueryDataStoreInterface = useStore(
     QueryDataStore
   )
@@ -118,7 +133,24 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
   }, [enumerationState.confirmChangeType])
 
   return (
-    <PropertiesPanel title="API Connection" type="apiKey">
+    <PropertiesPanel
+      title={
+        <TitleContainer style={{ position: 'relative' }}>
+          {errors && errors.length > 0 && (
+            <MUIcon
+              size="small"
+              style={{
+                color: 'var(--color-warning)',
+                marginRight: 'var(--gutter)'
+              }}
+              render={p => <WarningIcon {...p} />}
+            />
+          )}
+          <div>API Connection</div>
+        </TitleContainer>
+      }
+      type="apiKey"
+    >
       <ConfirmContainer hidden={!enumerationState.confirmChange}>
         <ConfirmTitle>Your existing enumeration will be wiped</ConfirmTitle>
         <ConfirmButtons>
@@ -145,6 +177,9 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
           </Button>
         </ConfirmButtons>
       </ConfirmContainer>
+      <ErrorContainer hidden={!(errors && errors.length > 0)}>
+        errors here
+      </ErrorContainer>
       <FieldOptions
         id={`${enumerationState._stupidlyCreatedIdToForceRender}`}
         hidden={enumerationState.confirmChange}

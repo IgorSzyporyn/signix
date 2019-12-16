@@ -1,5 +1,6 @@
 import ModelBackgroundInterface from './ModelBackgroundInterface'
 import ModelColorInterface from './ModelColorInterface'
+import ModelCoreTypes from './ModelCoreTypes'
 import ModelDimensionInterface from './ModelDimensionInterface'
 import ModelEnumerationInterface from './ModelEnumerationInterface'
 import ModelFontInterface from './ModelFontInterface'
@@ -19,6 +20,7 @@ type ModelInterface = {
   value?: string
   hidden?: boolean
   unique?: boolean
+  coreType?: ModelCoreTypes
   font: ModelFontInterface
   background: ModelBackgroundInterface
   color: ModelColorInterface

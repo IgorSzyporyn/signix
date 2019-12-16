@@ -27,7 +27,7 @@ const Body = styled.div`
 `
 
 type PropertiesPanelProps = {
-  title: string
+  title: React.ReactNode
   type: string
   children?: React.ReactNode
 }

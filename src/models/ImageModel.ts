@@ -4,6 +4,7 @@ import CoreModel from './CoreModel'
 const ImageModel: ModelInterface = {
   ...CoreModel,
   type: 'image',
+  coreType: 'image',
   dimension: {
     ...CoreModel.dimension,
     width: 48,

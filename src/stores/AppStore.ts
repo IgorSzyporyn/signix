@@ -10,7 +10,4 @@ export const initAppStore = (values: Partial<AppStoreInterface>) => {
 
 const AppStore = new LacoStore({ ...appStoreDefaults })
 
-const clone: any = window
-clone.D = AppStore
-
 export default AppStore

@@ -2,6 +2,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import VisibilityIcon from '@material-ui/icons/Visibility'
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import WarningIcon from '@material-ui/icons/Warning'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
@@ -19,6 +20,8 @@ import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
+import LayerErrorStoreInterface from '../../types/LayerErrorStoreInterface'
+import LayerErrorStore from '../../stores/LayerErrorStore'
 
 const Wrapper = styled.li`
   user-select: none;
@@ -117,6 +120,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
   const { id, items, group, hidden } = model
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
+  const { [id!]: errors }: LayerErrorStoreInterface = useStore(LayerErrorStore)
   const { activeModelId, editingModelId }: AppStoreInterface = useStore(
     AppStore
   )
@@ -140,29 +144,37 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
           }
         }}
         data-active={isActive}
-        data-expanded={expanded}
-        data-group={group}
-        data-has-items={hasItems}
         data-is-editing={isEditingAny}
-        data-editing={editingModelId}
-        data-id={id}
-        data-level={level}
       >
         <HeadingInner level={level}>
-          <ModelTypeIcon
-            onClick={() => {
-              if (level !== 0 && group) {
-                updateItemInLayerStore(!expanded, id)
-              }
-            }}
-            hasItems={hasItems}
-            type={model.type}
-            isExpanded={expanded}
-            size="medium"
-            style={{
-              marginRight: 'calc(0.75 * var(--gutter))'
-            }}
-          />
+          <div style={{ position: 'relative' }}>
+            <ModelTypeIcon
+              onClick={() => {
+                if (level !== 0 && group) {
+                  updateItemInLayerStore(!expanded, id)
+                }
+              }}
+              hasItems={hasItems}
+              type={model.type}
+              isExpanded={expanded}
+              size="medium"
+              style={{
+                marginRight: 'var(--gutter)'
+              }}
+            />
+            {errors && errors.length > 0 && (
+              <MUIcon
+                size="tiny"
+                style={{
+                  color: 'var(--color-warning)',
+                  position: 'absolute',
+                  top: '-3px',
+                  right: '0'
+                }}
+                render={p => <WarningIcon {...p} />}
+              />
+            )}
+          </div>
           <TitleWrapper
             onDoubleClick={() => {
               updateActiveTabInAppTabStore({ actionAreaActiveTab: 1 })

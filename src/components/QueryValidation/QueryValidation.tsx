@@ -1,21 +1,27 @@
 import { useStore } from 'laco-react'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import resetLayerErrorStore from '../../stores/layerErrorStore/resetLayerErrorStore'
+import setLayerErrorStore from '../../stores/layerErrorStore/setLayerErrorStore'
 import QueryStore from '../../stores/QueryStore'
 import QueryStoreInterface from '../../types/QueryStoreInterface'
+import getFontSize from '../../utils/getFontSize'
+import groupLayerErrorsById from '../../utils/groupLayerErrorsById'
+import updateLayersWithApi from '../../utils/updateLayersWithApi'
 import { uniqueId } from '../../utils/utilities'
 import validateDataEndpoint from '../../utils/validateDataEndpoint'
 import validateDataEndpointFetch from '../../utils/validateDataEndpointFetch'
 import validateDataEndpointWrite from '../../utils/validateDataEndpointWrite'
-import validateModelEndpoint from '../../utils/validateModelEndpoint'
-import validateModelEndpointFetch from '../../utils/validateModelEndpointFetch'
-import validateModelEndpointIntegrity from '../../utils/validateModelEndpointIntegrity'
-import QueryValidationItem from '../QueryValidationItem/QueryValidationItem'
-import getFontSize from '../../utils/getFontSize'
-import Button from '../Button/Button'
 import validateLayerModelIntegrity, {
   ValidateLayerModelResultItem
 } from '../../utils/validateLayerModelIntegrity'
+import validateModelEndpoint from '../../utils/validateModelEndpoint'
+import validateModelEndpointFetch from '../../utils/validateModelEndpointFetch'
+import validateModelEndpointIntegrity from '../../utils/validateModelEndpointIntegrity'
+import Button from '../Button/Button'
+import QueryValidationItem from '../QueryValidationItem/QueryValidationItem'
+import GroupedLayerErrorsInterface from '../../types/GroupedLayerErrorsInterface'
+import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 
 const Wrapper = styled.section`
   font-size: ${getFontSize('xsmall')};
@@ -37,7 +43,8 @@ const List = styled.ul`
 
 const ListItem = styled.li``
 
-const ModelIntegrityError = styled.div`
+const ErrorContainer = styled.div`
+  font-size: ${getFontSize('tiny')};
   padding-top: var(--half-gutter);
   padding-bottom: var(--half-gutter);
   padding-left: calc(var(--spacing) + var(--half-gutter));
@@ -47,19 +54,15 @@ const ModelIntegrityError = styled.div`
   }
 `
 
-const LayerErrorTitle = styled.div`
-  line-height: 1.4em;
-  font-size: ${getFontSize('tiny')};
-  padding-left: calc(var(--spacing) + var(--half-gutter));
+const ErrorContainerInner = styled.ul``
+
+const ErrorContainerTitle = styled.div`
+  margin-top: var(--half-gutter);
   margin-bottom: var(--gutter);
-  margin-top: var(--gutter);
 `
 
-const LayerError = styled.div`
-  font-size: ${getFontSize('tiny')};
-  padding-top: var(--half-gutter);
-  padding-bottom: var(--half-gutter);
-  padding-left: calc(var(--spacing) + var(--half-gutter));
+const ErrorContainerText = styled.li`
+  padding-left: var(--gutter);
 `
 
 const ButtonContainer = styled.div`
@@ -126,10 +129,12 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
   // LAYER STATTE
   const [layersValid, setLayersValid] = useState(false)
   const [layersValidating, setLayersValidating] = useState(true)
+  const [layersFix, setLayersFix] = useState(false)
+  const [attempedLayersFix, setAttemptedLayersFix] = useState(false)
 
   const [layersValidErrors, setLayersValidErrors] = useState<
-    ValidateLayerModelResultItem[]
-  >([])
+    GroupedLayerErrorsInterface
+  >({})
 
   // COMMON VALIDATIONS
   useEffect(() => {
@@ -142,6 +147,7 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
         setDataEndpointFetchValidating(false)
         setDataEndpointWriteValidating(false)
         setModelEndpointIntegrityValidating(false)
+        setLayersValidating(false)
       }
     })
 
@@ -153,6 +159,7 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
       if (!valid) {
         setModelEndpointFetchValidating(false)
         setModelEndpointIntegrityValidating(false)
+        setLayersValidating(false)
       }
     })
 
@@ -169,6 +176,7 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
         if (!valid) {
           setDataEndpointWriteValidating(false)
           setModelEndpointIntegrityValidating(false)
+          setLayersValidating(false)
         }
       })
     }
@@ -197,6 +205,7 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
 
         if (!valid) {
           setModelEndpointIntegrityValidating(false)
+          setLayersValidating(false)
         }
       })
     }
@@ -211,6 +220,10 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
         setModelEndpointIntegrityValid(valid)
         setModelEndpointIntegrityValidating(false)
         setModelEndpointIntegrityErrors(errors)
+
+        if (!valid) {
+          setLayersValidating(false)
+        }
       })
     }
 
@@ -219,19 +232,50 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
 
   // LAYER INTEGRITY CHECK
   useEffect(() => {
-    if (modelEndpointIntegrityValid) {
+    if (dataEndpointWriteValid && modelEndpointFetchValid) {
       validateLayerModelIntegrity(result => {
         if (result === true) {
+          resetLayerErrorStore()
           setLayersValid(true)
           setLayersValidating(false)
         } else {
+          const groupedResult = groupLayerErrorsById(result)
+          setLayerErrorStore(groupedResult)
           setLayersValid(false)
           setLayersValidating(false)
-          setLayersValidErrors(result)
+          setLayersValidErrors(groupedResult)
         }
       })
     }
-  }, [modelEndpointIntegrityValid])
+  }, [modelEndpointFetchValid, dataEndpointWriteValid])
+
+  // LAYER FIX
+  useEffect(() => {
+    if (layersFix) {
+      updateLayersWithApi(layersValidErrors, () => {
+        setLayersFix(false)
+        setAttemptedLayersFix(true)
+
+        validateLayerModelIntegrity(result => {
+          setLayersValidErrors({})
+
+          if (result === true) {
+            resetLayerErrorStore()
+            setLayersValid(true)
+            setLayersValidating(false)
+          } else {
+            const groupedResult = groupLayerErrorsById(result)
+            setLayerErrorStore(groupedResult)
+            setLayersValid(false)
+            setLayersValidating(false)
+            setLayersValidErrors(groupedResult)
+          }
+        })
+      })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layersFix])
 
   const valid =
     dataEndpointValid &&
@@ -239,7 +283,8 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
     dataEndpointWriteValid &&
     modelEndpointValid &&
     modelEndpointFetchValid &&
-    modelEndpointIntegrityValid
+    modelEndpointIntegrityValid &&
+    layersValid
 
   const validating =
     dataEndpointValidating ||
@@ -298,7 +343,7 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
               dataEndpointWriteValidating || modelEndpointFetchValidating
             }
             valid={modelEndpointIntegrityValid}
-            title="Checking Model Table Integrity"
+            title="Checking Model Integrity"
             validating={
               dataEndpointWriteValid &&
               modelEndpointFetchValid &&
@@ -307,11 +352,11 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
           >
             {modelEndpointIntegrityErrors.length > 0 &&
               modelEndpointIntegrityErrors.map(error => (
-                <ModelIntegrityError
+                <ErrorContainer
                   key={`modelEndpointIntegrityError-${uniqueId()}`}
                 >
-                  - {error}
-                </ModelIntegrityError>
+                  <li>{error}</li>
+                </ErrorContainer>
               ))}
           </QueryValidationItem>
         </ListItem>
@@ -319,43 +364,51 @@ const QueryValidation = ({ onValidated }: QueryValidationProps) => {
           <QueryValidationItem
             disabled={modelEndpointIntegrityValidating}
             valid={layersValid}
-            title="Checking Layer API Integrity"
+            title="Checking API Integrity For Layers"
             validating={layersValidating}
           >
-            {layersValidErrors.length > 0 && (
-              <>
-                <LayerErrorTitle>
-                  <div>
-                    Note: Errors in layer API integrity does not affect the
-                    validity of the provided API
-                  </div>
-                  <div>
-                    And they can most likely be fixed with our auto fix button
-                  </div>
-                </LayerErrorTitle>
-                {layersValidErrors.map(item => {
-                  return (
-                    <LayerError key={`layerError-${uniqueId()}`}>
-                      {item.error}
-                    </LayerError>
-                  )
-                })}
-              </>
-            )}
+            {Object.keys(layersValidErrors).map(key => {
+              const errors = layersValidErrors[key]
+              const title = errors[0] && errors[0].name ? errors[0].name : ''
+
+              return (
+                <ErrorContainer>
+                  <ErrorContainerTitle>Layer: {title}</ErrorContainerTitle>
+                  <ErrorContainerInner>
+                    {errors.map(error => (
+                      <ErrorContainerText>{error.text}</ErrorContainerText>
+                    ))}
+                  </ErrorContainerInner>
+                </ErrorContainer>
+              )
+            })}
           </QueryValidationItem>
         </ListItem>
       </List>
       <ButtonContainer>
-        {!validating && !layersValid && (
-          <Button
-            variant="secondary"
-            disabled={validating}
-            onClick={() => {
-              onValidated && onValidated(valid)
-            }}
-          >
-            Auto Fix Layers
-          </Button>
+        {modelEndpointFetchValid && !validating && !layersValid && (
+          <>
+            {attempedLayersFix ? (
+              <>
+                {!layersValid && (
+                  <Button disabled={true} variant="secondary">
+                    Failed To (All) Fix Layers
+                  </Button>
+                )}
+              </>
+            ) : (
+              <Button
+                variant="secondary"
+                disabled={validating}
+                onClick={() => {
+                  setLayersValidating(true)
+                  setLayersFix(true)
+                }}
+              >
+                Attempt Fix Layers
+              </Button>
+            )}
+          </>
         )}
         <Button
           variant="primary"

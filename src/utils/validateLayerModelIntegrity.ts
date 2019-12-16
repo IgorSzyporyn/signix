@@ -1,10 +1,11 @@
 import ModelStore from '../stores/ModelStore'
-import ModelStoreInterface from '../types/ModelStoreInterface'
 import QueryDataStore from '../stores/QueryDataStore'
-import QueryDataStoreInterface from '../types/QueryDataStoreInterface'
+import ModelEnumerationKeyTypes from '../types/ModelEnumerationKeyTypes'
 import ModelInterface from '../types/ModelInterface'
-import QueryDataStoreModelInterface from '../types/QueryDataStoreModelInterface'
+import ModelStoreInterface from '../types/ModelStoreInterface'
 import QueryDataStoreDataInterface from '../types/QueryDataStoreDataInterface'
+import QueryDataStoreInterface from '../types/QueryDataStoreInterface'
+import QueryDataStoreModelInterface from '../types/QueryDataStoreModelInterface'
 
 const appendErrorToResult = (
   result: ValidateLayerModelResultItem[] | true,
@@ -38,8 +39,9 @@ const validateLayerModel = (
   if (model.api && model.value && !apiData[model.value]) {
     result = appendErrorToResult(result, {
       id: model.id!,
-      error: `API Key "${model.value}" used in the layer "${model.name}" does not exist in result from data API`,
-      errorLevel: 'major'
+      text: `API Key "${model.value}" does not exist in results from data API`,
+      errorLevel: 'critical',
+      name: model.name || ''
     })
   }
 
@@ -54,8 +56,11 @@ const validateLayerModel = (
         if (!apiModelKeys.includes(enumeration.key)) {
           const error: ValidateLayerModelResultItem = {
             id: model.id!,
-            error: `Enumerations key for layer "${model.value}" has no match in model from API`,
-            errorLevel: 'major'
+            text: `The enumeration key "${enumeration.key}" is missing in API model`,
+            errorLevel: 'fixable',
+            enumKey: enumeration.key,
+            type: 'unsupportedEnumKey',
+            name: model.name || ''
           }
 
           result = appendErrorToResult(result, error)
@@ -74,8 +79,11 @@ const validateLayerModel = (
         if (!modelKeyUsedInEnumeration) {
           const error: ValidateLayerModelResultItem = {
             id: model.id!,
-            error: `The layer "${model.name}" missed enumeration for "${modelKey}"`,
-            errorLevel: 'medium'
+            text: `Missing an enumeration for "${modelKey}" in "${model.value}""`,
+            errorLevel: 'fixable',
+            enumKey: modelKey,
+            type: 'missingEnumKey',
+            name: model.name || ''
           }
 
           result = appendErrorToResult(result, error)
@@ -84,8 +92,9 @@ const validateLayerModel = (
     } else {
       const error: ValidateLayerModelResultItem = {
         id: model.id!,
-        error: `API key "${model.value}" has no matching enumeration model in layer "${model.name}"`,
-        errorLevel: 'major'
+        text: `Unmatched key (${model.value}) in the API model`,
+        errorLevel: 'critical',
+        name: model.name || ''
       }
 
       result = appendErrorToResult(result, error)
@@ -109,12 +118,17 @@ const validateLayerModel = (
   return result
 }
 
-type ValidateLayerModelResultErrorLevel = 'minor' | 'medium' | 'major'
+type ValidateLayerModelResultErrorLevel = 'fixable' | 'critical'
+
+type ValidateLayerModelErrorType = 'missingEnumKey' | 'unsupportedEnumKey'
 
 export type ValidateLayerModelResultItem = {
   id: string
-  error: string
+  enumKey?: ModelEnumerationKeyTypes
+  type?: ValidateLayerModelErrorType
+  text: string
   errorLevel: ValidateLayerModelResultErrorLevel
+  name: string
 }
 
 export type ValidateLayerModelResult = ValidateLayerModelResultItem[] | true

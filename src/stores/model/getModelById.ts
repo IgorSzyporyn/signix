@@ -32,14 +32,14 @@ const getModelById = (id: string | undefined, model: ModelInterface) => {
     found = searchItemsForModelById(id, model.items)
   }
 
-  return found
+  return found ? ({ ...found } as ModelInterface) : null
 }
 
 export const searchModelById = (id: string) => {
   const { model } = ModelStore.get()
   const found = getModelById(id, model)
 
-  return found
+  return found ? ({ ...found } as ModelInterface) : null
 }
 
 export default getModelById
