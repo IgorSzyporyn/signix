@@ -10,7 +10,7 @@ import Form from '../../components/Form/Form'
 import Layers from '../../components/Layers/Layers'
 import MUIcon from '../../components/MUIcon/MUIcon'
 import Properties from '../../components/Properties/Properties'
-import Query from '../../components/Query/Query'
+import Api from '../../components/Api/Api'
 import Settings from '../../components/Settings/Settings'
 import TabPanel from '../../components/TabPanel/TabPanel'
 import Toolbox from '../../components/Toolbox/Toolbox'
@@ -97,7 +97,7 @@ const Main = () => {
             'Connect to API Interfaces'
           ]}
           tabs={['Layers', 'Properties', 'API']}
-          panels={[<Layers />, <Properties />, <Query />]}
+          panels={[<Layers />, <Properties />, <Api />]}
         />
       </PaneContainerSecondary>
     </SplitPane>

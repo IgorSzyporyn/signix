@@ -23,7 +23,7 @@ const Title = styled.h4`
 
 const Body = styled.div`
   position: relative;
-  padding: 0 calc(var(--spacing) + var(--gutter)) var(--gutter);
+  padding: 0 var(--spacing-large) var(--gutter);
 `
 
 type PropertiesPanelProps = {

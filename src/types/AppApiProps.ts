@@ -1,9 +1,9 @@
-import QueryDataStoreInterface from './QueryDataStoreInterface'
-import QueryStoreInterface from './QueryStoreInterface'
+import ApiQueryStoreInterface from './ApiQueryStoreInterface'
+import ApiStoreInterface from './ApiStoreInterface'
 
 type AppApiProps = {
-  query: Pick<QueryStoreInterface, 'data' | 'model' | 'enabled'>
-  data: QueryDataStoreInterface
+  query: Pick<ApiStoreInterface, 'data' | 'model' | 'enabled'>
+  data: ApiQueryStoreInterface
 }
 
 export default AppApiProps

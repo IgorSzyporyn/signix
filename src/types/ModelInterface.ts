@@ -2,7 +2,7 @@ import ModelBackgroundInterface from './ModelBackgroundInterface'
 import ModelColorInterface from './ModelColorInterface'
 import ModelCoreTypes from './ModelCoreTypes'
 import ModelDimensionInterface from './ModelDimensionInterface'
-import ModelEnumerationInterface from './ModelEnumerationInterface'
+import ApiEnumerationInterface from './ApiEnumerationInterface'
 import ModelFontInterface from './ModelFontInterface'
 import ModelInterfacePartial from './ModelInterfacePartial'
 import ModelOptionsInterface from './ModelOptionsInterface'
@@ -26,7 +26,7 @@ type ModelInterface = {
   color: ModelColorInterface
   dimension: ModelDimensionInterface
   items: ModelInterfacePartial[]
-  enumeration: ModelEnumerationInterface[]
+  enumeration: ApiEnumerationInterface[]
   position: ModelPositionInterface
   type: ModelTypes
 }

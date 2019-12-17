@@ -1,14 +1,14 @@
-import QueryDataStore from '../stores/QueryDataStore'
-import QueryStoreInterface from '../types/QueryStoreInterface'
-import QueryStore from '../stores/QueryStore'
-import QueryDataStoreInterface from '../types/QueryDataStoreInterface'
-import updateDataKeysInQueryDataStore from '../stores/queryDataStore/updateDataKeysInQueryDataStore'
+import ApiQueryStore from '../stores/ApiQueryStore'
+import ApiStoreInterface from '../types/ApiStoreInterface'
+import ApiStore from '../stores/ApiStore'
+import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
+import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 
 type Callback = (valid: boolean) => void
 
 const validateDataEndpointWrite = (callback: Callback) => {
-  const { data }: QueryDataStoreInterface = QueryDataStore.get()
-  const { data: options }: QueryStoreInterface = QueryStore.get()
+  const { data }: ApiQueryStoreInterface = ApiQueryStore.get()
+  const { data: options }: ApiStoreInterface = ApiStore.get()
   const { dynamicKey } = options
 
   let noWriteErrors = false
@@ -24,7 +24,7 @@ const validateDataEndpointWrite = (callback: Callback) => {
       })
       .map(i => i)
 
-    updateDataKeysInQueryDataStore(dataKeys)
+    updateDataKeysInApiQueryStore(dataKeys)
 
     noWriteErrors = true
   } catch (e) {}

@@ -1,16 +1,13 @@
 import { searchModelById } from '../stores/model/getModelById'
 import updateItemInModelStore from '../stores/model/updateItemInModelStore'
-import ModelCoreTypes from '../types/ModelCoreTypes'
-import ModelEnumerationInterface from '../types/ModelEnumerationInterface'
-import ModelEnumerationKeyTypes from '../types/ModelEnumerationKeyTypes'
-import groupLayerErrorsById from './groupLayerErrorsById'
-import { ValidateLayerModelResultItem } from './validateLayerModelIntegrity'
-import resetLayerErrorStore from '../stores/layerErrorStore/resetLayerErrorStore'
+import ApiEnumerationInterface from '../types/ApiEnumerationInterface'
+import ApiEnumerationKeyTypes from '../types/ApiEnumerationKeyTypes'
 import GroupedLayerErrorsInterface from '../types/GroupedLayerErrorsInterface'
+import ModelCoreTypes from '../types/ModelCoreTypes'
 
 const fixMissingEnumKey = (
-  enumeration: ModelEnumerationInterface[],
-  key: ModelEnumerationKeyTypes,
+  enumeration: ApiEnumerationInterface[],
+  key: ApiEnumerationKeyTypes,
   type: ModelCoreTypes
 ) => {
   enumeration.push({
@@ -23,8 +20,8 @@ const fixMissingEnumKey = (
 }
 
 const fixUnsupportedEnumKey = (
-  enumeration: ModelEnumerationInterface[],
-  key: ModelEnumerationKeyTypes
+  enumeration: ApiEnumerationInterface[],
+  key: ApiEnumerationKeyTypes
 ) => {
   const filteredEnumeration = enumeration.filter(item => {
     return item.key !== key

@@ -4,8 +4,8 @@ import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
 import { useStore } from 'laco-react'
-import QueryStore from '../../stores/QueryStore'
-import QueryStoreInterface from '../../types/QueryStoreInterface'
+import ApiStore from '../../stores/ApiStore'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
 
 const ListContainer = styled.ul`
   list-style: none;
@@ -100,7 +100,7 @@ type ToolboxItemsProps = {
 }
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {
-  const { valid, enabled }: QueryStoreInterface = useStore(QueryStore)
+  const { valid, enabled }: ApiStoreInterface = useStore(ApiStore)
 
   return (
     <div>

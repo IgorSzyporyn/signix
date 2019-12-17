@@ -1,11 +1,11 @@
 import ModelStore from '../stores/ModelStore'
-import QueryDataStore from '../stores/QueryDataStore'
-import ModelEnumerationKeyTypes from '../types/ModelEnumerationKeyTypes'
+import ApiQueryStore from '../stores/ApiQueryStore'
+import ApiEnumerationKeyTypes from '../types/ApiEnumerationKeyTypes'
 import ModelInterface from '../types/ModelInterface'
 import ModelStoreInterface from '../types/ModelStoreInterface'
-import QueryDataStoreDataInterface from '../types/QueryDataStoreDataInterface'
-import QueryDataStoreInterface from '../types/QueryDataStoreInterface'
-import QueryDataStoreModelInterface from '../types/QueryDataStoreModelInterface'
+import ApiQueryStoreDataInterface from '../types/ApiQueryStoreDataInterface'
+import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
+import ApiQueryStoreModelInterface from '../types/ApiQueryStoreModelInterface'
 
 const appendErrorToResult = (
   result: ValidateLayerModelResultItem[] | true,
@@ -30,8 +30,8 @@ const appendErrorToResult = (
 
 const validateLayerModel = (
   model: ModelInterface,
-  apiData: QueryDataStoreDataInterface,
-  apiModel: QueryDataStoreModelInterface
+  apiData: ApiQueryStoreDataInterface,
+  apiModel: ApiQueryStoreModelInterface
 ) => {
   let result: ValidateLayerModelResult = true
 
@@ -124,7 +124,7 @@ type ValidateLayerModelErrorType = 'missingEnumKey' | 'unsupportedEnumKey'
 
 export type ValidateLayerModelResultItem = {
   id: string
-  enumKey?: ModelEnumerationKeyTypes
+  enumKey?: ApiEnumerationKeyTypes
   type?: ValidateLayerModelErrorType
   text: string
   errorLevel: ValidateLayerModelResultErrorLevel
@@ -140,7 +140,7 @@ const validateLayerModelIntegrity = (callback: Callback) => {
   const {
     data: apiData,
     model: apiModel
-  }: QueryDataStoreInterface = QueryDataStore.get()
+  }: ApiQueryStoreInterface = ApiQueryStore.get()
   const result = validateLayerModel(rootModel, apiData, apiModel)
 
   callback(result)

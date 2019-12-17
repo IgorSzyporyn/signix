@@ -1,29 +1,29 @@
 import { useStore } from 'laco-react'
 import React, { useState, useEffect } from 'react'
-import QueryDataStore from '../../stores/QueryDataStore'
+import ApiQueryStore from '../../stores/ApiQueryStore'
 import FieldOptionsOptionType from '../../types/FieldOptionsOptionType'
 import ModelInterface from '../../types/ModelInterface'
-import QueryDataStoreInterface from '../../types/QueryDataStoreInterface'
+import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import FieldEnumeration from '../FieldEnumeration/FieldEnumeration'
 import FieldOptions from '../FieldOptions/FieldOptions'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import ModelCoreTypes from '../../types/ModelCoreTypes'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
-import ModelEnumerationInterface from '../../types/ModelEnumerationInterface'
+import ApiEnumerationInterface from '../../types/ApiEnumerationInterface'
 import WarningIcon from '@material-ui/icons/Warning'
 import Button from '../Button/Button'
 import styled from 'styled-components'
-import QueryDataStoreModelInterface from '../../types/QueryDataStoreModelInterface'
+import ApiQueryStoreModelInterface from '../../types/ApiQueryStoreModelInterface'
 import LayerErrorStoreInterface from '../../types/LayerErrorStoreInterface'
 import LayerErrorStore from '../../stores/LayerErrorStore'
 import MUIcon from '../MUIcon/MUIcon'
 
 const createEnum = (
-  dataStoreModel: QueryDataStoreModelInterface,
+  dataStoreModel: ApiQueryStoreModelInterface,
   type: ModelCoreTypes,
   value?: string
 ) => {
-  let enumeration: ModelEnumerationInterface[] = []
+  let enumeration: ApiEnumerationInterface[] = []
 
   if (value) {
     const enumerationKeys = dataStoreModel[value]
@@ -70,7 +70,7 @@ const EnumerationTitle = styled.h5`
 type PropertyApiKeyEnumerationState = {
   confirmChange: boolean
   confirmChangeType: 'proceed' | 'cancel' | null
-  storedEnumeration: ModelEnumerationInterface[]
+  storedEnumeration: ApiEnumerationInterface[]
   storedValue: string
   _stupidlyCreatedIdToForceRender: number
 }
@@ -84,8 +84,8 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
   const { [model.id!]: errors }: LayerErrorStoreInterface = useStore(
     LayerErrorStore
   )
-  const { dataKeys, model: dataStoreModel }: QueryDataStoreInterface = useStore(
-    QueryDataStore
+  const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(
+    ApiQueryStore
   )
 
   const [enumerationState, setEnumerationState] = useState<

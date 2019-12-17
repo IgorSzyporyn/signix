@@ -9,11 +9,11 @@ import Header from './containers/Header/Header'
 import Main from './containers/Main/Main'
 import './resizer.scss'
 import initModelStore from './stores/model/initModelStore'
-import { initQueryDataStore } from './stores/QueryDataStore'
-import { initQueryStore } from './stores/QueryStore'
+import { initApiQueryStore } from './stores/ApiQueryStore'
+import { initApiStore } from './stores/ApiStore'
 import AppApiProps from './types/AppApiProps'
 import ModelInterfacePartial from './types/ModelInterfacePartial'
-import updateQueryStore from './stores/queryStore/updateQueryStore'
+import updateApiStore from './stores/apiStore/updateApiStore'
 
 const Root = styled.div`
   height: 100vh;
@@ -57,8 +57,8 @@ const App = ({ model, api }: AppProps) => {
 
   useEffect(() => {
     if (api) {
-      initQueryStore(api.query)
-      initQueryDataStore(api.data)
+      initApiStore(api.query)
+      initApiQueryStore(api.data)
     }
   }, [api])
 
@@ -77,7 +77,7 @@ const App = ({ model, api }: AppProps) => {
           <QueryValidation
             onValidated={valid => {
               setShowValidation(false)
-              updateQueryStore({
+              updateApiStore({
                 valid,
                 validating: false,
                 tested: true

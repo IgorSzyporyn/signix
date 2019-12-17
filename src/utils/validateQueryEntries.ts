@@ -1,9 +1,9 @@
-import QueryStoreModelInterface from '../types/QueryStoreModelInterface'
-import QueryStoreDataInterface from '../types/QueryStoreDataInterface'
+import ApiStoreModelQueryInterface from '../types/ApiStoreModelQueryInterface'
+import ApiStoreDataQueryInterface from '../types/ApiStoreDataQueryInterface'
 
 const validateQueryEntries = (
-  data: QueryStoreDataInterface,
-  model: QueryStoreModelInterface
+  data: ApiStoreDataQueryInterface,
+  model: ApiStoreModelQueryInterface
 ) => {
   if (!data.url) {
     return false

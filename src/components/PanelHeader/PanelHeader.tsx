@@ -9,7 +9,7 @@ const Wrapper = styled.header<WrapperProps>`
   align-items: center;
   display: flex;
   padding-left: var(--spacing-medium);
-  padding-right: calc(var(--spacing) + var(--gutter));
+  padding-right: var(--spacing-large);
   min-height: calc(var(--gutter) * 7);
   margin-top: ${({ topMargin }) => (topMargin ? 'var(--spacing-small)' : '0')};
 `

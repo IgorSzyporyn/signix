@@ -1,10 +1,10 @@
-import QueryDataStore from '../stores/QueryDataStore'
-import QueryDataStoreInterface from '../types/QueryDataStoreInterface'
+import ApiQueryStore from '../stores/ApiQueryStore'
+import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
 
 type Callback = (valid: boolean, errors: string[]) => void
 
 const validateModelEndpointIntegrity = (callback: Callback) => {
-  const { dataKeys, model }: QueryDataStoreInterface = QueryDataStore.get()
+  const { dataKeys, model }: ApiQueryStoreInterface = ApiQueryStore.get()
 
   let noIntegrityErrors = true
   const errors: string[] = []

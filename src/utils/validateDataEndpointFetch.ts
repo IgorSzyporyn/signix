@@ -1,10 +1,10 @@
-import QueryStoreDataInterface from '../types/QueryStoreDataInterface'
-import updateDataInQueryDataStore from '../stores/queryDataStore/updateDataInQueryDataStore'
+import ApiStoreDataQueryInterface from '../types/ApiStoreDataQueryInterface'
+import updateDataInApiQueryStore from '../stores/apiQueryStore/updateDataInQueryDataStore'
 
 type Callback = (valid: boolean) => void
 
 const validateDataEndpointFetch = async (
-  props: QueryStoreDataInterface,
+  props: ApiStoreDataQueryInterface,
   callback: Callback
 ) => {
   const { dynamic, dynamicKey, dynamicTestKey } = props
@@ -23,7 +23,7 @@ const validateDataEndpointFetch = async (
   } catch (e) {}
 
   if (noFetchError && data) {
-    updateDataInQueryDataStore(data)
+    updateDataInApiQueryStore(data)
   }
 
   callback(noFetchError)

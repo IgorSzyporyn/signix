@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import withField, { WithFieldProps } from '../../hoc/withField'
-import ModelEnumerationInterface from '../../types/ModelEnumerationInterface'
+import ApiEnumerationInterface from '../../types/ApiEnumerationInterface'
 import { uniqueId } from '../../utils/utilities'
 import FieldInput from '../FieldInput/FieldInput'
 
 const Wrapper = styled.div``
 
 type FieldEnumerationProps = {
-  enumeration?: ModelEnumerationInterface[]
+  enumeration?: ApiEnumerationInterface[]
 } & WithFieldProps
 
 const FieldEnumeration = ({

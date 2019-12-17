@@ -4,10 +4,10 @@ import WarningIcon from '@material-ui/icons/Warning'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import QueryStore from '../../stores/QueryStore'
-import updateQueryStore from '../../stores/queryStore/updateQueryStore'
-import updateValidatingInQueryStore from '../../stores/queryStore/updateValidatingInQueryStore'
-import QueryStoreInterface from '../../types/QueryStoreInterface'
+import ApiStore from '../../stores/ApiStore'
+import updateApiStore from '../../stores/apiStore/updateApiStore'
+import updateValidatingInApiStore from '../../stores/apiStore/updateValidatingInApiStore'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
 import Button from '../Button/Button'
 import Modal from '../Modal/Modal'
 import MUIcon from '../MUIcon/MUIcon'
@@ -19,7 +19,7 @@ type WrapperProps = {
 
 const Wrapper = styled.div<WrapperProps>`
   display: flex;
-  padding: var(--spacing-small) 0;
+  margin: var(--spacing-small) 0;
   border-radius: 0.5rem;
   ${({ disabled }) => {
     return disabled ? 'opacity: 0.4;' : null
@@ -35,9 +35,7 @@ type QueryValidatorProps = {
 }
 
 const QueryValidator = ({ disabled }: QueryValidatorProps) => {
-  const { valid, validating, tested }: QueryStoreInterface = useStore(
-    QueryStore
-  )
+  const { valid, validating, tested }: ApiStoreInterface = useStore(ApiStore)
 
   return (
     <Wrapper disabled={disabled}>
@@ -73,7 +71,7 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
         <Button
           variant="primary"
           onClick={() => {
-            updateValidatingInQueryStore(true)
+            updateValidatingInApiStore(true)
           }}
         >
           {tested ? 'Validate & Sync' : 'Requires Validation & Sync'}
@@ -83,7 +81,7 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
         <Modal>
           <QueryValidation
             onValidated={valid => {
-              updateQueryStore({
+              updateApiStore({
                 valid,
                 validating: false,
                 tested: true

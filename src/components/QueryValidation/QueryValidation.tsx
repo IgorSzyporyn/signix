@@ -1,10 +1,11 @@
 import { useStore } from 'laco-react'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import ApiStore from '../../stores/ApiStore'
 import resetLayerErrorStore from '../../stores/layerErrorStore/resetLayerErrorStore'
 import setLayerErrorStore from '../../stores/layerErrorStore/setLayerErrorStore'
-import QueryStore from '../../stores/QueryStore'
-import QueryStoreInterface from '../../types/QueryStoreInterface'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
+import GroupedLayerErrorsInterface from '../../types/GroupedLayerErrorsInterface'
 import getFontSize from '../../utils/getFontSize'
 import groupLayerErrorsById from '../../utils/groupLayerErrorsById'
 import updateLayersWithApi from '../../utils/updateLayersWithApi'
@@ -12,16 +13,12 @@ import { uniqueId } from '../../utils/utilities'
 import validateDataEndpoint from '../../utils/validateDataEndpoint'
 import validateDataEndpointFetch from '../../utils/validateDataEndpointFetch'
 import validateDataEndpointWrite from '../../utils/validateDataEndpointWrite'
-import validateLayerModelIntegrity, {
-  ValidateLayerModelResultItem
-} from '../../utils/validateLayerModelIntegrity'
+import validateLayerModelIntegrity from '../../utils/validateLayerModelIntegrity'
 import validateModelEndpoint from '../../utils/validateModelEndpoint'
 import validateModelEndpointFetch from '../../utils/validateModelEndpointFetch'
 import validateModelEndpointIntegrity from '../../utils/validateModelEndpointIntegrity'
 import Button from '../Button/Button'
 import QueryValidationItem from '../QueryValidationItem/QueryValidationItem'
-import GroupedLayerErrorsInterface from '../../types/GroupedLayerErrorsInterface'
-import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 
 const Wrapper = styled.section`
   font-size: ${getFontSize('xsmall')};
@@ -84,7 +81,7 @@ type QueryValidationProps = {
 }
 
 const QueryValidation = ({ onValidated }: QueryValidationProps) => {
-  const { data, model }: QueryStoreInterface = useStore(QueryStore)
+  const { data, model }: ApiStoreInterface = useStore(ApiStore)
 
   // DATA STATES
   const [dataEndpointValid, setDataEndpointValid] = useState(false)

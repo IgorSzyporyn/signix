@@ -1,10 +1,10 @@
-import updateModelInQueryDataStore from '../stores/queryDataStore/updateModelInQueryDataStore'
-import QueryStoreModelInterface from '../types/QueryStoreModelInterface'
+import updateModelInApiQueryStore from '../stores/apiQueryStore/updateModelInApiQueryStore'
+import ApiStoreModelQueryInterface from '../types/ApiStoreModelQueryInterface'
 
 type Callback = (valid: boolean) => void
 
 const validateModelEndpointFetch = async (
-  props: QueryStoreModelInterface,
+  props: ApiStoreModelQueryInterface,
   callback: Callback
 ) => {
   const { url } = props
@@ -25,7 +25,9 @@ const validateModelEndpointFetch = async (
   } catch (e) {}
 
   if (noFetchError) {
-    updateModelInQueryDataStore(model)
+    updateModelInApiQueryStore(model)
+  } else {
+    updateModelInApiQueryStore({})
   }
 
   callback(noFetchError)
