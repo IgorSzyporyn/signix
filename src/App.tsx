@@ -3,17 +3,17 @@ import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import styled from 'styled-components'
 import './animations.css'
+import ApiQueryValidation from './components/ApiQueryValidation/ApiQueryValidation'
 import Modal from './components/Modal/Modal'
-import QueryValidation from './components/QueryValidation/QueryValidation'
 import Header from './containers/Header/Header'
 import Main from './containers/Main/Main'
 import './resizer.scss'
-import initModelStore from './stores/model/initModelStore'
 import { initApiQueryStore } from './stores/ApiQueryStore'
+import updateApiQueryStore from './stores/apiQueryStore/updateApiQueryStore'
 import { initApiStore } from './stores/ApiStore'
+import initModelStore from './stores/model/initModelStore'
 import AppApiProps from './types/AppApiProps'
 import ModelInterfacePartial from './types/ModelInterfacePartial'
-import updateApiStore from './stores/apiStore/updateApiStore'
 
 const Root = styled.div`
   height: 100vh;
@@ -74,10 +74,10 @@ const App = ({ model, api }: AppProps) => {
       </DndProvider>
       {showValidation && (
         <Modal>
-          <QueryValidation
+          <ApiQueryValidation
             onValidated={valid => {
               setShowValidation(false)
-              updateApiStore({
+              updateApiQueryStore({
                 valid,
                 validating: false,
                 tested: true

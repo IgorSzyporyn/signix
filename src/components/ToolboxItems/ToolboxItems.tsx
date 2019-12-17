@@ -3,9 +3,6 @@ import styled from 'styled-components'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
-import { useStore } from 'laco-react'
-import ApiStore from '../../stores/ApiStore'
-import ApiStoreInterface from '../../types/ApiStoreInterface'
 
 const ListContainer = styled.ul`
   list-style: none;
@@ -100,53 +97,27 @@ type ToolboxItemsProps = {
 }
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {
-  const { valid, enabled }: ApiStoreInterface = useStore(ApiStore)
-
   return (
     <div>
       {view === 'list' && (
         <ListContainer>
           {toolboxItems.map(toolboxItem => {
-            let item = null
-
-            if (toolboxItem.api && enabled && valid) {
-              item = (
-                <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
-                  <ToolboxItem {...toolboxItem} view="list" />
-                </ListItem>
-              )
-            } else if (!toolboxItem.api) {
-              item = (
-                <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
-                  <ToolboxItem {...toolboxItem} view="list" />
-                </ListItem>
-              )
-            }
-
-            return item
+            return (
+              <ListItem key={`toolbox-item-${toolboxItem.type}-list`}>
+                <ToolboxItem {...toolboxItem} view="list" />
+              </ListItem>
+            )
           })}
         </ListContainer>
       )}
       {view === 'grid' && (
         <GridContainer>
           {toolboxItems.map(toolboxItem => {
-            let item = null
-
-            if (toolboxItem.api && enabled && valid) {
-              item = (
-                <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
-                  <ToolboxItem {...toolboxItem} view="grid" />
-                </GridItem>
-              )
-            } else if (!toolboxItem.api) {
-              item = (
-                <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
-                  <ToolboxItem {...toolboxItem} view="grid" />
-                </GridItem>
-              )
-            }
-
-            return item
+            return (
+              <GridItem key={`toolbox-item-${toolboxItem.type}-grid`}>
+                <ToolboxItem {...toolboxItem} view="grid" />
+              </GridItem>
+            )
           })}
         </GridContainer>
       )}

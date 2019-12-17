@@ -1,7 +1,7 @@
 import ApiErrorInterface from './ApiErrorInterface'
 
-type GroupedLayerErrorsInterface = {
+type ApiLayerErrorStoreInterface = {
   [key: string]: ApiErrorInterface[]
 }
 
-export default GroupedLayerErrorsInterface
+export default ApiLayerErrorStoreInterface

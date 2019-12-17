@@ -19,7 +19,7 @@ import PropertiesItem from '../PropertiesItem/PropertiesItem'
 
 const PanelBodyInner = styled.div`
   margin-top: var(--half-gutter);
-  padding: 0 var(--spacing-medium);
+  padding: 0 var(--spacing-medium) var(--spacing-medium);
 `
 
 const PanelBodyEmpty = styled.div`

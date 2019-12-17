@@ -13,11 +13,11 @@ import MUIcon from '../MUIcon/MUIcon'
 import Panel from '../Panel/Panel'
 import PanelBody from '../PanelBody/PanelBody'
 import PanelHeader from '../PanelHeader/PanelHeader'
-import QueryValidator from '../QueryValidator/QueryValidator'
+import ApiValidationButton from '../ApiValidationButton/ApiValidationButton'
 
 const PanelBodyInner = styled.div`
   margin-top: var(--half-gutter);
-  padding: 0 var(--spacing-medium);
+  padding: 0 var(--spacing-medium) var(--spacing-medium);
 `
 
 const Api = () => {
@@ -58,7 +58,7 @@ const Api = () => {
             }}
           />
           <div hidden={!enabled}>
-            <QueryValidator />
+            <ApiValidationButton />
             <ApiDataQuery />
             <ApiModelQuery />
           </div>

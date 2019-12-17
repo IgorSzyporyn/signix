@@ -20,8 +20,8 @@ import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
-import LayerErrorStoreInterface from '../../types/LayerErrorStoreInterface'
-import LayerErrorStore from '../../stores/LayerErrorStore'
+import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
+import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
 
 const Wrapper = styled.li`
   user-select: none;
@@ -120,7 +120,9 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
   const { id, items, group, hidden } = model
 
   let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
-  const { [id!]: errors }: LayerErrorStoreInterface = useStore(LayerErrorStore)
+  const { [id!]: errors }: ApiLayerErrorStoreInterface = useStore(
+    ApiLayerErrorStore
+  )
   const { activeModelId, editingModelId }: AppStoreInterface = useStore(
     AppStore
   )

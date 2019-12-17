@@ -6,6 +6,7 @@ const validateModelEndpoint = async (url: string, callback: Callback) => {
   try {
     const response = await fetch(url)
 
+    // @TODO - Lots of other stuff can indicate a problem...
     if (response && response.status) {
       noServerError = response.status < 500
     }

@@ -4,14 +4,14 @@ import WarningIcon from '@material-ui/icons/Warning'
 import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
-import ApiStore from '../../stores/ApiStore'
-import updateApiStore from '../../stores/apiStore/updateApiStore'
-import updateValidatingInApiStore from '../../stores/apiStore/updateValidatingInApiStore'
-import ApiStoreInterface from '../../types/ApiStoreInterface'
+import ApiQueryStore from '../../stores/ApiQueryStore'
+import updateApiQueryStore from '../../stores/apiQueryStore/updateApiQueryStore'
+import updateValidatingInApiQueryStore from '../../stores/apiQueryStore/updateValidatingInApiQueryStore'
+import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
+import ApiQueryValidation from '../ApiQueryValidation/ApiQueryValidation'
 import Button from '../Button/Button'
 import Modal from '../Modal/Modal'
 import MUIcon from '../MUIcon/MUIcon'
-import QueryValidation from '../QueryValidation/QueryValidation'
 
 type WrapperProps = {
   disabled?: boolean
@@ -30,12 +30,14 @@ const MainContainer = styled.div`
   margin-left: var(--spacing);
 `
 
-type QueryValidatorProps = {
+type ApiQueryValidatorProps = {
   disabled?: boolean
 }
 
-const QueryValidator = ({ disabled }: QueryValidatorProps) => {
-  const { valid, validating, tested }: ApiStoreInterface = useStore(ApiStore)
+const ApiValidationButton = ({ disabled }: ApiQueryValidatorProps) => {
+  const { valid, validating, tested }: ApiQueryStoreInterface = useStore(
+    ApiQueryStore
+  )
 
   return (
     <Wrapper disabled={disabled}>
@@ -71,7 +73,7 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
         <Button
           variant="primary"
           onClick={() => {
-            updateValidatingInApiStore(true)
+            updateValidatingInApiQueryStore(true)
           }}
         >
           {tested ? 'Validate & Sync' : 'Requires Validation & Sync'}
@@ -79,9 +81,9 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
       </MainContainer>
       {validating && (
         <Modal>
-          <QueryValidation
+          <ApiQueryValidation
             onValidated={valid => {
-              updateApiStore({
+              updateApiQueryStore({
                 valid,
                 validating: false,
                 tested: true
@@ -94,4 +96,4 @@ const QueryValidator = ({ disabled }: QueryValidatorProps) => {
   )
 }
 
-export default QueryValidator
+export default ApiValidationButton

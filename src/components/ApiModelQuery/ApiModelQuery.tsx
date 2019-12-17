@@ -1,9 +1,10 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import ApiQueryStore from '../../stores/ApiQueryStore'
+import updateTestedInApiQueryStore from '../../stores/apiQueryStore/updateTestedInApiQueryStore'
 import ApiStore from '../../stores/ApiStore'
-import updateExpandedInApiStore from '../../stores/apiStore/updateExpandedInApiStore'
 import updateApiStore from '../../stores/apiStore/updateApiStore'
+import updateExpandedInApiStore from '../../stores/apiStore/updateExpandedInApiStore'
 import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import ApiStoreInterface from '../../types/ApiStoreInterface'
 import FieldInput from '../FieldInput/FieldInput'
@@ -18,7 +19,7 @@ const ApiModelQuery = ({ disabled }: ApiModelQueryProps) => {
   const { model: exampleModel }: ApiQueryStoreInterface = useStore(
     ApiQueryStore
   )
-  const { expanded, model }: ApiStoreInterface = useStore(ApiStore)
+  const { expanded, modelQuery: model }: ApiStoreInterface = useStore(ApiStore)
   const { queryModel: isExpanded } = expanded
 
   return (
@@ -34,9 +35,9 @@ const ApiModelQuery = ({ disabled }: ApiModelQueryProps) => {
         label="Model Query URL"
         value={model.url}
         onChange={e => {
+          updateTestedInApiQueryStore(true)
           updateApiStore({
-            tested: false,
-            model: { ...model, url: e.currentTarget.value }
+            modelQuery: { ...model, url: e.currentTarget.value }
           })
         }}
       />

@@ -44,10 +44,10 @@ const updateLayersWithApi = (
       const groupedError = errors[modelId]
 
       groupedError.forEach(error => {
-        const { errorLevel, enumKey, type } = error
+        const { errorLevel, enumKey, errorType } = error
 
         if (errorLevel === 'fixable' && enumKey) {
-          switch (type) {
+          switch (errorType) {
             case 'missingEnumKey':
               enumeration = fixMissingEnumKey(
                 enumeration,

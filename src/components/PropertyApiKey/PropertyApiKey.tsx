@@ -14,8 +14,8 @@ import WarningIcon from '@material-ui/icons/Warning'
 import Button from '../Button/Button'
 import styled from 'styled-components'
 import ApiQueryStoreModelInterface from '../../types/ApiQueryStoreModelInterface'
-import LayerErrorStoreInterface from '../../types/LayerErrorStoreInterface'
-import LayerErrorStore from '../../stores/LayerErrorStore'
+import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
+import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
 import MUIcon from '../MUIcon/MUIcon'
 
 const createEnum = (
@@ -81,8 +81,8 @@ type PropertyApiKeyQueryProps = {
 }
 
 const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
-  const { [model.id!]: errors }: LayerErrorStoreInterface = useStore(
-    LayerErrorStore
+  const { [model.id!]: errors }: ApiLayerErrorStoreInterface = useStore(
+    ApiLayerErrorStore
   )
   const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(
     ApiQueryStore

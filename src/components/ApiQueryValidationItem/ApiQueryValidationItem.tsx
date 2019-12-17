@@ -44,7 +44,7 @@ type QueryValidationItemProps = {
   disabled?: boolean
 }
 
-const QueryValidationItem = ({
+const ApiQueryValidationItem = ({
   children,
   title,
   valid,
@@ -84,4 +84,4 @@ const QueryValidationItem = ({
   )
 }
 
-export default QueryValidationItem
+export default ApiQueryValidationItem

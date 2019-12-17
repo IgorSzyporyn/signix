@@ -1,7 +1,10 @@
 import ApiStoreDataQueryInterface from '../types/ApiStoreDataQueryInterface'
 import updateDataInApiQueryStore from '../stores/apiQueryStore/updateDataInQueryDataStore'
+import ApiErrorInterface from '../types/ApiErrorInterface'
+import { isPlainObject } from 'lodash'
+import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 
-type Callback = (valid: boolean) => void
+type Callback = (valid: boolean, error: ApiErrorInterface[]) => void
 
 const validateDataEndpointFetch = async (
   props: ApiStoreDataQueryInterface,
@@ -10,23 +13,72 @@ const validateDataEndpointFetch = async (
   const { dynamic, dynamicKey, dynamicTestKey } = props
   const url = `${props.url}${dynamic ? `?${dynamicKey}=${dynamicTestKey}` : ''}`
 
-  let noFetchError = false
+  let valid = false
+  let response: Response | null = null
+  let httpStatusError = false
+  const error: ApiErrorInterface[] = []
   let data: any | null = null
 
   try {
-    const response = await fetch(url)
+    response = await fetch(url)
 
-    if (response.status === 200) {
-      noFetchError = true
+    if (response && response.status) {
+      httpStatusError = response.status >= 400
       data = await response.json()
     }
   } catch (e) {}
 
-  if (noFetchError && data) {
-    updateDataInApiQueryStore(data)
+  if (!response) {
+    error.push({
+      id: 'validateEndpointFetch',
+      text: 'Could not complete a HTTP request',
+      errorLevel: 'critical',
+      name: 'Endpoint Fetch HTTP Request'
+    })
+  } else if (httpStatusError) {
+    error.push({
+      id: 'validateEndpointFetch',
+      text: `HTTP request returned ${response.status} as status code`,
+      errorLevel: 'critical',
+      name: 'Endpoint Fetch HTTP Request'
+    })
+  } else if (data) {
+    valid = isPlainObject(data)
+
+    if (!valid) {
+      error.push({
+        id: 'validateEndpointFetch',
+        text: `Returned JSON response is not a plain object`,
+        errorLevel: 'critical',
+        name: 'Endpoint Fetch HTTP Request'
+      })
+
+      if (Array.isArray(data)) {
+        error.push({
+          id: 'validateEndpointFetch',
+          text: `Returned JSON response is an array instead of an object`,
+          errorLevel: 'critical',
+          name: 'Endpoint Fetch HTTP Request'
+        })
+      }
+    }
+  } else if (!data) {
+    error.push({
+      id: 'validateEndpointFetch',
+      text: `No returned JSON object`,
+      errorLevel: 'critical',
+      name: 'Endpoint Fetch HTTP Request'
+    })
   }
 
-  callback(noFetchError)
+  if (valid) {
+    updateDataInApiQueryStore(data)
+  } else {
+    updateDataInApiQueryStore({})
+    updateDataKeysInApiQueryStore([])
+  }
+
+  callback(valid, error)
 }
 
 export default validateDataEndpointFetch

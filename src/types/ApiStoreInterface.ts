@@ -5,11 +5,8 @@ import ApiStoreModelQueryInterface from './ApiStoreModelQueryInterface'
 type ApiStoreInterface = {
   enabled: boolean
   expanded: ExpandedInterface
-  valid: boolean
-  tested: boolean
-  validating: boolean
-  data: ApiStoreDataQueryInterface
-  model: ApiStoreModelQueryInterface
+  dataQuery: ApiStoreDataQueryInterface
+  modelQuery: ApiStoreModelQueryInterface
 }
 
 export default ApiStoreInterface

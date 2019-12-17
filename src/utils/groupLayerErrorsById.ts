@@ -1,7 +1,7 @@
+import ApiErrorInterface from '../types/ApiErrorInterface'
 import GroupedLayerErrorsInterface from '../types/GroupedLayerErrorsInterface'
-import { ValidateLayerModelResultItem } from './validateLayerModelIntegrity'
 
-const groupLayerErrorsById = (errors: ValidateLayerModelResultItem[]) => {
+const groupLayerErrorsById = (errors: ApiErrorInterface[]) => {
   const groupedErrors: GroupedLayerErrorsInterface = {}
 
   errors.forEach(error => {

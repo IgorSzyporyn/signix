@@ -13,7 +13,8 @@ const Wrapper = styled.main<PanelBodyProps>`
     flex-grow: 1;
   }
 
-  padding: 0 ${({ noPadding }) => (noPadding ? '0' : 'var(--spacing-medium)')} 0;
+  padding: ${({ noPadding }) =>
+    noPadding ? '0' : '0 var(--spacing-medium) var(--spacing-medium)'};
 `
 
 type PanelBodyProps = {

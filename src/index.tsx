@@ -10,13 +10,13 @@ import ModelInterface from './types/ModelInterface'
 const apiExample: AppApiProps = {
   query: {
     enabled: true,
-    data: {
+    dataQuery: {
       url: 'http://localhost:8000/mock/data',
       dynamic: true,
       dynamicKey: 'token',
       dynamicTestKey: '1'
     },
-    model: {
+    modelQuery: {
       url: 'http://localhost:8000/mock/model'
     }
   },
