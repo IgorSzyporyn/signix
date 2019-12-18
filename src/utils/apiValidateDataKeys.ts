@@ -1,21 +1,21 @@
 import ApiQueryStore from '../stores/ApiQueryStore'
-import ApiStoreInterface from '../types/ApiStoreInterface'
 import ApiStore from '../stores/ApiStore'
-import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
-import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
+import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
+import ApiStoreInterface from '../types/ApiStoreInterface'
+import apiSyncDataKeys from './apiSyncDataKeys'
 
-type Callback = (valid: boolean, error: ApiErrorInterface | null) => void
-
-const validateDataEndpointWrite = (callback: Callback) => {
+const apiValidateDataKeys = (
+  callback?: (valid: boolean, error: ApiErrorInterface[] | undefined) => void
+) => {
   const { data }: ApiQueryStoreInterface = ApiQueryStore.get()
-  const { dataQuery: options }: ApiStoreInterface = ApiStore.get()
-  const { dynamicKey } = options
+  const { dataQuery }: ApiStoreInterface = ApiStore.get()
+  const { dynamicKey } = dataQuery
 
   let valid = false
   let dataKeys: string[] = []
 
-  let error: ApiErrorInterface | null = {
+  let error: ApiErrorInterface | undefined = {
     id: 'validateEndpointWrite',
     text: 'No keys in data to write',
     errorLevel: 'critical',
@@ -36,12 +36,11 @@ const validateDataEndpointWrite = (callback: Callback) => {
 
   if (dataKeys.length > 0) {
     valid = true
-    error = null
+    error = undefined
   }
 
-  updateDataKeysInApiQueryStore(dataKeys)
-
-  callback(valid, error)
+  apiSyncDataKeys(valid, dataKeys, error ? [error] : undefined)
+  callback && callback(valid, error ? [error] : undefined)
 }
 
-export default validateDataEndpointWrite
+export default apiValidateDataKeys

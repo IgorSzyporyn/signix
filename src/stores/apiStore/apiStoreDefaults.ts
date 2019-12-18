@@ -1,7 +1,7 @@
 import ApiStoreInterface from '../../types/ApiStoreInterface'
 
 const apiStoreDefaults: ApiStoreInterface = {
-  enabled: true,
+  enabled: false,
   expanded: {
     queryData: true,
     queryModel: true

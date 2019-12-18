@@ -1,12 +1,15 @@
-import ModelStore from '../stores/ModelStore'
+import resetApiLayerErrorStore from '../stores/apiLayerErrorStore/resetApiLayerErrorStore'
+import setApiLayerErrorStore from '../stores/apiLayerErrorStore/setApiLayerErrorStore'
 import ApiQueryStore from '../stores/ApiQueryStore'
-import ApiEnumerationKeyTypes from '../types/ApiEnumerationKeyTypes'
-import ModelInterface from '../types/ModelInterface'
-import ModelStoreInterface from '../types/ModelStoreInterface'
+import ModelStore from '../stores/ModelStore'
+import ApiErrorInterface from '../types/ApiErrorInterface'
 import ApiQueryStoreDataInterface from '../types/ApiQueryStoreDataInterface'
 import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
 import ApiQueryStoreModelInterface from '../types/ApiQueryStoreModelInterface'
-import ApiErrorInterface from '../types/ApiErrorInterface'
+import GroupedLayerErrorsInterface from '../types/GroupedLayerErrorsInterface'
+import ModelInterface from '../types/ModelInterface'
+import ModelStoreInterface from '../types/ModelStoreInterface'
+import groupLayerErrorsById from './groupLayerErrorsById'
 
 const appendErrorToResult = (
   result: ApiErrorInterface[] | true,
@@ -121,17 +124,28 @@ const validateLayerModel = (
 
 type ValidateApiLayerInterface = ApiErrorInterface[] | true
 
-type Callback = (valid: ValidateApiLayerInterface) => void
+type Callback = (result: GroupedLayerErrorsInterface | true) => void
 
-const validateLayerModelIntegrity = (callback: Callback) => {
+const validateApiLayerIntegrity = (callback?: Callback) => {
   const { model: rootModel }: ModelStoreInterface = ModelStore.get()
   const {
     data: apiData,
     model: apiModel
   }: ApiQueryStoreInterface = ApiQueryStore.get()
-  const result = validateLayerModel(rootModel, apiData, apiModel)
 
-  callback(result)
+  debugger
+
+  let result = validateLayerModel(rootModel, apiData, apiModel)
+  let groupedResult: GroupedLayerErrorsInterface | true = true
+
+  if (result === true) {
+    resetApiLayerErrorStore()
+  } else {
+    groupedResult = groupLayerErrorsById(result)
+    setApiLayerErrorStore(groupedResult)
+  }
+
+  callback && callback(groupedResult)
 }
 
-export default validateLayerModelIntegrity
+export default validateApiLayerIntegrity

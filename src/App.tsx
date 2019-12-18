@@ -39,15 +39,7 @@ type AppProps = {
 }
 
 const App = ({ model, api }: AppProps) => {
-  const shouldShowValidation = !!api
-    ? (api => {
-        const { query } = api
-
-        return query.enabled
-      })(api!)
-    : false
-
-  const [showValidation, setShowValidation] = useState(shouldShowValidation)
+  const [showValidation, setShowValidation] = useState(false)
 
   useEffect(() => {
     if (model) {
@@ -59,6 +51,7 @@ const App = ({ model, api }: AppProps) => {
     if (api) {
       initApiStore(api.query)
       initApiQueryStore(api.data)
+      setShowValidation(true)
     }
   }, [api])
 

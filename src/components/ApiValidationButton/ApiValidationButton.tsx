@@ -6,13 +6,12 @@ import React from 'react'
 import styled from 'styled-components'
 import ApiQueryStore from '../../stores/ApiQueryStore'
 import updateApiQueryStore from '../../stores/apiQueryStore/updateApiQueryStore'
-import updateValidInApiQueryStore from '../../stores/apiQueryStore/updateValidInApiQueryStore'
+import updateValidatingInApiQueryStore from '../../stores/apiQueryStore/updateValidatingInApiQueryStore'
 import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import ApiQueryValidation from '../ApiQueryValidation/ApiQueryValidation'
 import Button from '../Button/Button'
 import Modal from '../Modal/Modal'
 import MUIcon from '../MUIcon/MUIcon'
-import updateValidatingInApiQueryStore from '../../stores/apiQueryStore/updateValidatingInApiQueryStore'
 
 type WrapperProps = {
   disabled?: boolean

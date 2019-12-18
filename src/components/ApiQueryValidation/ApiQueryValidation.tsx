@@ -1,21 +1,14 @@
 import { useStore } from 'laco-react'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import resetApiLayerErrorStore from '../../stores/apiLayerErrorStore/resetApiLayerErrorStore'
-import setApiLayerErrorStore from '../../stores/apiLayerErrorStore/setApiLayerErrorStore'
-import ApiStore from '../../stores/ApiStore'
-import ApiErrorInterface from '../../types/ApiErrorInterface'
-import ApiStoreInterface from '../../types/ApiStoreInterface'
+import ApiQueryErrorStore from '../../stores/ApiQueryErrorStore'
+import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
+import apiValidateDataFetch from '../../utils/apiValidateDataFetch'
+import apiValidateDataKeys from '../../utils/apiValidateDataKeys'
+import apiValidateModelFetch from '../../utils/apiValidateModelFetch'
+import apiValidateModelIntegrity from '../../utils/apiValidateModelIntegrity'
 import getFontSize from '../../utils/getFontSize'
-import groupLayerErrorsById from '../../utils/groupLayerErrorsById'
-import { uniqueId } from '../../utils/utilities'
-import validateDataEndpoint from '../../utils/validateDataEndpoint'
-import validateDataEndpointFetch from '../../utils/validateDataEndpointFetch'
-import validateDataEndpointWrite from '../../utils/validateDataEndpointWrite'
-import validateLayerModelIntegrity from '../../utils/validateLayerModelIntegrity'
-import validateModelEndpoint from '../../utils/validateModelEndpoint'
-import validateModelEndpointFetch from '../../utils/validateModelEndpointFetch'
-import validateModelEndpointIntegrity from '../../utils/validateModelEndpointIntegrity'
+import validateApiLayerIntegrity from '../../utils/validateApiLayerIntegrity'
 import ApiQueryValidationItem from '../ApiQueryValidationItem/ApiQueryValidationItem'
 import Button from '../Button/Button'
 
@@ -39,19 +32,6 @@ const List = styled.ul`
 
 const ListItem = styled.li``
 
-const ErrorContainer = styled.ul`
-  font-size: ${getFontSize('tiny')};
-  margin-top: var(--half-gutter);
-  padding-top: var(--gutter);
-  padding-bottom: 0;
-  padding-right: 0;
-  padding-left: var(--spacing-large);
-`
-
-const ErrorContainerItem = styled.li`
-  padding-left: var(--gutter);
-`
-
 const ButtonContainer = styled.div`
   margin-top: var(--spacing-huge);
   display: flex;
@@ -71,188 +51,82 @@ type ApiQueryValidationProps = {
 }
 
 const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
-  const { dataQuery: data, modelQuery: model }: ApiStoreInterface = useStore(
-    ApiStore
-  )
+  const errors: ApiQueryErrorStoreInterface = useStore(ApiQueryErrorStore)
 
   // DATA STATES
-  const [dataEndpointValid, setDataEndpointValid] = useState(false)
-  const [dataEndpointValidating, setDataEndpointValidating] = useState(true)
-  const [
-    dataEndpointError,
-    setDataEndpointError
-  ] = useState<ApiErrorInterface | null>(null)
+  const [dataFetchValid, setDataFetchValid] = useState(false)
+  const [dataFetchValidating, setDataFetchValidating] = useState(true)
 
-  const [dataEndpointFetchValid, setDataEndpointFetchValid] = useState(false)
-  const [
-    dataEndpointFetchValidating,
-    setDataEndpointFetchValidating
-  ] = useState(true)
-  const [dataEndpointFetchError, setDataEndpointFetchError] = useState<
-    ApiErrorInterface[] | null
-  >(null)
+  const [dataKeysValid, setDataKeysValid] = useState(false)
+  const [dataKeysValidating, setDataKeysValidating] = useState(false)
 
-  const [dataEndpointWriteValid, setDataEndpointWriteValid] = useState(false)
-  const [
-    dataEndpointWriteValidating,
-    setDataEndpointWriteValidating
-  ] = useState(true)
-  const [
-    dataEndpointWriteError,
-    setDataEndpointWriteError
-  ] = useState<ApiErrorInterface | null>(null)
+  const [modelFetchValid, setModelFetchValid] = useState(false)
+  const [modelFetchValidating, setModelFetchValidating] = useState(true)
 
-  // MODEL STATES
-  const [modelEndpointValid, setModelEndpointValid] = useState(false)
-  const [modelEndpointValidating, setModelEndpointValidating] = useState(true)
+  const [modelIntegrityValid, setModelIntegrityValid] = useState(false)
+  const [modelIntegrityValidating, setModelIntegrityValidating] = useState(
+    false
+  )
 
-  const [modelEndpointFetchValid, setModelEndpointFetchValid] = useState(false)
-  const [
-    modelEndpointFetchValidating,
-    setModelEndpointFetchValidating
-  ] = useState(true)
-
-  const [
-    modelEndpointIntegrityValid,
-    setModelEndpointIntegrityValid
-  ] = useState(false)
-  const [
-    modelEndpointIntegrityValidating,
-    setModelEndpointIntegrityValidating
-  ] = useState(true)
-
-  const [
-    modelEndpointIntegrityErrors,
-    setModelEndpointIntegrityErrors
-  ] = useState<string[]>([])
-
-  // COMMON VALIDATIONS
+  // DATA FETCH VALIDATION & SYNC
   useEffect(() => {
-    // DATA
-    validateDataEndpoint(data.url, (valid, error) => {
-      setDataEndpointValid(valid)
-      setDataEndpointValidating(false)
-
-      if (!valid) {
-        setDataEndpointError(error)
-        setDataEndpointFetchValidating(false)
-        setDataEndpointWriteValidating(false)
-        setModelEndpointIntegrityValidating(false)
-      } else {
-        setDataEndpointError(null)
-      }
-    })
-
-    // MODEL
-    validateModelEndpoint(model.url, valid => {
-      setModelEndpointValid(valid)
-      setModelEndpointValidating(false)
-
-      if (!valid) {
-        setModelEndpointFetchValidating(false)
-        setModelEndpointIntegrityValidating(false)
-      }
+    apiValidateDataFetch(valid => {
+      setDataFetchValid(valid)
+      setDataFetchValidating(false)
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, model])
+  }, [])
 
-  // DATA FETCH VALIDATION
+  // DATA KEYS VALIDATION & SYNC
   useEffect(() => {
-    if (dataEndpointValid) {
-      validateDataEndpointFetch(data, (valid, error) => {
-        setDataEndpointFetchValid(valid)
-        setDataEndpointFetchValidating(false)
-
-        if (!valid) {
-          setDataEndpointFetchError(error)
-          setDataEndpointWriteValidating(false)
-          setModelEndpointIntegrityValidating(false)
-        } else {
-          setDataEndpointFetchError(null)
-        }
+    if (dataFetchValid) {
+      apiValidateDataKeys(valid => {
+        setDataKeysValid(valid)
+        setDataKeysValidating(false)
       })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEndpointValid])
-
-  // DATA WRITE VALIDATION
-  useEffect(() => {
-    if (dataEndpointFetchValid) {
-      validateDataEndpointWrite((valid, error) => {
-        setDataEndpointWriteValid(valid)
-        setDataEndpointWriteValidating(false)
-
-        if (!valid) {
-          setDataEndpointWriteError(error)
-        } else {
-          setDataEndpointWriteError(null)
-        }
-      })
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataEndpointFetchValid])
+  }, [dataFetchValid])
 
   // MODEL FETCH VALIDATION
   useEffect(() => {
-    if (modelEndpointValid) {
-      validateModelEndpointFetch(model, valid => {
-        setModelEndpointFetchValid(valid)
-        setModelEndpointFetchValidating(false)
-
-        if (!valid) {
-          setModelEndpointIntegrityValidating(false)
-        }
-      })
-    }
+    apiValidateModelFetch(valid => {
+      setModelFetchValid(valid)
+      setModelFetchValidating(false)
+    })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelEndpointValid])
+  }, [])
 
   // MODEL INTEGRITY VALIDATION
   useEffect(() => {
-    if (dataEndpointWriteValid && modelEndpointFetchValid) {
-      validateModelEndpointIntegrity((valid, errors) => {
-        setModelEndpointIntegrityValid(valid)
-        setModelEndpointIntegrityValidating(false)
-        setModelEndpointIntegrityErrors(errors)
+    if (dataKeysValid && modelFetchValid) {
+      apiValidateModelIntegrity(valid => {
+        setModelIntegrityValid(valid)
+        setModelIntegrityValidating(false)
       })
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelEndpointFetchValid, dataEndpointWriteValid])
+  }, [modelFetchValid, dataKeysValid])
 
   // LAYER INTEGRITY CHECK
   useEffect(() => {
-    if (dataEndpointWriteValid && modelEndpointFetchValid) {
-      validateLayerModelIntegrity(result => {
-        if (result === true) {
-          resetApiLayerErrorStore()
-        } else {
-          const groupedResult = groupLayerErrorsById(result)
-          setApiLayerErrorStore(groupedResult)
-        }
-      })
+    if (dataKeysValid && modelFetchValid) {
+      validateApiLayerIntegrity()
     }
-  }, [modelEndpointFetchValid, dataEndpointWriteValid])
+  }, [modelFetchValid, dataKeysValid])
 
   const valid =
-    dataEndpointValid &&
-    dataEndpointFetchValid &&
-    dataEndpointWriteValid &&
-    modelEndpointValid &&
-    modelEndpointFetchValid &&
-    modelEndpointIntegrityValid
+    dataFetchValid && dataKeysValid && modelFetchValid && modelIntegrityValid
 
   const validating =
-    dataEndpointValidating ||
-    dataEndpointFetchValidating ||
-    dataEndpointWriteValidating ||
-    modelEndpointValidating ||
-    modelEndpointFetchValidating ||
-    modelEndpointIntegrityValidating
+    dataFetchValidating ||
+    dataKeysValidating ||
+    modelFetchValidating ||
+    modelIntegrityValidating
 
   return (
     <Wrapper>
@@ -260,89 +134,37 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
       <List>
         <ListItem>
           <ApiQueryValidationItem
-            valid={dataEndpointValid}
-            title="Validating Query Data Endpoint"
-            validating={dataEndpointValidating}
-          >
-            {dataEndpointError !== null && (
-              <ErrorContainer>
-                <ErrorContainerItem>
-                  {dataEndpointError.text}
-                </ErrorContainerItem>
-              </ErrorContainer>
-            )}
-          </ApiQueryValidationItem>
-        </ListItem>
-        <ListItem>
-          <ApiQueryValidationItem
-            disabled={dataEndpointValidating}
-            valid={dataEndpointFetchValid}
+            valid={dataFetchValid}
             title="Fetching Example Data"
-            validating={dataEndpointValid && dataEndpointFetchValidating}
-          >
-            {dataEndpointFetchError &&
-              dataEndpointFetchError.map(error => {
-                return (
-                  <ErrorContainer key={`dataEndpointFetchError-${uniqueId()}`}>
-                    <ErrorContainerItem>{error.text}</ErrorContainerItem>
-                  </ErrorContainer>
-                )
-              })}
-          </ApiQueryValidationItem>
+            validating={dataFetchValidating}
+            errors={errors.dataFetch}
+          />
         </ListItem>
         <ListItem>
           <ApiQueryValidationItem
-            disabled={dataEndpointValidating}
-            valid={dataEndpointWriteValid}
+            disabled={dataFetchValidating}
+            valid={dataKeysValid}
             title="Writing Data Keys"
-            validating={dataEndpointValid && dataEndpointWriteValidating}
-          >
-            {dataEndpointWriteError && (
-              <ErrorContainer>
-                <ErrorContainerItem>
-                  {dataEndpointWriteError.text}
-                </ErrorContainerItem>
-              </ErrorContainer>
-            )}
-          </ApiQueryValidationItem>
-        </ListItem>
-        <ListItem>
-          <ApiQueryValidationItem
-            valid={modelEndpointValid}
-            title="Validating Query Model Endpoint"
-            validating={modelEndpointValidating}
+            validating={dataKeysValidating}
+            errors={errors.dataKeys}
           />
         </ListItem>
         <ListItem>
           <ApiQueryValidationItem
-            disabled={modelEndpointValidating}
-            valid={modelEndpointFetchValid}
+            valid={modelFetchValid}
             title="Fetching & Writing Model"
-            validating={modelEndpointValid && modelEndpointFetchValidating}
+            validating={modelFetchValidating}
+            errors={errors.modelFetch}
           />
         </ListItem>
         <ListItem>
           <ApiQueryValidationItem
-            disabled={
-              dataEndpointWriteValidating || modelEndpointFetchValidating
-            }
-            valid={modelEndpointIntegrityValid}
+            disabled={dataKeysValidating || modelFetchValidating}
+            valid={modelIntegrityValid}
             title="Checking Model Integrity"
-            validating={
-              dataEndpointWriteValid &&
-              modelEndpointFetchValid &&
-              modelEndpointIntegrityValidating
-            }
-          >
-            {modelEndpointIntegrityErrors.length > 0 &&
-              modelEndpointIntegrityErrors.map(error => (
-                <ErrorContainer
-                  key={`modelEndpointIntegrityError-${uniqueId()}`}
-                >
-                  <ErrorContainerItem>{error}</ErrorContainerItem>
-                </ErrorContainer>
-              ))}
-          </ApiQueryValidationItem>
+            validating={modelIntegrityValidating}
+            errors={errors.modelIntegrity}
+          />
         </ListItem>
       </List>
       <ButtonContainer>

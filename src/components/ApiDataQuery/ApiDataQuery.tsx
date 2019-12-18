@@ -1,17 +1,16 @@
 import { useStore } from 'laco-react'
 import React from 'react'
 import ApiQueryStore from '../../stores/ApiQueryStore'
+import updateTestedInApiQueryStore from '../../stores/apiQueryStore/updateTestedInApiQueryStore'
 import ApiStore from '../../stores/ApiStore'
+import updateApiStore from '../../stores/apiStore/updateApiStore'
 import updateExpandedInApiStore from '../../stores/apiStore/updateExpandedInApiStore'
-import updateApiQueryStore from '../../stores/apiQueryStore/updateApiQueryStore'
 import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import ApiStoreInterface from '../../types/ApiStoreInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import JsonViewer from '../JsonViewer/JsonViewer'
 import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
-import updateApiStore from '../../stores/apiStore/updateApiStore'
-import updateTestedInApiQueryStore from '../../stores/apiQueryStore/updateTestedInApiQueryStore'
 
 type ApiDataQueryProps = {
   disabled?: boolean

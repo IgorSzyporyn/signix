@@ -4,6 +4,9 @@ import MUIcon from '../MUIcon/MUIcon'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ErrorIcon from '@material-ui/icons/Error'
 import AutorenewIcon from '@material-ui/icons/Autorenew'
+import getFontSize from '../../utils/getFontSize'
+import ApiErrorInterface from '../../types/ApiErrorInterface'
+import { uniqueId } from '../../utils/utilities'
 
 type WrapperProps = {
   disabled?: boolean
@@ -36,21 +39,37 @@ const Title = styled.div`
 
 const Main = styled.main``
 
+const ErrorContainer = styled.ul`
+  font-size: ${getFontSize('tiny')};
+  margin-top: var(--half-gutter);
+  padding-top: var(--gutter);
+  padding-bottom: 0;
+  padding-right: 0;
+  padding-left: var(--spacing-large);
+`
+
+const ErrorContainerItem = styled.li`
+  padding-left: var(--gutter);
+`
+
 type QueryValidationItemProps = {
-  children?: React.ReactNode
   validating?: boolean
   valid?: boolean
   title?: string
   disabled?: boolean
+  errors?: ApiErrorInterface[]
 }
 
 const ApiQueryValidationItem = ({
-  children,
+  errors,
   title,
   valid,
   validating,
   disabled
 }: QueryValidationItemProps) => {
+  if (title === 'Validating Query Data Endpoint') {
+    // debugger
+  }
   return (
     <Wrapper disabled={disabled}>
       <Header>
@@ -79,7 +98,15 @@ const ApiQueryValidationItem = ({
         </Icon>
         <Title>{title}</Title>
       </Header>
-      <Main>{children}</Main>
+      <Main>
+        {' '}
+        {errors &&
+          errors.map(error => (
+            <ErrorContainer key={`ApiQueryValidationItem-${uniqueId()}`}>
+              <ErrorContainerItem>{error.text}</ErrorContainerItem>
+            </ErrorContainer>
+          ))}
+      </Main>
     </Wrapper>
   )
 }

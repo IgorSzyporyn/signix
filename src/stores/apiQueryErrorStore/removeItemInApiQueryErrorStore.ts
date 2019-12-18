@@ -1,7 +1,7 @@
 import ApiQueryErrorStore from '../ApiQueryErrorStore'
 import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
 
-const removeItemFromApiQueryErrorStore = (id: string) => {
+const removeItemInApiQueryErrorStore = (id: string) => {
   const store: ApiQueryErrorStoreInterface = ApiQueryErrorStore.get()
   const clone = { ...store }
 
@@ -12,4 +12,4 @@ const removeItemFromApiQueryErrorStore = (id: string) => {
   }
 }
 
-export default removeItemFromApiQueryErrorStore
+export default removeItemInApiQueryErrorStore

@@ -11,6 +11,6 @@ export const initApiQueryErrorStore = (values: ApiQueryErrorStoreInterface) => {
 const ApiQueryErrorStore = new Store({ ...apiQueryErrorStoreDefaults })
 
 const clone: any = window
-clone.D = ApiQueryErrorStore
+clone.C = ApiQueryErrorStore
 
 export default ApiQueryErrorStore
