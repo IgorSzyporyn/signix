@@ -1,9 +1,7 @@
 import removeItemInApiQueryErrorStore from '../stores/apiQueryErrorStore/removeItemInApiQueryErrorStore'
 import updateApiQueryErrorStore from '../stores/apiQueryErrorStore/updateApiQueryErrorStore'
-import ApiErrorInterface from '../types/ApiErrorInterface'
 import updateModelInApiQueryStore from '../stores/apiQueryStore/updateModelInApiQueryStore'
-
-const apiQueryErrorStoreModelFetchKey = 'modelFetch'
+import ApiErrorInterface from '../types/ApiErrorInterface'
 
 const apiSyncModelFetch = (
   valid: boolean,
@@ -11,15 +9,13 @@ const apiSyncModelFetch = (
   errors?: ApiErrorInterface[]
 ) => {
   if (valid) {
-    removeItemInApiQueryErrorStore(apiQueryErrorStoreModelFetchKey)
+    removeItemInApiQueryErrorStore('modelFetch')
     updateModelInApiQueryStore(model)
   } else {
     updateModelInApiQueryStore({})
 
     if (errors) {
-      updateApiQueryErrorStore({
-        [apiQueryErrorStoreModelFetchKey]: errors
-      })
+      updateApiQueryErrorStore({ modelFetch: errors })
     }
   }
 }

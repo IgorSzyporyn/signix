@@ -4,24 +4,20 @@ import updateDataInApiQueryStore from '../stores/apiQueryStore/updateDataInQuery
 import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
 
-const apiQueryErrorStoreDataFetchKey = 'dataFetch'
-
 const apiSyncDataFetch = (
   valid: boolean,
   data: object,
   errors?: ApiErrorInterface[]
 ) => {
   if (valid) {
-    removeItemInApiQueryErrorStore(apiQueryErrorStoreDataFetchKey)
+    removeItemInApiQueryErrorStore('dataFetch')
     updateDataInApiQueryStore(data)
   } else {
     updateDataInApiQueryStore({})
     updateDataKeysInApiQueryStore([])
 
     if (errors) {
-      updateApiQueryErrorStore({
-        [apiQueryErrorStoreDataFetchKey]: errors
-      })
+      updateApiQueryErrorStore({ dataFetch: errors })
     }
   }
 }

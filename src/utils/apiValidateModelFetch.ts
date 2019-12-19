@@ -46,10 +46,10 @@ const apiValidateModelFetch = async (callback?: Callback) => {
         apiSyncModelFetch(valid, model, error)
         callback && callback(valid, error)
       })
-      .catch(() => {
+      .catch(e => {
         error.push({
           id: 'validateModelFetch',
-          text: 'Could not complete a HTTP request',
+          text: e.message,
           errorLevel: 'critical',
           name: 'Model Fetch HTTP Request'
         })

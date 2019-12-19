@@ -29,7 +29,7 @@ type IconProps = {
 
 const Icon = styled.div<IconProps>`
   ${({ isLoading, disabled }) => {
-    return isLoading && !disabled ? 'animation:spin 1s linear infinite;' : null
+    return isLoading && !disabled ? 'animation: spin 1s linear infinite;' : null
   }}
 `
 
@@ -67,9 +67,6 @@ const ApiQueryValidationItem = ({
   validating,
   disabled
 }: QueryValidationItemProps) => {
-  if (title === 'Validating Query Data Endpoint') {
-    // debugger
-  }
   return (
     <Wrapper disabled={disabled}>
       <Header>

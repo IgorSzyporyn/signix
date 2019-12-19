@@ -2,14 +2,12 @@ import removeItemInApiQueryErrorStore from '../stores/apiQueryErrorStore/removeI
 import updateApiQueryErrorStore from '../stores/apiQueryErrorStore/updateApiQueryErrorStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
 
-const apiQueryErrorStoreModelIntegrityKey = 'modelIntegrity'
-
 const apiSyncModelIntegrity = (valid: boolean, error?: ApiErrorInterface[]) => {
   if (valid) {
-    removeItemInApiQueryErrorStore(apiQueryErrorStoreModelIntegrityKey)
+    removeItemInApiQueryErrorStore('modelIntegrity')
   } else {
     if (error) {
-      updateApiQueryErrorStore({ [apiQueryErrorStoreModelIntegrityKey]: error })
+      updateApiQueryErrorStore({ modelIntegrity: error })
     }
   }
 }

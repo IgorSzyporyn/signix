@@ -11,6 +11,7 @@ import getFontSize from '../../utils/getFontSize'
 import validateApiLayerIntegrity from '../../utils/validateApiLayerIntegrity'
 import ApiQueryValidationItem from '../ApiQueryValidationItem/ApiQueryValidationItem'
 import Button from '../Button/Button'
+import resetApiQueryErrorStore from '../../stores/apiQueryErrorStore/resetApiQueryErrorStore'
 
 const Wrapper = styled.section`
   font-size: ${getFontSize('xsmall')};
@@ -68,11 +69,19 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
     false
   )
 
-  // DATA FETCH VALIDATION & SYNC
   useEffect(() => {
+    resetApiQueryErrorStore()
+
+    // DATA FETCH VALIDATION & SYNC
     apiValidateDataFetch(valid => {
       setDataFetchValid(valid)
       setDataFetchValidating(false)
+    })
+
+    // MODEL FETCH VALIDATION & SYNC
+    apiValidateModelFetch(valid => {
+      setModelFetchValid(valid)
+      setModelFetchValidating(false)
     })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,19 +95,7 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
         setDataKeysValidating(false)
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataFetchValid])
-
-  // MODEL FETCH VALIDATION
-  useEffect(() => {
-    apiValidateModelFetch(valid => {
-      setModelFetchValid(valid)
-      setModelFetchValidating(false)
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   // MODEL INTEGRITY VALIDATION
   useEffect(() => {
@@ -108,8 +105,6 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
         setModelIntegrityValidating(false)
       })
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modelFetchValid, dataKeysValid])
 
   // LAYER INTEGRITY CHECK
@@ -152,7 +147,7 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
         <ListItem>
           <ApiQueryValidationItem
             valid={modelFetchValid}
-            title="Fetching & Writing Model"
+            title="Fetching Model"
             validating={modelFetchValidating}
             errors={errors.modelFetch}
           />

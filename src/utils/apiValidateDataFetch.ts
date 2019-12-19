@@ -49,10 +49,10 @@ const apiValidateDataFetch = async (callback?: Callback) => {
         apiSyncDataFetch(valid, data, error)
         callback && callback(valid, error)
       })
-      .catch(() => {
+      .catch(e => {
         error.push({
           id: 'validateDataFetch',
-          text: 'Could not complete a HTTP request',
+          text: e.message,
           errorLevel: 'critical',
           name: 'Data Fetch HTTP Request'
         })

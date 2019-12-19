@@ -3,21 +3,19 @@ import updateApiQueryErrorStore from '../stores/apiQueryErrorStore/updateApiQuer
 import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
 
-const apiQueryErrorStoreDataKeysKey = 'dataKeys'
-
 const apiSyncDataKeys = (
   valid: boolean,
   dataKeys?: string[],
   error?: ApiErrorInterface[]
 ) => {
   if (valid) {
-    removeItemInApiQueryErrorStore(apiQueryErrorStoreDataKeysKey)
+    removeItemInApiQueryErrorStore('dataKeys')
     updateDataKeysInApiQueryStore(dataKeys || [])
   } else {
     updateDataKeysInApiQueryStore([])
 
     if (error) {
-      updateApiQueryErrorStore({ [apiQueryErrorStoreDataKeysKey]: error })
+      updateApiQueryErrorStore({ dataKeys: error })
     }
   }
 }

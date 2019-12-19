@@ -133,8 +133,6 @@ const validateApiLayerIntegrity = (callback?: Callback) => {
     model: apiModel
   }: ApiQueryStoreInterface = ApiQueryStore.get()
 
-  debugger
-
   let result = validateLayerModel(rootModel, apiData, apiModel)
   let groupedResult: GroupedLayerErrorsInterface | true = true
 
