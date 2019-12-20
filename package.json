@@ -33,11 +33,11 @@
     }
   },
   "lint-staged": {
-    "*.{ts, tsx, css, md, json}": [
-      "prettier \"./src/**/*.{ts,tsx,css,md,json}\" --write",
+    "*.{ts,tsx,css,md,json}": [
+      "prettier --write",
       "git add"
     ],
-    "src/**/*.{ts, tsx}": [
+    "src/**/*.{ts,tsx}": [
       "eslint",
       "jest --findRelatedTests"
     ]
