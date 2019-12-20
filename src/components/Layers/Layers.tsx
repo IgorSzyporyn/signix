@@ -3,7 +3,7 @@ import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { useStore } from 'laco-react'
 import React from 'react'
-import setAllItemsInLayerStore from '../../stores/layer/setAllItemsInLayerStore'
+import updateAllExpandedInLayerStore from '../../stores/layerStore/updateAllExpandedInLayerStore'
 import ModelStore from '../../stores/ModelStore'
 import LayerItem from '../LayerItem/LayerItem'
 import MUIcon from '../MUIcon/MUIcon'
@@ -12,14 +12,24 @@ import PanelBody from '../PanelBody/PanelBody'
 import PanelHeader from '../PanelHeader/PanelHeader'
 import styled from 'styled-components'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
+import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
+import { isEmpty } from 'lodash'
+import LayersApiFixButton from '../LayersApiFixButton/LayersApiFixButton'
+import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
+import ApiStore from '../../stores/ApiStore'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
 
 const handleCollapseAll = () => {
-  setAllItemsInLayerStore(false)
+  updateAllExpandedInLayerStore(false)
 }
 
 const handleExpandAll = () => {
-  setAllItemsInLayerStore(true)
+  updateAllExpandedInLayerStore(true)
 }
+
+const LayersError = styled.div`
+  padding: 0 var(--spacing-medium);
+`
 
 const PanelBodyInner = styled.div`
   margin-top: var(--spacing-small);
@@ -27,6 +37,9 @@ const PanelBodyInner = styled.div`
 
 const Layers = () => {
   const { model }: ModelStoreInterface = useStore(ModelStore)
+  const { enabled: apiEnabled }: ApiStoreInterface = useStore(ApiStore)
+  const apiErrors: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+  const hasApiErrors = !isEmpty(apiErrors)
 
   return (
     <Panel>
@@ -56,6 +69,11 @@ const Layers = () => {
         }
       />
       <PanelBody noPadding>
+        {hasApiErrors && apiEnabled && (
+          <LayersError>
+            <LayersApiFixButton />
+          </LayersError>
+        )}
         <PanelBodyInner>
           <LayerItem model={model} />
         </PanelBodyInner>

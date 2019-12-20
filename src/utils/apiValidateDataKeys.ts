@@ -6,7 +6,7 @@ import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncDataKeys from './apiSyncDataKeys'
 
 const apiValidateDataKeys = (
-  callback?: (valid: boolean, error: ApiErrorInterface[] | undefined) => void
+  callback?: (valid: boolean, errors: ApiErrorInterface[] | undefined) => void
 ) => {
   const { data }: ApiQueryStoreInterface = ApiQueryStore.get()
   const { dataQuery }: ApiStoreInterface = ApiStore.get()
@@ -39,8 +39,8 @@ const apiValidateDataKeys = (
     error = undefined
   }
 
-  apiSyncDataKeys(valid, dataKeys, error ? [error] : undefined)
-  callback && callback(valid, error ? [error] : undefined)
+  apiSyncDataKeys(valid, dataKeys, error ? [error] : [])
+  callback && callback(valid, error ? [error] : [])
 }
 
 export default apiValidateDataKeys

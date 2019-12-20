@@ -2,16 +2,16 @@ import { useStore } from 'laco-react'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ApiQueryErrorStore from '../../stores/ApiQueryErrorStore'
+import resetApiQueryErrorStore from '../../stores/apiQueryErrorStore/resetApiQueryErrorStore'
 import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
 import apiValidateDataFetch from '../../utils/apiValidateDataFetch'
 import apiValidateDataKeys from '../../utils/apiValidateDataKeys'
 import apiValidateModelFetch from '../../utils/apiValidateModelFetch'
 import apiValidateModelIntegrity from '../../utils/apiValidateModelIntegrity'
 import getFontSize from '../../utils/getFontSize'
-import validateApiLayerIntegrity from '../../utils/validateApiLayerIntegrity'
+import apiValidateLayers from '../../utils/apiValidateLayers'
 import ApiQueryValidationItem from '../ApiQueryValidationItem/ApiQueryValidationItem'
 import Button from '../Button/Button'
-import resetApiQueryErrorStore from '../../stores/apiQueryErrorStore/resetApiQueryErrorStore'
 
 const Wrapper = styled.section`
   font-size: ${getFontSize('xsmall')};
@@ -110,7 +110,7 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
   // LAYER INTEGRITY CHECK
   useEffect(() => {
     if (dataKeysValid && modelFetchValid) {
-      validateApiLayerIntegrity()
+      apiValidateLayers()
     }
   }, [modelFetchValid, dataKeysValid])
 

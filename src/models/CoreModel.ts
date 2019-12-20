@@ -31,7 +31,6 @@ const CoreModel: ModelInterface = {
     position: 'center'
   },
   options: [],
-  api: false,
   value: ''
 }
 

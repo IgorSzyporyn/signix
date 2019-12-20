@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import MUIcon from '../MUIcon/MUIcon'
+import AutorenewIcon from '@material-ui/icons/Autorenew'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import ErrorIcon from '@material-ui/icons/Error'
-import AutorenewIcon from '@material-ui/icons/Autorenew'
-import getFontSize from '../../utils/getFontSize'
+import React from 'react'
+import styled from 'styled-components'
 import ApiErrorInterface from '../../types/ApiErrorInterface'
+import getFontSize from '../../utils/getFontSize'
 import { uniqueId } from '../../utils/utilities'
+import MUIcon from '../MUIcon/MUIcon'
 
 type WrapperProps = {
   disabled?: boolean
@@ -96,7 +96,6 @@ const ApiQueryValidationItem = ({
         <Title>{title}</Title>
       </Header>
       <Main>
-        {' '}
         {errors &&
           errors.map(error => (
             <ErrorContainer key={`ApiQueryValidationItem-${uniqueId()}`}>

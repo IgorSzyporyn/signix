@@ -10,8 +10,8 @@ import AppStore from '../../stores/AppStore'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 import updateEditingModelInAppStore from '../../stores/appStore/updateEditingModelInAppStore'
 import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
-import updateItemInLayerStore from '../../stores/layer/updateItemInLayerStore'
-import LayerStore, { LayerStoreInterface } from '../../stores/LayerStore'
+import updateExpandedInLayerStore from '../../stores/layerStore/updateExpandedInLayerStore'
+import LayerStore from '../../stores/LayerStore'
 import deleteItemInModelStore from '../../stores/model/deleteItemInModelStore'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import AppStoreInterface from '../../types/AppStoreInterface'
@@ -22,8 +22,9 @@ import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
 import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
+import LayerStoreInterface from '../../types/LayerStoreInterface'
 
-const Wrapper = styled.li`
+const Wrapper = styled.div`
   user-select: none;
 `
 
@@ -117,9 +118,9 @@ type LayerItemInnerProps = {
 
 const LayerItemInner = (props: LayerItemInnerProps) => {
   const { model } = props
-  const { id, items, group, hidden } = model
+  const { id, items, group, hidden, disabled } = model
 
-  let { [id!]: expanded }: LayerStoreInterface = useStore(LayerStore)
+  const { expanded }: LayerStoreInterface = useStore(LayerStore)
   const { [id!]: errors }: ApiLayerErrorStoreInterface = useStore(
     ApiLayerErrorStore
   )
@@ -131,9 +132,10 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
   const hasItems = items && items.length > 0
   const level = model.level || 0
   const isActive = activeModelId === id
+  let isExpanded = expanded[id!]
 
-  if (expanded === undefined && level === 0) {
-    expanded = true
+  if (isExpanded === undefined && level === 0) {
+    isExpanded = true
   }
 
   return (
@@ -153,12 +155,12 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
             <ModelTypeIcon
               onClick={() => {
                 if (level !== 0 && group) {
-                  updateItemInLayerStore(!expanded, id)
+                  updateExpandedInLayerStore(!isExpanded, id)
                 }
               }}
               hasItems={hasItems}
               type={model.type}
-              isExpanded={expanded}
+              isExpanded={isExpanded}
               size="medium"
               style={{
                 marginRight: 'var(--gutter)'
@@ -251,7 +253,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
         </HeadingInner>
       </Heading>
       {hasItems && (
-        <Body hidden={!expanded}>
+        <Body hidden={!isExpanded}>
           <LayerItems items={items as ModelInterface[]} />
           {level > 0 && <LayerItemsBar level={level} />}
         </Body>

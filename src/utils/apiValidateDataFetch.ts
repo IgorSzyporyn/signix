@@ -3,7 +3,10 @@ import ApiErrorInterface from '../types/ApiErrorInterface'
 import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncDataFetch from './apiSyncDataFetch'
 
-type Callback = (valid: boolean, error: ApiErrorInterface[] | undefined) => void
+type Callback = (
+  valid: boolean,
+  errors: ApiErrorInterface[] | undefined
+) => void
 
 const apiValidateDataFetch = async (callback?: Callback) => {
   const { dataQuery }: ApiStoreInterface = ApiStore.get()
@@ -13,7 +16,7 @@ const apiValidateDataFetch = async (callback?: Callback) => {
   }`
 
   let valid = false
-  let error: ApiErrorInterface[] = []
+  let errors: ApiErrorInterface[] = []
 
   if (dataQuery.url) {
     fetch(url)
@@ -21,7 +24,7 @@ const apiValidateDataFetch = async (callback?: Callback) => {
         const { status } = response
 
         if (status >= 400) {
-          error.push({
+          errors.push({
             id: 'validateDataFetch',
             text: `Request returned ${status} as status code`,
             errorLevel: 'critical',
@@ -35,7 +38,7 @@ const apiValidateDataFetch = async (callback?: Callback) => {
         let data = {}
 
         if (Array.isArray(json)) {
-          error.push({
+          errors.push({
             id: 'validateDataFetch',
             text: 'Returned data is an array instead of an object',
             errorLevel: 'critical',
@@ -46,30 +49,30 @@ const apiValidateDataFetch = async (callback?: Callback) => {
           valid = true
         }
 
-        apiSyncDataFetch(valid, data, error)
-        callback && callback(valid, error)
+        apiSyncDataFetch(valid, data, errors)
+        callback && callback(valid, errors)
       })
       .catch(e => {
-        error.push({
+        errors.push({
           id: 'validateDataFetch',
           text: e.message,
           errorLevel: 'critical',
           name: 'Data Fetch HTTP Request'
         })
 
-        apiSyncDataFetch(valid, {}, error)
-        callback && callback(valid, error)
+        apiSyncDataFetch(valid, {}, errors)
+        callback && callback(valid, errors)
       })
   } else {
-    error.push({
+    errors.push({
       id: 'validateDataFetch',
       text: 'No URL provided',
       errorLevel: 'critical',
       name: 'Data Fetch HTTP Request'
     })
 
-    apiSyncDataFetch(valid, {}, error)
-    callback && callback(valid, error)
+    apiSyncDataFetch(valid, {}, errors)
+    callback && callback(valid, errors)
   }
 }
 

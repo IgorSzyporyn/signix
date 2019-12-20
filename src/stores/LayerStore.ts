@@ -1,11 +1,6 @@
 import { Store } from 'laco'
+import layerStoreDefaults from './layerStore/layerStoreDefaults'
 
-export type LayerStoreInterface = {
-  [key: string]: boolean
-}
-
-const defaultStore: LayerStoreInterface = {}
-
-const LayerStore = new Store(defaultStore)
+const LayerStore = new Store(layerStoreDefaults)
 
 export default LayerStore

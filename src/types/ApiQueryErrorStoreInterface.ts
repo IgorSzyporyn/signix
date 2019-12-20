@@ -1,7 +1,8 @@
 import ApiErrorInterface from './ApiErrorInterface'
+import ApiQueryErrorTypes from './ApiQueryErrorTypes'
 
 type ApiQueryErrorStoreInterface = {
-  [key: string]: ApiErrorInterface[]
+  [name in ApiQueryErrorTypes]: ApiErrorInterface[]
 }
 
 export default ApiQueryErrorStoreInterface

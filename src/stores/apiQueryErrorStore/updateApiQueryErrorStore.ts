@@ -1,7 +1,9 @@
 import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
 import ApiQueryErrorStore from '../ApiQueryErrorStore'
 
-const updateApiQueryErrorStore = (source: ApiQueryErrorStoreInterface) => {
+const updateApiQueryErrorStore = (
+  source: Partial<ApiQueryErrorStoreInterface>
+) => {
   ApiQueryErrorStore.set((state: ApiQueryErrorStoreInterface) => ({
     ...state,
     ...source

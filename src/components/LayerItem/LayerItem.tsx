@@ -5,18 +5,13 @@ import LayerItemInner from '../LayerItemInner/LayerItemInner'
 
 type WrapperProps = {
   isHidden?: boolean
+  isDisabled?: boolean
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  ${({ isHidden }) => {
-    return isHidden ? 'opacity: 0.6;' : null
+  ${({ isHidden, isDisabled }) => {
+    return isHidden || isDisabled ? 'opacity: 0.6;' : null
   }}
-`
-
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
 `
 
 type LayerItemProps = {
@@ -27,14 +22,8 @@ const LayerItem = (props: LayerItemProps) => {
   const { model } = props
 
   return (
-    <Wrapper isHidden={model.hidden}>
-      {model.level === 0 ? (
-        <List>
-          <LayerItemInner {...props} />
-        </List>
-      ) : (
-        <LayerItemInner {...props} />
-      )}
+    <Wrapper isHidden={model.hidden} isDisabled={model.disabled}>
+      <LayerItemInner {...props} />
     </Wrapper>
   )
 }

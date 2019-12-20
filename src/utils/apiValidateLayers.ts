@@ -126,7 +126,7 @@ type ValidateApiLayerInterface = ApiErrorInterface[] | true
 
 type Callback = (result: GroupedLayerErrorsInterface | true) => void
 
-const validateApiLayerIntegrity = (callback?: Callback) => {
+const apiValidateLayers = (callback?: Callback) => {
   const { model: rootModel }: ModelStoreInterface = ModelStore.get()
   const {
     data: apiData,
@@ -146,4 +146,4 @@ const validateApiLayerIntegrity = (callback?: Callback) => {
   callback && callback(groupedResult)
 }
 
-export default validateApiLayerIntegrity
+export default apiValidateLayers

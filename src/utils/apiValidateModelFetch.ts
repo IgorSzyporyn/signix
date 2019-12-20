@@ -3,13 +3,16 @@ import ApiErrorInterface from '../types/ApiErrorInterface'
 import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncModelFetch from './apiSyncModelFetch'
 
-type Callback = (valid: boolean, error: ApiErrorInterface[] | undefined) => void
+type Callback = (
+  valid: boolean,
+  errors: ApiErrorInterface[] | undefined
+) => void
 
 const apiValidateModelFetch = async (callback?: Callback) => {
   const { modelQuery }: ApiStoreInterface = ApiStore.get()
 
   let valid = false
-  let error: ApiErrorInterface[] = []
+  let errors: ApiErrorInterface[] = []
 
   if (modelQuery.url) {
     fetch(modelQuery.url)
@@ -17,7 +20,7 @@ const apiValidateModelFetch = async (callback?: Callback) => {
         const { status } = response
 
         if (status >= 400) {
-          error.push({
+          errors.push({
             id: 'validateModelFetch',
             text: `HTTP request returned ${status} as status code`,
             errorLevel: 'critical',
@@ -32,7 +35,7 @@ const apiValidateModelFetch = async (callback?: Callback) => {
         let model = {}
 
         if (Array.isArray(json)) {
-          error.push({
+          errors.push({
             id: 'validateModelFetch',
             text: 'Returned data is an array instead of an object',
             errorLevel: 'critical',
@@ -43,30 +46,30 @@ const apiValidateModelFetch = async (callback?: Callback) => {
           valid = true
         }
 
-        apiSyncModelFetch(valid, model, error)
-        callback && callback(valid, error)
+        apiSyncModelFetch(valid, model, errors)
+        callback && callback(valid, errors)
       })
       .catch(e => {
-        error.push({
+        errors.push({
           id: 'validateModelFetch',
           text: e.message,
           errorLevel: 'critical',
           name: 'Model Fetch HTTP Request'
         })
 
-        apiSyncModelFetch(valid, {}, error)
-        callback && callback(valid, error)
+        apiSyncModelFetch(valid, {}, errors)
+        callback && callback(valid, errors)
       })
   } else {
-    error.push({
+    errors.push({
       id: 'validateModelFetch',
       text: 'No URL provided',
       errorLevel: 'critical',
       name: 'Model Fetch HTTP Request'
     })
 
-    apiSyncModelFetch(valid, {}, error)
-    callback && callback(valid, error)
+    apiSyncModelFetch(valid, {}, errors)
+    callback && callback(valid, errors)
   }
 }
 

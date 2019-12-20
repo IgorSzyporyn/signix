@@ -19,6 +19,7 @@ type ModelInterface = {
   parentId?: string
   value?: string
   hidden?: boolean
+  disabled?: boolean
   unique?: boolean
   coreType?: ModelCoreTypes
   font: ModelFontInterface
