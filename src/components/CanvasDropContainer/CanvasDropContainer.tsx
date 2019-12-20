@@ -43,9 +43,8 @@ type CanvasDropContainerProps = {
   level?: number
 }
 
-const CanvasDropContainer = React.forwardRef<
-  HTMLDivElement,
-  CanvasDropContainerProps
->((props, ref) => <Wrapper ref={ref} {...props} />)
+const CanvasDropContainer = React.forwardRef<HTMLDivElement, CanvasDropContainerProps>(
+  (props, ref) => <Wrapper ref={ref} {...props} />
+)
 
 export default CanvasDropContainer

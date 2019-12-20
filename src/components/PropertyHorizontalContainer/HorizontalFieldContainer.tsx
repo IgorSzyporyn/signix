@@ -21,8 +21,8 @@ type HorizontalFieldContainerProps = {
   children?: React.ReactNode
 }
 
-const HorizontalFieldContainer = ({
-  children
-}: HorizontalFieldContainerProps) => <Wrapper>{children}</Wrapper>
+const HorizontalFieldContainer = ({ children }: HorizontalFieldContainerProps) => (
+  <Wrapper>{children}</Wrapper>
+)
 
 export default HorizontalFieldContainer

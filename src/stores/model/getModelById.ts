@@ -2,10 +2,7 @@ import ModelInterface from '../../types/ModelInterface'
 import ModelStore from '../ModelStore'
 import ModelInterfacePartial from '../../types/ModelInterfacePartial'
 
-export const searchItemsForModelById = (
-  id: string | undefined,
-  items: ModelInterfacePartial[]
-) => {
+export const searchItemsForModelById = (id: string | undefined, items: ModelInterfacePartial[]) => {
   let found: ModelInterfacePartial | null = null
 
   items.some(item => {

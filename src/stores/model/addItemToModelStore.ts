@@ -4,10 +4,7 @@ import initModel from '../../utils/initModel'
 import ModelStore from '../ModelStore'
 import { searchModelById } from './getModelById'
 
-const addItemToModelStore = (
-  source: ModelInterfacePartial,
-  parentId: string
-) => {
+const addItemToModelStore = (source: ModelInterfacePartial, parentId: string) => {
   const store = ModelStore.get()
   let root = { ...store.model }
 

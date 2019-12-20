@@ -11,10 +11,7 @@ type PropertyDimensionProps = {
   disallowDisable?: boolean
 }
 
-const PropertyDimension = ({
-  model,
-  disallowDisable
-}: PropertyDimensionProps) => {
+const PropertyDimension = ({ model, disallowDisable }: PropertyDimensionProps) => {
   const { dimension } = model
 
   return (

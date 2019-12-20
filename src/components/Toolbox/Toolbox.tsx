@@ -32,10 +32,7 @@ type ToolboxProps = {
   view?: ToolboxViewTypes
 }
 
-const getViewTypeIconStyle = (
-  view: ToolboxViewTypes,
-  currentView: ToolboxViewTypes
-) => ({
+const getViewTypeIconStyle = (view: ToolboxViewTypes, currentView: ToolboxViewTypes) => ({
   color: view === currentView ? 'var(--color-blue)' : 'currentColor'
 })
 

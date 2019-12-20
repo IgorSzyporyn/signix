@@ -8,6 +8,4 @@ export default {
   title: 'Components|PropertiesTextStaticQuery'
 }
 
-export const Default = () => (
-  <PropertiesTextStaticQuery model={{ ...TextModel }} />
-)
+export const Default = () => <PropertiesTextStaticQuery model={{ ...TextModel }} />

@@ -8,10 +8,7 @@ type ExpandableActionsProps = {
   onCollapseAll?: () => void
 }
 
-const ExpandableActions = ({
-  onCollapseAll,
-  onExpandAll
-}: ExpandableActionsProps) => {
+const ExpandableActions = ({ onCollapseAll, onExpandAll }: ExpandableActionsProps) => {
   return (
     <>
       <MUIcon

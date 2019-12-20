@@ -16,9 +16,7 @@ const a = (model: ModelInterfacePartial, updateItem: ModelInterfacePartial) => {
   })
 }
 
-const updateItemInModelStore = (
-  source: Omit<ModelInterfacePartial, 'type'>
-) => {
+const updateItemInModelStore = (source: Omit<ModelInterfacePartial, 'type'>) => {
   let { model }: ModelStoreInterface = ModelStore.get()
   let updateItem = { type: model.type, ...source }
 

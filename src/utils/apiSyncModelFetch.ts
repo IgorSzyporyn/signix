@@ -2,11 +2,7 @@ import updateApiQueryErrorStore from '../stores/apiQueryErrorStore/updateApiQuer
 import updateModelInApiQueryStore from '../stores/apiQueryStore/updateModelInApiQueryStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
 
-const apiSyncModelFetch = (
-  valid: boolean,
-  model: object,
-  errors?: ApiErrorInterface[]
-) => {
+const apiSyncModelFetch = (valid: boolean, model: object, errors?: ApiErrorInterface[]) => {
   if (valid) {
     updateModelInApiQueryStore(model)
   } else {

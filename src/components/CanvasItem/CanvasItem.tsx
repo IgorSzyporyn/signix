@@ -19,10 +19,7 @@ type CanvasItemProps = {
   style?: React.CSSProperties
 }
 
-const getComponent = (
-  { model, style, ...props }: CanvasItemProps,
-  activeModelId?: string
-) => {
+const getComponent = ({ model, style, ...props }: CanvasItemProps, activeModelId?: string) => {
   let Component = null
   const canvasStyle: React.CSSProperties = {}
 

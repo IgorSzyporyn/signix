@@ -78,10 +78,7 @@ const createTabItems = (
 const createPanelItems = (panels: React.ReactNode[], activeTab: number) =>
   panels.map((panel, index) => {
     return (
-      <PanelItem
-        hidden={activeTab !== index}
-        key={`tabpanel-panel-${index}-${uniqueId()}`}
-      >
+      <PanelItem hidden={activeTab !== index} key={`tabpanel-panel-${index}-${uniqueId()}`}>
         {panel}
       </PanelItem>
     )
@@ -106,15 +103,14 @@ const TabPanel = ({
   tabsStyle = {},
   titles
 }: TabPanelProps) => {
-  const tabItems = useMemo(
-    () => createTabItems(titles, tabs, activeTab, changeHandler),
-    [titles, tabs, activeTab, changeHandler]
-  )
-
-  const panelItems = useMemo(() => createPanelItems(panels, activeTab), [
-    panels,
-    activeTab
+  const tabItems = useMemo(() => createTabItems(titles, tabs, activeTab, changeHandler), [
+    titles,
+    tabs,
+    activeTab,
+    changeHandler
   ])
+
+  const panelItems = useMemo(() => createPanelItems(panels, activeTab), [panels, activeTab])
 
   return (
     <Wrapper>

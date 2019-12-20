@@ -7,6 +7,4 @@ export default {
   title: 'Components|PropertiesPanel'
 }
 
-export const Default = () => (
-  <PropertiesPanel title="Default" type="Background" />
-)
+export const Default = () => <PropertiesPanel title="Default" type="Background" />

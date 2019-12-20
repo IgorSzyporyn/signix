@@ -44,21 +44,14 @@ type FieldOptionsProps = {
   onSelection?: (value?: string) => void
 } & InputHTMLAttributes<HTMLInputElement>
 
-const FieldOptions = ({
-  value,
-  options,
-  searchable,
-  ...props
-}: FieldOptionsProps) => {
+const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProps) => {
   const optionsType = getOptionsType(options)
   const simpleType = optionsType === 'simple'
 
   return (
     <Downshift
       selectedItem={value}
-      onChange={(selection?: string) =>
-        props.onSelection && props.onSelection(selection)
-      }
+      onChange={(selection?: string) => props.onSelection && props.onSelection(selection)}
       itemToString={item => (item ? (simpleType ? item : item.value) : '')}
     >
       {({
@@ -77,10 +70,7 @@ const FieldOptions = ({
             {searchable ? (
               <input {...getInputProps()} {...props} />
             ) : (
-              <div
-                className={`FieldInput ${isOpen ? 'open' : ''}`}
-                onClick={onToggleClick}
-              >
+              <div className={`FieldInput ${isOpen ? 'open' : ''}`} onClick={onToggleClick}>
                 {simpleType ? selectedItem : selectedItem.value}
               </div>
             )}

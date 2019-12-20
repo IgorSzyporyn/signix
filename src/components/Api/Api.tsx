@@ -33,9 +33,7 @@ const Api = () => {
       <PanelHeader
         topMargin
         title="API"
-        icon={
-          <MUIcon size="medium" render={p => <CloudDownloadIcon {...p} />} />
-        }
+        icon={<MUIcon size="medium" render={p => <CloudDownloadIcon {...p} />} />}
         actions={
           <ExpandableActions
             onExpandAll={() => {

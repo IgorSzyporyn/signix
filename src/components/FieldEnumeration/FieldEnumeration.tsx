@@ -11,10 +11,7 @@ type FieldEnumerationProps = {
   enumeration?: ApiEnumerationInterface[]
 } & WithFieldProps
 
-const FieldEnumeration = ({
-  enumeration = [],
-  ...props
-}: FieldEnumerationProps) => {
+const FieldEnumeration = ({ enumeration = [], ...props }: FieldEnumerationProps) => {
   return (
     <Wrapper>
       {enumeration.map(item => {

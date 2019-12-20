@@ -3,29 +3,16 @@ import updateActiveModelInAppStore from '../stores/appStore/updateActiveModelInA
 import updateActiveTabInAppTabStore from '../stores/appTabStore/updateActiveTabInAppTabStore'
 import ModelInterface from '../types/ModelInterface'
 import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
-import convertColorToCSS, {
-  ColorCSSProperties
-} from '../utils/convertColorToCSS'
-import convertDimensionToCSS, {
-  DimensionCSSProperties
-} from '../utils/convertDimensionToCSS'
-import convertPositionToCSS, {
-  PositionCSSProperties
-} from '../utils/convertPositionToCSS'
+import convertColorToCSS, { ColorCSSProperties } from '../utils/convertColorToCSS'
+import convertDimensionToCSS, { DimensionCSSProperties } from '../utils/convertDimensionToCSS'
+import convertPositionToCSS, { PositionCSSProperties } from '../utils/convertPositionToCSS'
 
 type CanvasCSSProperties = Pick<
   CSSProperties,
-  | keyof ColorCSSProperties
-  | keyof PositionCSSProperties
-  | keyof DimensionCSSProperties
+  keyof ColorCSSProperties | keyof PositionCSSProperties | keyof DimensionCSSProperties
 >
 
-const createCanvasStyle = ({
-  dimension,
-  position,
-  color,
-  background
-}: ModelInterface) => {
+const createCanvasStyle = ({ dimension, position, color, background }: ModelInterface) => {
   const style: CanvasCSSProperties = {
     ...convertDimensionToCSS(dimension),
     ...convertPositionToCSS(position),

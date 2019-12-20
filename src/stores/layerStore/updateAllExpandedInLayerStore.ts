@@ -18,11 +18,7 @@ const getValuesByTraversing = (
 
   if (model.items && model.items.length) {
     model.items.forEach(item => {
-      const newItems = getValuesByTraversing(
-        item as ModelInterface,
-        storeExpanded,
-        expanded
-      )
+      const newItems = getValuesByTraversing(item as ModelInterface, storeExpanded, expanded)
 
       newStoreExpanded = { ...newStoreExpanded, ...newItems }
     })

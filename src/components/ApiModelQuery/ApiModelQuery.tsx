@@ -16,9 +16,7 @@ type ApiModelQueryProps = {
 }
 
 const ApiModelQuery = ({ disabled }: ApiModelQueryProps) => {
-  const { model: exampleModel }: ApiQueryStoreInterface = useStore(
-    ApiQueryStore
-  )
+  const { model: exampleModel }: ApiQueryStoreInterface = useStore(ApiQueryStore)
   const { expanded, modelQuery: model }: ApiStoreInterface = useStore(ApiStore)
   const { queryModel: isExpanded } = expanded
 

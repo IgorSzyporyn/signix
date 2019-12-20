@@ -13,9 +13,7 @@ const createLayerItems = (items: ModelInterface[]) => {
   let children: React.ReactNode = []
 
   if (items && items.length) {
-    children = items.map(item => (
-      <LayerItem key={`layer-item-${item.id}}`} model={item} />
-    ))
+    children = items.map(item => <LayerItem key={`layer-item-${item.id}}`} model={item} />)
   }
 
   return children

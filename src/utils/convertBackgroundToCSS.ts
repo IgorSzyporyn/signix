@@ -3,10 +3,7 @@ import ModelBackgroundInterface from '../types/ModelBackgroundInterface'
 
 export type BackgroundCSSProperties = Pick<
   CSSProperties,
-  | 'backgroundImage'
-  | 'backgroundSize'
-  | 'backgroundPosition'
-  | 'backgroundRepeat'
+  'backgroundImage' | 'backgroundSize' | 'backgroundPosition' | 'backgroundRepeat'
 >
 
 const convertBackgroundToCSS = (source?: ModelBackgroundInterface) => {

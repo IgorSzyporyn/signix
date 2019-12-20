@@ -46,18 +46,14 @@ const Layers = () => {
       <PanelHeader
         topMargin
         title="Layers"
-        icon={
-          <MUIcon size="medium" render={p => <LayersOutlinedIcon {...p} />} />
-        }
+        icon={<MUIcon size="medium" render={p => <LayersOutlinedIcon {...p} />} />}
         actions={
           <>
             <MUIcon
               size="medium"
               title="Collapse All"
               interactive
-              render={p => (
-                <UnfoldLessIcon onClick={handleCollapseAll} {...p} />
-              )}
+              render={p => <UnfoldLessIcon onClick={handleCollapseAll} {...p} />}
             />
             <MUIcon
               size="medium"

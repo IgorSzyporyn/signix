@@ -8,6 +8,4 @@ export default {
   title: 'Components|PropertiesBackground'
 }
 
-export const Default = () => (
-  <PropertiesBackground model={{ ...BackgroundModel }} />
-)
+export const Default = () => <PropertiesBackground model={{ ...BackgroundModel }} />

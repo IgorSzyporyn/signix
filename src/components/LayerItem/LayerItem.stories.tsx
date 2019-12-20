@@ -13,12 +13,7 @@ export default {
 }
 
 export const UsingBackgroundModel = () => (
-  <LayerItem
-    model={initModel(
-      { ...BackgroundModel, name: 'Background' },
-      BackgroundModel.type
-    )}
-  />
+  <LayerItem model={initModel({ ...BackgroundModel, name: 'Background' }, BackgroundModel.type)} />
 )
 
 export const UsingBackgroundModelWithItems = () => (
@@ -39,9 +34,7 @@ export const UsingBackgroundModelWithItems = () => (
 )
 
 export const UsingTextModel = () => (
-  <LayerItem
-    model={initModel({ ...TextModel, name: 'Text' }, BackgroundModel.type)}
-  />
+  <LayerItem model={initModel({ ...TextModel, name: 'Text' }, BackgroundModel.type)} />
 )
 
 export const UsingGroupModelWithItems = () => (

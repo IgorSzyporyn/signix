@@ -35,9 +35,7 @@ type ApiQueryValidatorProps = {
 }
 
 const ApiValidationButton = ({ disabled }: ApiQueryValidatorProps) => {
-  const { valid, validating, tested }: ApiQueryStoreInterface = useStore(
-    ApiQueryStore
-  )
+  const { valid, validating, tested }: ApiQueryStoreInterface = useStore(ApiQueryStore)
 
   return (
     <Wrapper disabled={disabled}>
@@ -49,9 +47,7 @@ const ApiValidationButton = ({ disabled }: ApiQueryValidatorProps) => {
               style={{
                 color: valid ? 'var(--color-success)' : 'var(--color-failure)'
               }}
-              render={p =>
-                valid ? <CheckCircleIcon {...p} /> : <ErrorIcon {...p} />
-              }
+              render={p => (valid ? <CheckCircleIcon {...p} /> : <ErrorIcon {...p} />)}
             />
           ) : (
             <MUIcon

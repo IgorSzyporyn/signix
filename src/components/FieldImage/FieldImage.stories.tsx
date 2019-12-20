@@ -11,8 +11,6 @@ export const Default = () => <FieldImage />
 
 export const WithTitle = () => <FieldImage title="Here label title" />
 
-export const Disabled = () => (
-  <FieldImage disabled={true} title="Disabled field" />
-)
+export const Disabled = () => <FieldImage disabled={true} title="Disabled field" />
 
 export const Hidden = () => <FieldImage hidden={true} title="Disabled field" />

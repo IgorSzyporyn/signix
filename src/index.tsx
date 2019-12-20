@@ -68,10 +68,7 @@ const modelExample: ModelInterface = {
   level: 0
 }
 
-ReactDOM.render(
-  <App api={apiExample} model={modelExample} />,
-  document.getElementById('root')
-)
+ReactDOM.render(<App api={apiExample} model={modelExample} />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

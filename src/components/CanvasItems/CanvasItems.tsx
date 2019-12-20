@@ -31,10 +31,7 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
     <>
       {model.items.length > 0 &&
         model.items.map(item => (
-          <CanvasItem
-            key={`canvas-key${item.id}`}
-            model={item as ModelInterface}
-          />
+          <CanvasItem key={`canvas-key${item.id}`} model={item as ModelInterface} />
         ))}
       <CanvasDropContainer
         hidden={!canDrop}

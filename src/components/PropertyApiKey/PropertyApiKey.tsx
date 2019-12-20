@@ -81,16 +81,10 @@ type PropertyApiKeyQueryProps = {
 }
 
 const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
-  const { [model.id!]: errors }: ApiLayerErrorStoreInterface = useStore(
-    ApiLayerErrorStore
-  )
-  const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(
-    ApiQueryStore
-  )
+  const { [model.id!]: errors }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+  const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(ApiQueryStore)
 
-  const [enumerationState, setEnumerationState] = useState<
-    PropertyApiKeyEnumerationState
-  >({
+  const [enumerationState, setEnumerationState] = useState<PropertyApiKeyEnumerationState>({
     confirmChangeType: null,
     confirmChange: false,
     storedEnumeration: model.enumeration,
@@ -177,9 +171,7 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
           </Button>
         </ConfirmButtons>
       </ConfirmContainer>
-      <ErrorContainer hidden={!(errors && errors.length > 0)}>
-        errors here
-      </ErrorContainer>
+      <ErrorContainer hidden={!(errors && errors.length > 0)}>errors here</ErrorContainer>
       <FieldOptions
         id={`${enumerationState._stupidlyCreatedIdToForceRender}`}
         hidden={enumerationState.confirmChange}

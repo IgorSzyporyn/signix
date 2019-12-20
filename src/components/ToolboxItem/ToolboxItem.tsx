@@ -64,16 +64,9 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
             if (activeModel.group) {
               addItemToModelStore(modelTemplate, activeModel.id)
             } else if (activeModel.parentId) {
-              const activeParentModel = getModelById(
-                activeModel.parentId,
-                rootModel
-              )
+              const activeParentModel = getModelById(activeModel.parentId, rootModel)
 
-              if (
-                activeParentModel &&
-                activeParentModel.id &&
-                activeParentModel.group
-              ) {
+              if (activeParentModel && activeParentModel.id && activeParentModel.group) {
                 addItemToModelStore(modelTemplate, activeParentModel.id)
               }
             }

@@ -74,11 +74,9 @@ const validateLayerModel = (
       // Check if apiModel has a key we do not have in enumeration
       apiModelKeys.forEach(modelKey => {
         // Se if modelKey is use in enumeration
-        const modelKeyUsedInEnumeration = model.enumeration.find(
-          enumeration => {
-            return enumeration.key === modelKey
-          }
-        )
+        const modelKeyUsedInEnumeration = model.enumeration.find(enumeration => {
+          return enumeration.key === modelKey
+        })
 
         if (!modelKeyUsedInEnumeration) {
           const error: ApiErrorInterface = {
@@ -107,11 +105,7 @@ const validateLayerModel = (
 
   if (model.items.length > 0) {
     model.items.forEach(item => {
-      const validateResult = validateLayerModel(
-        item as ModelInterface,
-        apiData,
-        apiModel
-      )
+      const validateResult = validateLayerModel(item as ModelInterface, apiData, apiModel)
 
       if (validateResult !== true && validateResult.length > 0) {
         result = appendErrorToResult(result, validateResult)
@@ -128,10 +122,7 @@ type Callback = (result: GroupedLayerErrorsInterface | true) => void
 
 const apiValidateLayers = (callback?: Callback) => {
   const { model: rootModel }: ModelStoreInterface = ModelStore.get()
-  const {
-    data: apiData,
-    model: apiModel
-  }: ApiQueryStoreInterface = ApiQueryStore.get()
+  const { data: apiData, model: apiModel }: ApiQueryStoreInterface = ApiQueryStore.get()
 
   let result = validateLayerModel(rootModel, apiData, apiModel)
   let groupedResult: GroupedLayerErrorsInterface | true = true

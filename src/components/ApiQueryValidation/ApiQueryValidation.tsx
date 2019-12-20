@@ -65,9 +65,7 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
   const [modelFetchValidating, setModelFetchValidating] = useState(true)
 
   const [modelIntegrityValid, setModelIntegrityValid] = useState(false)
-  const [modelIntegrityValidating, setModelIntegrityValidating] = useState(
-    false
-  )
+  const [modelIntegrityValidating, setModelIntegrityValidating] = useState(false)
 
   useEffect(() => {
     resetApiQueryErrorStore()
@@ -114,14 +112,10 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
     }
   }, [modelFetchValid, dataKeysValid])
 
-  const valid =
-    dataFetchValid && dataKeysValid && modelFetchValid && modelIntegrityValid
+  const valid = dataFetchValid && dataKeysValid && modelFetchValid && modelIntegrityValid
 
   const validating =
-    dataFetchValidating ||
-    dataKeysValidating ||
-    modelFetchValidating ||
-    modelIntegrityValidating
+    dataFetchValidating || dataKeysValidating || modelFetchValidating || modelIntegrityValidating
 
   return (
     <Wrapper>

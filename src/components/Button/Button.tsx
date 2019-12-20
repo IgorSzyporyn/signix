@@ -53,9 +53,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
   }
 `
 
-type ButtonProps = { variant?: ActionVariantTypes } & ButtonHTMLAttributes<
-  HTMLButtonElement
->
+type ButtonProps = { variant?: ActionVariantTypes } & ButtonHTMLAttributes<HTMLButtonElement>
 
 const Button = ({ children, variant, ...props }: ButtonProps) => {
   return (

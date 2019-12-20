@@ -7,10 +7,7 @@ import FieldImage from '../FieldImage/FieldImage'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import PropertyPositionType from '../PropertyPositionType/PropertyPositionType'
 
-const handlePositionChange = (
-  position: ModelPositionTypes,
-  model: ModelInterface
-) => {
+const handlePositionChange = (position: ModelPositionTypes, model: ModelInterface) => {
   const newModel = {
     ...model,
     background: { ...model.background, position }
@@ -51,9 +48,7 @@ const PropertyBackground = ({ model }: PropertyBackgroundProps) => {
             disabled={disabled}
             label="Alignment"
             type={background.position}
-            onChange={(position: ModelPositionTypes) =>
-              handlePositionChange(position, model)
-            }
+            onChange={(position: ModelPositionTypes) => handlePositionChange(position, model)}
           />
           <FieldImage
             disabled={disabled}

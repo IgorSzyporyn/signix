@@ -7,6 +7,4 @@ export default {
   title: 'Components|PropertyPositionType'
 }
 
-export const Default = () => (
-  <PropertyPositionType type="top-left" onChange={() => {}} />
-)
+export const Default = () => <PropertyPositionType type="top-left" onChange={() => {}} />

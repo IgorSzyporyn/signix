@@ -121,15 +121,7 @@ export interface WithFieldProps {
 const withField = <P extends object>(Component: React.ComponentType<P>) =>
   class WithFieldHOC extends React.Component<P & WithFieldProps> {
     render() {
-      const {
-        labelStyle,
-        nomargin,
-        id,
-        name,
-        label,
-        inline,
-        ...rest
-      } = this.props
+      const { labelStyle, nomargin, id, name, label, inline, ...rest } = this.props
       const safeId = uniqueId()
 
       const title = rest.title || label || ''
@@ -145,18 +137,10 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
           {label ? (
             <Label htmlFor={id || safeId}>
               <Title style={labelStyle || {}}>{label}</Title>
-              <Component
-                id={id || safeId}
-                name={name || safeId}
-                {...(rest as P)}
-              />
+              <Component id={id || safeId} name={name || safeId} {...(rest as P)} />
             </Label>
           ) : (
-            <Component
-              id={id || safeId}
-              name={name || safeId}
-              {...(rest as P)}
-            />
+            <Component id={id || safeId} name={name || safeId} {...(rest as P)} />
           )}
         </Wrapper>
       )

@@ -9,9 +9,7 @@ export default {
 }
 
 export const Default = () => (
-  <CanvasTextStatic
-    model={{ ...TextModel, value: 'Using Default Model values' }}
-  />
+  <CanvasTextStatic model={{ ...TextModel, value: 'Using Default Model values' }} />
 )
 
 export const WithGreenColor = () => (

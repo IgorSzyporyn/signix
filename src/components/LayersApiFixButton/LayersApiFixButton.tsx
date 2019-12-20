@@ -41,9 +41,7 @@ const LayersApiFixButton = ({ onFixingChange }: LayersApiFixButtonProps) => {
         style={{ color: 'var(--color-warning)' }}
         render={p => <WarningIcon {...p} />}
       />
-      <Text>
-        One or more of your layers has a problem with the API data or model.
-      </Text>
+      <Text>One or more of your layers has a problem with the API data or model.</Text>
       <Text>Try to auto fix by clicking button.</Text>
       <Button
         variant="primary"

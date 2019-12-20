@@ -1,10 +1,7 @@
 import { CSSProperties } from 'react'
 import ModelColorInterface from '../types/ModelColorInterface'
 
-export type ColorCSSProperties = Pick<
-  CSSProperties,
-  'color' | 'backgroundColor'
->
+export type ColorCSSProperties = Pick<CSSProperties, 'color' | 'backgroundColor'>
 
 const convertColorToCSS = (source?: ModelColorInterface) => {
   const color: ColorCSSProperties = {}

@@ -47,10 +47,7 @@ const Properties = () => {
               type={activeModel.type}
             />
           ) : (
-            <MUIcon
-              size="medium"
-              render={p => <PermDataSettingOutlinedIcon {...p} />}
-            />
+            <MUIcon size="medium" render={p => <PermDataSettingOutlinedIcon {...p} />} />
           )
         }
         actions={

@@ -13,12 +13,7 @@ type PropertyPositionTypeProps = WithFieldProps & {
   onChange: (type: ModelPositionTypes) => void
 }
 
-const PropertyPositionType = ({
-  type,
-  onChange,
-  center,
-  disabled
-}: PropertyPositionTypeProps) => {
+const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPositionTypeProps) => {
   return (
     <FieldButtonGroup>
       <FieldPositionType
@@ -30,10 +25,7 @@ const PropertyPositionType = ({
         }}
         active={type === 'top-left' ? 'true' : 'false'}
       >
-        <MUIcon
-          size="medium"
-          render={p => <BorderStyleOutlinedIcon {...p} />}
-        />
+        <MUIcon size="medium" render={p => <BorderStyleOutlinedIcon {...p} />} />
       </FieldPositionType>
       <FieldPositionType
         nomargin="true"
@@ -60,10 +52,7 @@ const PropertyPositionType = ({
           }}
           active={type === 'center' ? 'true' : 'false'}
         >
-          <MUIcon
-            size="medium"
-            render={p => <FilterCenterFocusOutlinedIcon {...p} />}
-          />
+          <MUIcon size="medium" render={p => <FilterCenterFocusOutlinedIcon {...p} />} />
         </FieldPositionType>
       )}
       <FieldPositionType

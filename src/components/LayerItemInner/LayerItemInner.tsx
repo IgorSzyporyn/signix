@@ -30,8 +30,7 @@ const Wrapper = styled.div`
 
 const Heading = styled.div`
   border-left: var(--half-gutter) solid transparent;
-  padding: var(--gutter) var(--gutter) var(--gutter)
-    calc(var(--spacing-medium) - 0.2rem);
+  padding: var(--gutter) var(--gutter) var(--gutter) calc(var(--spacing-medium) - 0.2rem);
 
   &[data-active='true'] {
     color: var(--color-white);
@@ -91,8 +90,7 @@ const HiddenIconsWrapper = styled.div<HiddenIconsWrapperProps>`
     margin-right: var(--gutter);
 
     &:last-child {
-      margin-right: ${({ layerIsHidden }) =>
-        layerIsHidden ? ' var(--gutter)' : 0};
+      margin-right: ${({ layerIsHidden }) => (layerIsHidden ? ' var(--gutter)' : 0)};
     }
   }
 `
@@ -118,21 +116,18 @@ type LayerItemInnerProps = {
 
 const LayerItemInner = (props: LayerItemInnerProps) => {
   const { model } = props
-  const { id, items, group, hidden, disabled } = model
+  const { items, group, hidden } = model
+  const id = model.id!
 
   const { expanded }: LayerStoreInterface = useStore(LayerStore)
-  const { [id!]: errors }: ApiLayerErrorStoreInterface = useStore(
-    ApiLayerErrorStore
-  )
-  const { activeModelId, editingModelId }: AppStoreInterface = useStore(
-    AppStore
-  )
+  const { [id]: errors }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+  const { activeModelId, editingModelId }: AppStoreInterface = useStore(AppStore)
 
   const isEditingAny = !!editingModelId
   const hasItems = items && items.length > 0
   const level = model.level || 0
   const isActive = activeModelId === id
-  let isExpanded = expanded[id!]
+  let isExpanded = expanded[id]
 
   if (isExpanded === undefined && level === 0) {
     isExpanded = true
@@ -194,10 +189,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
               }}
             />
           </TitleWrapper>
-          <HiddenIconsWrapper
-            layerIsHidden={hidden}
-            className="hidden-icons-wrapper"
-          >
+          <HiddenIconsWrapper layerIsHidden={hidden} className="hidden-icons-wrapper">
             <MUIcon
               interactive={true}
               render={p => (

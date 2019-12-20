@@ -32,10 +32,7 @@ const fixUnsupportedEnumKey = (
 
 type Callback = () => void
 
-const updateLayersWithApi = (
-  errors: GroupedLayerErrorsInterface,
-  callback: Callback
-) => {
+const updateLayersWithApi = (errors: GroupedLayerErrorsInterface, callback: Callback) => {
   Object.keys(errors).forEach(modelId => {
     const model = searchModelById(modelId)
 
@@ -49,11 +46,7 @@ const updateLayersWithApi = (
         if (errorLevel === 'fixable' && enumKey) {
           switch (errorType) {
             case 'missingEnumKey':
-              enumeration = fixMissingEnumKey(
-                enumeration,
-                enumKey,
-                model.coreType!
-              )
+              enumeration = fixMissingEnumKey(enumeration, enumKey, model.coreType!)
               break
             case 'unsupportedEnumKey':
               enumeration = fixUnsupportedEnumKey(enumeration, enumKey)

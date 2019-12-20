@@ -9,6 +9,4 @@ export default {
 
 export const Default = () => <FieldCheckbox />
 export const WithTitle = () => <FieldCheckbox title="Here label title" />
-export const Inline = () => (
-  <FieldCheckbox title="Here label title" inline={true} />
-)
+export const Inline = () => <FieldCheckbox title="Here label title" inline={true} />
