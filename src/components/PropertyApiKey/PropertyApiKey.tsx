@@ -81,8 +81,10 @@ type PropertyApiKeyQueryProps = {
 }
 
 const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
-  const { [model.id!]: errors }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+  const errorStore: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
   const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(ApiQueryStore)
+
+  const errors = errorStore.errors[model.id!]
 
   const [enumerationState, setEnumerationState] = useState<PropertyApiKeyEnumerationState>({
     confirmChangeType: null,

@@ -17,6 +17,7 @@ const apiExample: AppApiProps = {
       dynamicTestKey: '1'
     },
     modelQuery: {
+      enabled: true,
       url: 'http://localhost:8000/mock/model'
     }
   },

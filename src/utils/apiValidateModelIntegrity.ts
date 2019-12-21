@@ -4,7 +4,7 @@ import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
 import apiSyncModelIntegrity from './apiSyncModelIntegrity'
 
 const apiValidateModelIntegrity = (
-  callback?: (valid: boolean, error: ApiErrorInterface[] | undefined) => void
+  callback?: (valid: boolean, error: ApiErrorInterface[]) => void
 ) => {
   const { dataKeys, model }: ApiQueryStoreInterface = ApiQueryStore.get()
 

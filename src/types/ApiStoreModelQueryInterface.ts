@@ -1,4 +1,5 @@
 type ApiStoreModelQueryInterface = {
+  enabled: boolean
   url: string
 }
 

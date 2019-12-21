@@ -3,7 +3,7 @@ import ApiErrorInterface from '../types/ApiErrorInterface'
 import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncModelFetch from './apiSyncModelFetch'
 
-type Callback = (valid: boolean, errors: ApiErrorInterface[] | undefined) => void
+type Callback = (valid: boolean, errors: ApiErrorInterface[]) => void
 
 const apiValidateModelFetch = async (callback?: Callback) => {
   const { modelQuery }: ApiStoreInterface = ApiStore.get()

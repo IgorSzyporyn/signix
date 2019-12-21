@@ -13,6 +13,7 @@ const apiStoreDefaults: ApiStoreInterface = {
     dynamicTestKey: ''
   },
   modelQuery: {
+    enabled: false,
     url: ''
   }
 }

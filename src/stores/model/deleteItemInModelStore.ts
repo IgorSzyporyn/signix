@@ -17,7 +17,7 @@ const deleteItemInModelStore = (id?: string) => {
     return false
   }
 
-  const { model } = ModelStore.get()
+  const { model }: ModelStoreInterface = ModelStore.get()
 
   if (model.id === id) {
     return false

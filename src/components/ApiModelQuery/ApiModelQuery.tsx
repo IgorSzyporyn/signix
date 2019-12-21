@@ -10,6 +10,7 @@ import ApiStoreInterface from '../../types/ApiStoreInterface'
 import FieldInput from '../FieldInput/FieldInput'
 import JsonViewer from '../JsonViewer/JsonViewer'
 import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
+import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 
 type ApiModelQueryProps = {
   disabled?: boolean
@@ -17,7 +18,7 @@ type ApiModelQueryProps = {
 
 const ApiModelQuery = ({ disabled }: ApiModelQueryProps) => {
   const { model: exampleModel }: ApiQueryStoreInterface = useStore(ApiQueryStore)
-  const { expanded, modelQuery: model }: ApiStoreInterface = useStore(ApiStore)
+  const { expanded, modelQuery }: ApiStoreInterface = useStore(ApiStore)
   const { queryModel: isExpanded } = expanded
 
   return (
@@ -29,17 +30,28 @@ const ApiModelQuery = ({ disabled }: ApiModelQueryProps) => {
         updateExpandedInApiStore({ queryModel: expanded })
       }}
     >
-      <FieldInput
-        label="Model Query URL"
-        value={model.url}
+      <FieldCheckbox
+        inline
+        label="Enable Model Query"
+        checked={modelQuery.enabled}
         onChange={e => {
-          updateTestedInApiQueryStore(true)
-          updateApiStore({
-            modelQuery: { ...model, url: e.currentTarget.value }
-          })
+          updateTestedInApiQueryStore(false)
+          updateApiStore({ modelQuery: { ...modelQuery, enabled: e.currentTarget.checked } })
         }}
       />
-      {exampleModel && <JsonViewer json={exampleModel} />}
+      {modelQuery.enabled && (
+        <>
+          <FieldInput
+            label="Model Query URL"
+            value={modelQuery.url}
+            onChange={e => {
+              updateTestedInApiQueryStore(false)
+              updateApiStore({ modelQuery: { ...modelQuery, url: e.currentTarget.value } })
+            }}
+          />
+          {exampleModel && <JsonViewer json={exampleModel} />}
+        </>
+      )}
     </PanelExpandableItem>
   )
 }

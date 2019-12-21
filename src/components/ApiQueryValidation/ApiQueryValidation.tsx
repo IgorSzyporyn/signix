@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import ApiQueryErrorStore from '../../stores/ApiQueryErrorStore'
 import resetApiQueryErrorStore from '../../stores/apiQueryErrorStore/resetApiQueryErrorStore'
+import ApiStore from '../../stores/ApiStore'
 import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
 import apiValidateDataFetch from '../../utils/apiValidateDataFetch'
 import apiValidateDataKeys from '../../utils/apiValidateDataKeys'
+import apiValidateLayers from '../../utils/apiValidateLayers'
 import apiValidateModelFetch from '../../utils/apiValidateModelFetch'
 import apiValidateModelIntegrity from '../../utils/apiValidateModelIntegrity'
 import getFontSize from '../../utils/getFontSize'
-import apiValidateLayers from '../../utils/apiValidateLayers'
 import ApiQueryValidationItem from '../ApiQueryValidationItem/ApiQueryValidationItem'
 import Button from '../Button/Button'
 
@@ -53,6 +55,7 @@ type ApiQueryValidationProps = {
 
 const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
   const errors: ApiQueryErrorStoreInterface = useStore(ApiQueryErrorStore)
+  const { modelQuery }: ApiStoreInterface = useStore(ApiStore)
 
   // DATA STATES
   const [dataFetchValid, setDataFetchValid] = useState(false)
@@ -76,11 +79,13 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
       setDataFetchValidating(false)
     })
 
-    // MODEL FETCH VALIDATION & SYNC
-    apiValidateModelFetch(valid => {
-      setModelFetchValid(valid)
-      setModelFetchValidating(false)
-    })
+    if (modelQuery.enabled) {
+      // MODEL FETCH VALIDATION & SYNC
+      apiValidateModelFetch(valid => {
+        setModelFetchValid(valid)
+        setModelFetchValidating(false)
+      })
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -107,15 +112,20 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
 
   // LAYER INTEGRITY CHECK
   useEffect(() => {
-    if (dataKeysValid && modelFetchValid) {
+    if (dataKeysValid && (modelQuery.enabled ? modelFetchValid : true)) {
       apiValidateLayers()
     }
-  }, [modelFetchValid, dataKeysValid])
+  }, [modelFetchValid, dataKeysValid, modelQuery.enabled])
 
-  const valid = dataFetchValid && dataKeysValid && modelFetchValid && modelIntegrityValid
+  let valid = dataFetchValid && dataKeysValid
 
-  const validating =
-    dataFetchValidating || dataKeysValidating || modelFetchValidating || modelIntegrityValidating
+  let validating = dataFetchValidating || dataKeysValidating
+
+  if (modelQuery.enabled) {
+    valid = dataFetchValid && dataKeysValid && modelFetchValid && modelIntegrityValid
+    validating =
+      dataFetchValidating || dataKeysValidating || modelFetchValidating || modelIntegrityValidating
+  }
 
   return (
     <Wrapper>
@@ -138,23 +148,27 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
             errors={errors.dataKeys}
           />
         </ListItem>
-        <ListItem>
-          <ApiQueryValidationItem
-            valid={modelFetchValid}
-            title="Fetching Model"
-            validating={modelFetchValidating}
-            errors={errors.modelFetch}
-          />
-        </ListItem>
-        <ListItem>
-          <ApiQueryValidationItem
-            disabled={dataKeysValidating || modelFetchValidating}
-            valid={modelIntegrityValid}
-            title="Checking Model Integrity"
-            validating={modelIntegrityValidating}
-            errors={errors.modelIntegrity}
-          />
-        </ListItem>
+        {modelQuery.enabled && (
+          <>
+            <ListItem>
+              <ApiQueryValidationItem
+                valid={modelFetchValid}
+                title="Fetching Model"
+                validating={modelFetchValidating}
+                errors={errors.modelFetch}
+              />
+            </ListItem>
+            <ListItem>
+              <ApiQueryValidationItem
+                disabled={dataKeysValidating || modelFetchValidating}
+                valid={modelIntegrityValid}
+                title="Checking Model Integrity"
+                validating={modelIntegrityValidating}
+                errors={errors.modelIntegrity}
+              />
+            </ListItem>
+          </>
+        )}
       </List>
       <ButtonContainer>
         <Button

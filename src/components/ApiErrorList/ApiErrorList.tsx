@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import ApiErrorInterface from '../../types/ApiErrorInterface'
 import getFontSize from '../../utils/getFontSize'
 import MUIcon from '../MUIcon/MUIcon'
+import { uniqueId } from '../../utils/utilities'
 
 const Wrapper = styled.div``
 
@@ -46,7 +47,7 @@ const ApiErrorList = ({ errors, title }: ApiErrorListProps) => {
       {errors.length > 0 && (
         <List>
           {errors.map(error => {
-            return <ListItem>{error.text}</ListItem>
+            return <ListItem key={`ApiErrorList-item-${uniqueId()}`}>{error.text}</ListItem>
           })}
         </List>
       )}

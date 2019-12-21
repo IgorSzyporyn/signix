@@ -1,47 +1,27 @@
-import resetApiLayerErrorStore from '../stores/apiLayerErrorStore/resetApiLayerErrorStore'
-import setApiLayerErrorStore from '../stores/apiLayerErrorStore/setApiLayerErrorStore'
+import { isEmpty } from 'lodash'
 import ApiQueryStore from '../stores/ApiQueryStore'
 import ModelStore from '../stores/ModelStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
+import ApiLayerErrorStoreErrorsInterface from '../types/ApiLayerErrorStoreErrorsInterface'
 import ApiQueryStoreDataInterface from '../types/ApiQueryStoreDataInterface'
 import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
 import ApiQueryStoreModelInterface from '../types/ApiQueryStoreModelInterface'
-import GroupedLayerErrorsInterface from '../types/GroupedLayerErrorsInterface'
 import ModelInterface from '../types/ModelInterface'
 import ModelStoreInterface from '../types/ModelStoreInterface'
-import groupLayerErrorsById from './groupLayerErrorsById'
+import apiSyncValidateLayers from './apiSyncValidateLayers'
 
-const appendErrorToResult = (
-  result: ApiErrorInterface[] | true,
-  error: ApiErrorInterface | ApiErrorInterface[]
-) => {
-  let processedError: ApiErrorInterface[] = []
-
-  if (!Array.isArray(error)) {
-    processedError = [error]
-  } else {
-    processedError = error
-  }
-
-  if (result !== true) {
-    result = [...result, ...processedError]
-  } else {
-    result = processedError
-  }
-
-  return result
-}
-
-const validateLayerModel = (
+const validateModel = (
   model: ModelInterface,
-  apiData: ApiQueryStoreDataInterface,
-  apiModel: ApiQueryStoreModelInterface
+  queryData: ApiQueryStoreDataInterface,
+  queryModel: ApiQueryStoreModelInterface,
+  sourceErrors: ApiLayerErrorStoreErrorsInterface
 ) => {
-  let result: ValidateApiLayerInterface = true
+  const modelErrors: ApiErrorInterface[] = []
+  let errors: ApiLayerErrorStoreErrorsInterface = { ...sourceErrors }
 
   // Check for name in example data
-  if (model.api && model.value && !apiData[model.value]) {
-    result = appendErrorToResult(result, {
+  if (model.api && model.value && !queryData[model.value]) {
+    modelErrors.push({
       id: model.id!,
       text: `API Key "${model.value}" does not exist in results from data API`,
       errorLevel: 'critical',
@@ -52,22 +32,20 @@ const validateLayerModel = (
   // Check if all enumerations matches up
   if (model.enumeration.length > 0) {
     // Go through check for this API key in matching apiModel
-    if (model.value && apiModel[model.value]) {
-      const apiModelKeys = apiModel[model.value]
+    if (model.value && queryModel[model.value]) {
+      const apiModelKeys = queryModel[model.value]
 
       // Make sure apiModel has a key for our enumeration
       model.enumeration.forEach(enumeration => {
         if (!apiModelKeys.includes(enumeration.key)) {
-          const error: ApiErrorInterface = {
+          modelErrors.push({
             id: model.id!,
             text: `The enumeration key "${enumeration.key}" is missing in API model`,
             errorLevel: 'fixable',
             enumKey: enumeration.key,
             errorType: 'unsupportedEnumKey',
             name: model.name || ''
-          }
-
-          result = appendErrorToResult(result, error)
+          })
         }
       })
 
@@ -79,62 +57,54 @@ const validateLayerModel = (
         })
 
         if (!modelKeyUsedInEnumeration) {
-          const error: ApiErrorInterface = {
+          modelErrors.push({
             id: model.id!,
             text: `Missing an enumeration for "${modelKey}" in "${model.value}""`,
             errorLevel: 'fixable',
             enumKey: modelKey,
             errorType: 'missingEnumKey',
             name: model.name || ''
-          }
-
-          result = appendErrorToResult(result, error)
+          })
         }
       })
     } else {
-      const error: ApiErrorInterface = {
+      modelErrors.push({
         id: model.id!,
         text: `Unmatched key (${model.value}) in the API model`,
         errorLevel: 'critical',
         name: model.name || ''
-      }
-
-      result = appendErrorToResult(result, error)
+      })
     }
+  }
+
+  if (modelErrors.length > 0) {
+    errors[model.id!] = modelErrors
   }
 
   if (model.items.length > 0) {
     model.items.forEach(item => {
-      const validateResult = validateLayerModel(item as ModelInterface, apiData, apiModel)
-
-      if (validateResult !== true && validateResult.length > 0) {
-        result = appendErrorToResult(result, validateResult)
-      }
+      errors = validateModel(item as ModelInterface, queryData, queryModel, errors)
     })
   }
 
-  return result
+  return errors
 }
 
-type ValidateApiLayerInterface = ApiErrorInterface[] | true
-
-type Callback = (result: GroupedLayerErrorsInterface | true) => void
-
-const apiValidateLayers = (callback?: Callback) => {
+const apiValidateLayers = (
+  callback?: (valid: boolean, error: ApiLayerErrorStoreErrorsInterface) => void
+) => {
   const { model: rootModel }: ModelStoreInterface = ModelStore.get()
-  const { data: apiData, model: apiModel }: ApiQueryStoreInterface = ApiQueryStore.get()
+  const queryStore: ApiQueryStoreInterface = ApiQueryStore.get()
 
-  let result = validateLayerModel(rootModel, apiData, apiModel)
-  let groupedResult: GroupedLayerErrorsInterface | true = true
+  let valid = false
+  const errors = validateModel(rootModel, queryStore.data, queryStore.model, {})
 
-  if (result === true) {
-    resetApiLayerErrorStore()
-  } else {
-    groupedResult = groupLayerErrorsById(result)
-    setApiLayerErrorStore(groupedResult)
+  if (isEmpty(errors)) {
+    valid = true
   }
 
-  callback && callback(groupedResult)
+  apiSyncValidateLayers(valid, errors)
+  callback && callback(valid, errors)
 }
 
 export default apiValidateLayers

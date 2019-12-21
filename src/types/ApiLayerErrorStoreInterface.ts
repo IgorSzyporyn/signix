@@ -1,7 +1,11 @@
-import ApiErrorInterface from './ApiErrorInterface'
+import ApiLayerErrorStoreErrorsInterface from './ApiLayerErrorStoreErrorsInterface'
 
 type ApiLayerErrorStoreInterface = {
-  [key: string]: ApiErrorInterface[]
+  tested: boolean
+  valid: boolean
+  fixed: boolean
+  attempedFixed: boolean
+  errors: ApiLayerErrorStoreErrorsInterface
 }
 
 export default ApiLayerErrorStoreInterface

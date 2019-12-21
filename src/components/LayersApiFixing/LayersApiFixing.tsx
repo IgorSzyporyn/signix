@@ -2,11 +2,14 @@ import { useStore } from 'laco-react'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
+import updateApiLayerErrorStore from '../../stores/apiLayerErrorStore/updateApiLayerErrorStore'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
+import apiValidateLayers from '../../utils/apiValidateLayers'
 import getFontSize from '../../utils/getFontSize'
 import ApiErrorList from '../ApiErrorList/ApiErrorList'
 import Button from '../Button/Button'
-import apiValidateLayers from '../../utils/apiValidateLayers'
+import apiFixLayers from '../../utils/apiFixLayers'
+import { uniqueId } from '../../utils/utilities'
 
 const Wrapper = styled.div`
   font-size: ${getFontSize('xsmall')};
@@ -35,35 +38,42 @@ const ButtonContainer = styled.div`
 `
 
 type LayersApiFixingProps = {
-  onFixed?: (fixed: boolean) => void
+  onClose?: () => void
 }
 
-const LayersApiFixing = ({ onFixed }: LayersApiFixingProps) => {
-  const errorStore: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+const LayersApiFixing = ({ onClose }: LayersApiFixingProps) => {
+  const { errors, fixed, attempedFixed }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
 
   const [fixing, setFixing] = useState(false)
-  const [tested, setTested] = useState(false)
-  const [isFixed, setIsFixed] = useState(false)
 
   return (
     <Wrapper>
       <Title>Attempt Auto Fix For These Layers</Title>
-      {Object.keys(errorStore).map(modelId => {
-        const errors = errorStore[modelId]
+      {fixed ? (
+        <div>I'm fixed</div>
+      ) : (
+        Object.keys(errors).map((key: string) => {
+          const layerErrors = errors[key]
+          const title = layerErrors.length > 0 ? layerErrors[0].name : ''
 
-        let title = errors.length > 0 ? errors[0].name : ''
-
-        return <ApiErrorList title={title} errors={errors} />
-      })}
+          return (
+            <ApiErrorList
+              key={`LayersApiFixing-error-${uniqueId()}`}
+              title={title}
+              errors={layerErrors}
+            />
+          )
+        })
+      )}
       <ButtonContainer>
-        {!tested && (
+        {!fixed && (
           <Button
             variant="primary"
-            disabled={fixing}
+            disabled={fixing || attempedFixed}
             onClick={() => {
               setFixing(true)
-              apiValidateLayers(valid => {
-                setTested(true)
+              apiFixLayers(() => {
+                setFixing(false)
               })
             }}
           >
@@ -71,13 +81,13 @@ const LayersApiFixing = ({ onFixed }: LayersApiFixingProps) => {
           </Button>
         )}
         <Button
-          variant="primary"
+          variant={fixed ? 'primary' : 'normal'}
           disabled={fixing}
           onClick={() => {
-            onFixed && onFixed(isFixed)
+            onClose && onClose()
           }}
         >
-          OK
+          Close
         </Button>
       </ButtonContainer>
     </Wrapper>

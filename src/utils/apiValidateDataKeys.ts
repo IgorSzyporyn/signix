@@ -5,9 +5,7 @@ import ApiQueryStoreInterface from '../types/ApiQueryStoreInterface'
 import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncDataKeys from './apiSyncDataKeys'
 
-const apiValidateDataKeys = (
-  callback?: (valid: boolean, errors: ApiErrorInterface[] | undefined) => void
-) => {
+const apiValidateDataKeys = (callback?: (valid: boolean, errors: ApiErrorInterface[]) => void) => {
   const { data }: ApiQueryStoreInterface = ApiQueryStore.get()
   const { dataQuery }: ApiStoreInterface = ApiStore.get()
   const { dynamicKey } = dataQuery

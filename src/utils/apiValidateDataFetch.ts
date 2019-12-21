@@ -3,7 +3,7 @@ import ApiErrorInterface from '../types/ApiErrorInterface'
 import ApiStoreInterface from '../types/ApiStoreInterface'
 import apiSyncDataFetch from './apiSyncDataFetch'
 
-type Callback = (valid: boolean, errors: ApiErrorInterface[] | undefined) => void
+type Callback = (valid: boolean, errors: ApiErrorInterface[]) => void
 
 const apiValidateDataFetch = async (callback?: Callback) => {
   const { dataQuery }: ApiStoreInterface = ApiStore.get()
