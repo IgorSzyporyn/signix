@@ -7,7 +7,6 @@ import { useStore } from 'laco-react'
 import React from 'react'
 import styled from 'styled-components'
 import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
-import deleteErrorInApiLayerErrorStore from '../../stores/apiLayerErrorStore/deleteErrorInApiLayerErrorStore'
 import ApiQueryStore from '../../stores/ApiQueryStore'
 import AppStore from '../../stores/AppStore'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
@@ -15,13 +14,13 @@ import updateEditingModelInAppStore from '../../stores/appStore/updateEditingMod
 import updateActiveTabInAppTabStore from '../../stores/appTabStore/updateActiveTabInAppTabStore'
 import LayerStore from '../../stores/LayerStore'
 import updateExpandedInLayerStore from '../../stores/layerStore/updateExpandedInLayerStore'
-import deleteItemInModelStore from '../../stores/model/deleteItemInModelStore'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
 import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import AppStoreInterface from '../../types/AppStoreInterface'
 import LayerStoreInterface from '../../types/LayerStoreInterface'
 import ModelInterface from '../../types/ModelInterface'
+import deleteModel from '../../utils/deleteModel'
 import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
@@ -215,8 +214,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
                 render={p => (
                   <DeleteIcon
                     onClick={() => {
-                      deleteErrorInApiLayerErrorStore(id)
-                      deleteItemInModelStore(id)
+                      deleteModel(id)
                     }}
                     {...p}
                   />

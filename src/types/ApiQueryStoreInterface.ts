@@ -4,10 +4,14 @@ import ApiQueryStoreDataInterface from './ApiQueryStoreDataInterface'
 type ApiQueryStoreInterface = {
   data: ApiQueryStoreDataInterface
   dataKeys: string[]
+  dataTested: boolean
+  dataValid: boolean
   model: ApiQueryStoreModelInterface
-  valid?: boolean
-  validating?: boolean
-  tested?: boolean
+  modelTested: boolean
+  modelValid: boolean
+  valid: boolean
+  validating: boolean
+  tested: boolean
 }
 
 export default ApiQueryStoreInterface

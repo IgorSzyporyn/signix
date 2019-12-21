@@ -2,6 +2,7 @@ import updateApiQueryErrorStore from '../stores/apiQueryErrorStore/updateApiQuer
 import updateDataInApiQueryStore from '../stores/apiQueryStore/updateDataInQueryDataStore'
 import updateDataKeysInApiQueryStore from '../stores/apiQueryStore/updateDataKeysInApiQueryStore'
 import ApiErrorInterface from '../types/ApiErrorInterface'
+import updateApiQueryStore from '../stores/apiQueryStore/updateApiQueryStore'
 
 const apiSyncDataFetch = (valid: boolean, data: object, errors?: ApiErrorInterface[]) => {
   if (valid) {
@@ -11,6 +12,7 @@ const apiSyncDataFetch = (valid: boolean, data: object, errors?: ApiErrorInterfa
     updateDataKeysInApiQueryStore([])
   }
 
+  updateApiQueryStore({ dataTested: true, dataValid: valid })
   updateApiQueryErrorStore({ dataFetch: errors })
 }
 

@@ -23,8 +23,15 @@ const apiExample: AppApiProps = {
   },
   data: {
     data: { name: 'Splynx', rank: 1, quality: 'good' },
+    dataKeys: ['name', 'rank', 'quality'],
+    dataTested: true,
+    dataValid: true,
     model: { rank: [0, 1, 2, 3, 4, 5], quality: ['good', 'poor'] },
-    dataKeys: ['name', 'rank', 'quality']
+    modelTested: true,
+    modelValid: true,
+    tested: true,
+    valid: true,
+    validating: true
   }
 }
 

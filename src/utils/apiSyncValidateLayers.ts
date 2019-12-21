@@ -5,6 +5,8 @@ const apiSyncValidateLayers = (valid: boolean, errors: ApiLayerErrorStoreErrorsI
   updateApiLayerErrorStore({
     valid,
     tested: true,
+    attempedFixed: false,
+    fixed: false,
     errors
   })
 }

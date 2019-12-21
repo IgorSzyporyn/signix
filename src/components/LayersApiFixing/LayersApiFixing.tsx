@@ -2,14 +2,12 @@ import { useStore } from 'laco-react'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
-import updateApiLayerErrorStore from '../../stores/apiLayerErrorStore/updateApiLayerErrorStore'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
-import apiValidateLayers from '../../utils/apiValidateLayers'
+import apiFixLayers from '../../utils/apiFixLayers'
 import getFontSize from '../../utils/getFontSize'
+import { uniqueId } from '../../utils/utilities'
 import ApiErrorList from '../ApiErrorList/ApiErrorList'
 import Button from '../Button/Button'
-import apiFixLayers from '../../utils/apiFixLayers'
-import { uniqueId } from '../../utils/utilities'
 
 const Wrapper = styled.div`
   font-size: ${getFontSize('xsmall')};

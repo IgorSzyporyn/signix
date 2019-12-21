@@ -3,20 +3,17 @@ import { useStore } from 'laco-react'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
+import ApiQueryStore from '../../stores/ApiQueryStore'
+import ApiStore from '../../stores/ApiStore'
+import checkForApiItemsInModelStore from '../../stores/model/checkForApiItemsInModelStore'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
+import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
 import getFontSize from '../../utils/getFontSize'
 import Button from '../Button/Button'
 import LayersApiFixing from '../LayersApiFixing/LayersApiFixing'
 import Modal from '../Modal/Modal'
 import MUIcon from '../MUIcon/MUIcon'
-import ApiStoreInterface from '../../types/ApiStoreInterface'
-import ApiStore from '../../stores/ApiStore'
-import ApiQueryErrorStoreInterface from '../../types/ApiQueryErrorStoreInterface'
-import ApiQueryErrorStore from '../../stores/ApiQueryErrorStore'
-import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
-import ApiQueryStore from '../../stores/ApiQueryStore'
-import ModelStoreInterface from '../../types/ModelStoreInterface'
-import checkForApiItemsInModelStore from '../../stores/model/checkForApiItemsInModelStore'
 
 const Wrapper = styled.div`
   padding: 0 var(--spacing-medium);
@@ -47,6 +44,7 @@ const LayersApiFixButton = (props: LayersApiFixButtonProps) => {
   const [fixing, setFixing] = useState(false)
 
   const hasApiItems = checkForApiItemsInModelStore()
+  console.log(hasApiItems, (!apiEnabled && !hasApiItems) || !hasApiItems)
 
   return (
     <Wrapper hidden={(!apiEnabled && !hasApiItems) || !hasApiItems}>
