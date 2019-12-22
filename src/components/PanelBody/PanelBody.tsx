@@ -12,19 +12,15 @@ const Wrapper = styled.main<PanelBodyProps>`
   & > * {
     flex-grow: 1;
   }
-
-  padding: ${({ noPadding }) =>
-    noPadding ? '0' : '0 var(--spacing-medium) var(--spacing-medium)'};
 `
 
 type PanelBodyProps = {
   children?: React.ReactNode
-  noPadding?: boolean
 }
 
-const PanelBody = ({ children, noPadding }: PanelBodyProps) => {
+const PanelBody = ({ children }: PanelBodyProps) => {
   return (
-    <Wrapper noPadding={noPadding}>
+    <Wrapper>
       <Scrollbars
         autoHide
         renderThumbVertical={ScrollbarThumb}

@@ -62,7 +62,7 @@ const Properties = () => {
         }
       />
       {activeModel ? (
-        <PanelBody noPadding>
+        <PanelBody>
           <PanelBodyInner>
             <PropertiesItem model={activeModel} />
           </PanelBodyInner>

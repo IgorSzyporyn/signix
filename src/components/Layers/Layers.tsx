@@ -52,7 +52,7 @@ const Layers = () => {
           </>
         }
       />
-      <PanelBody noPadding>
+      <PanelBody>
         <LayersApiFixButton />
         <PanelBodyInner>
           <LayerItem model={model} />

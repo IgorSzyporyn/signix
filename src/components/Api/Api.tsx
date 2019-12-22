@@ -44,7 +44,7 @@ const Api = () => {
           />
         }
       />
-      <PanelBody noPadding>
+      <PanelBody>
         <PanelBodyInner>
           <FieldCheckbox
             inline

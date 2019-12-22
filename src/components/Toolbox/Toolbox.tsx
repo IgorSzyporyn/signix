@@ -86,7 +86,7 @@ const Toolbox = (props: ToolboxProps) => {
           </>
         }
       />
-      <PanelBody noPadding>
+      <PanelBody>
         <ToolboxItems view={view as ToolboxViewTypes} />
       </PanelBody>
     </Panel>
