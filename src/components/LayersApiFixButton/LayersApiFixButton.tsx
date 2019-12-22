@@ -15,10 +15,9 @@ import LayersApiFixing from '../LayersApiFixing/LayersApiFixing'
 import Modal from '../Modal/Modal'
 import MUIcon from '../MUIcon/MUIcon'
 
-const Wrapper = styled.div`
+const Inner = styled.div`
   padding: 0 var(--spacing-medium);
   margin: var(--spacing-small) 0 var(--spacing);
-  border-radius: 0.5rem;
 
   & > p:first-of-type {
     min-height: 3.2rem;
@@ -27,28 +26,24 @@ const Wrapper = styled.div`
   }
 `
 
-const MainContainer = styled.div``
-
 const Text = styled.p`
   font-size: ${getFontSize('xsmall')};
   margin-bottom: var(--gutter);
 `
 
-type LayersApiFixButtonProps = {}
-
-const LayersApiFixButton = (props: LayersApiFixButtonProps) => {
+const LayersApiFixButton = () => {
   const { enabled: apiEnabled }: ApiStoreInterface = useStore(ApiStore)
   const { tested: apiTested }: ApiQueryStoreInterface = useStore(ApiQueryStore)
-  const { valid }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
+  const { valid: apiLayersValid }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
 
   const [fixing, setFixing] = useState(false)
 
   const hasApiItems = checkForApiItemsInModelStore()
-  console.log(hasApiItems, (!apiEnabled && !hasApiItems) || !hasApiItems)
+  const hideInner = apiEnabled ? apiLayersValid && apiTested : false
 
   return (
-    <Wrapper hidden={(!apiEnabled && !hasApiItems) || !hasApiItems}>
-      <MainContainer hidden={valid && apiTested}>
+    <div hidden={!hasApiItems}>
+      <Inner hidden={hideInner}>
         <MUIcon
           size="large"
           rootStyle={{
@@ -89,8 +84,7 @@ const LayersApiFixButton = (props: LayersApiFixButtonProps) => {
             AutoFix
           </Button>
         )}
-      </MainContainer>
-
+      </Inner>
       {fixing && (
         <Modal>
           <LayersApiFixing
@@ -100,7 +94,7 @@ const LayersApiFixButton = (props: LayersApiFixButtonProps) => {
           />
         </Modal>
       )}
-    </Wrapper>
+    </div>
   )
 }
 

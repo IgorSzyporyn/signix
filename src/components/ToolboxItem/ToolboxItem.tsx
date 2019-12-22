@@ -14,6 +14,7 @@ import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModel
 import AppStoreInterface from '../../types/AppStoreInterface'
 import AppStore from '../../stores/AppStore'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
+import createModelFromTemplate from '../../utils/createModelFromTemplate'
 
 type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
 
@@ -43,7 +44,8 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
     end: (item: { name: string } | undefined, monitor: DragSourceMonitor) => {
       const dropResult = monitor.getDropResult()
       if (item && dropResult) {
-        addItemToModelStore(modelTemplate, dropResult.id)
+        const model = createModelFromTemplate(modelTemplate)
+        addItemToModelStore(model, dropResult.id)
       }
     },
     collect: monitor => ({
@@ -57,23 +59,25 @@ const ToolboxItem = ({ type, view, title, subtitle }: ToolboxItemProps) => {
       view={view}
       isDragging={isDragging}
       onDoubleClick={() => {
+        const model = createModelFromTemplate(modelTemplate)
+
         if (activeModelId) {
           const activeModel = getModelById(activeModelId, rootModel)
 
           if (activeModel && activeModel.id) {
             if (activeModel.group) {
-              addItemToModelStore(modelTemplate, activeModel.id)
+              addItemToModelStore(model, activeModel.id)
             } else if (activeModel.parentId) {
               const activeParentModel = getModelById(activeModel.parentId, rootModel)
 
               if (activeParentModel && activeParentModel.id && activeParentModel.group) {
-                addItemToModelStore(modelTemplate, activeParentModel.id)
+                addItemToModelStore(model, activeParentModel.id)
               }
             }
           }
         } else {
           if (rootModel.id) {
-            addItemToModelStore(modelTemplate, rootModel.id)
+            addItemToModelStore(model, rootModel.id)
           }
         }
       }}

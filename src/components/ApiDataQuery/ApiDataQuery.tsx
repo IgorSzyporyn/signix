@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash'
 import React from 'react'
 import styled from 'styled-components'
 import ApiQueryStore from '../../stores/ApiQueryStore'
-import updateTestedInApiQueryStore from '../../stores/apiQueryStore/updateTestedInApiQueryStore'
+import updateApiQueryStore from '../../stores/apiQueryStore/updateApiQueryStore'
 import ApiStore from '../../stores/ApiStore'
 import updateApiStore from '../../stores/apiStore/updateApiStore'
 import updateExpandedInApiStore from '../../stores/apiStore/updateExpandedInApiStore'
@@ -14,7 +14,6 @@ import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
 import FieldInput from '../FieldInput/FieldInput'
 import JsonViewer from '../JsonViewer/JsonViewer'
 import PanelExpandableItem from '../PanelExpandableItem/PanelExpandableItem'
-import updateApiQueryStore from '../../stores/apiQueryStore/updateApiQueryStore'
 
 const InvalidText = styled.div`
   font-size: ${getFontSize('xsmall')};

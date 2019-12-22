@@ -112,10 +112,29 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
 
   // LAYER INTEGRITY CHECK
   useEffect(() => {
-    if (dataKeysValid && (modelQuery.enabled ? modelFetchValid : true)) {
-      apiValidateLayers()
+    if (modelQuery.enabled) {
+      if (
+        !dataFetchValidating &&
+        !dataKeysValidating &&
+        !modelFetchValidating &&
+        !modelIntegrityValidating
+      ) {
+        console.log('A')
+        apiValidateLayers()
+      }
+    } else {
+      if (!dataFetchValidating && !dataKeysValidating) {
+        console.log('B')
+        apiValidateLayers()
+      }
     }
-  }, [modelFetchValid, dataKeysValid, modelQuery.enabled])
+  }, [
+    modelQuery.enabled,
+    dataFetchValidating,
+    dataKeysValidating,
+    modelFetchValidating,
+    modelIntegrityValidating
+  ])
 
   let valid = dataFetchValid && dataKeysValid
 

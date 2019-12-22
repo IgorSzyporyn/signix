@@ -1,11 +1,10 @@
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import { useStore } from 'laco-react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import ApiStore from '../../stores/ApiStore'
 import updateAllExpandedInApiStore from '../../stores/apiStore/updateAllExpandedInApiStore'
-import updateEnabledInApiStore from '../../stores/apiStore/updateEnabledInApiStore'
-import setDisabledForApiItemsInModelStore from '../../stores/model/setDisabledForApiItemsInModelStore'
+import updateApiEnabled from '../../utils/updateApiEnabled'
 import ApiDataQuery from '../ApiDataQuery/ApiDataQuery'
 import ApiModelQuery from '../ApiModelQuery/ApiModelQuery'
 import ApiValidationButton from '../ApiValidationButton/ApiValidationButton'
@@ -23,10 +22,6 @@ const PanelBodyInner = styled.div`
 
 const Api = () => {
   const { enabled } = useStore(ApiStore)
-
-  useEffect(() => {
-    setDisabledForApiItemsInModelStore(!enabled)
-  }, [enabled])
 
   return (
     <Panel>
@@ -56,8 +51,7 @@ const Api = () => {
             label="Enable API"
             checked={enabled}
             onChange={e => {
-              updateEnabledInApiStore(e.currentTarget.checked)
-              updateAllExpandedInApiStore(true)
+              updateApiEnabled(e.currentTarget.checked)
             }}
           />
           <div hidden={!enabled}>
