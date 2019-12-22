@@ -119,12 +119,10 @@ const ApiQueryValidation = ({ onValidated }: ApiQueryValidationProps) => {
         !modelFetchValidating &&
         !modelIntegrityValidating
       ) {
-        console.log('A')
         apiValidateLayers()
       }
     } else {
       if (!dataFetchValidating && !dataKeysValidating) {
-        console.log('B')
         apiValidateLayers()
       }
     }

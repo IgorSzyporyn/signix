@@ -1,11 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
 import withField, { WithFieldProps } from '../../hoc/withField'
 import ApiEnumerationInterface from '../../types/ApiEnumerationInterface'
 import { uniqueId } from '../../utils/utilities'
 import FieldInput from '../FieldInput/FieldInput'
-
-const Wrapper = styled.div``
 
 type FieldEnumerationProps = {
   enumeration?: ApiEnumerationInterface[]
@@ -13,7 +10,7 @@ type FieldEnumerationProps = {
 
 const FieldEnumeration = ({ enumeration = [], ...props }: FieldEnumerationProps) => {
   return (
-    <Wrapper>
+    <div>
       {enumeration.map(item => {
         let Item: React.ReactNode = null
 
@@ -23,7 +20,7 @@ const FieldEnumeration = ({ enumeration = [], ...props }: FieldEnumerationProps)
               <FieldInput
                 key={`FieldEnumeration-${item.type}-${uniqueId()}`}
                 value={item.value}
-                label={`Value for key - "${item.key}"`}
+                label={`Value for "${item.key}"`}
               />
             )
             break
@@ -32,7 +29,7 @@ const FieldEnumeration = ({ enumeration = [], ...props }: FieldEnumerationProps)
               <FieldInput
                 key={`FieldEnumeration-${item.type}-${uniqueId()}`}
                 value={item.value}
-                label={`Value for key - "${item.key}"`}
+                label={`Value for "${item.key}"`}
               />
             )
             break
@@ -42,7 +39,7 @@ const FieldEnumeration = ({ enumeration = [], ...props }: FieldEnumerationProps)
 
         return Item
       })}
-    </Wrapper>
+    </div>
   )
 }
 

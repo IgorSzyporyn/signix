@@ -4,6 +4,10 @@ import ToolboxItemProps from '../../types/ToolboxItemProps'
 import ToolboxViewTypes from '../../types/ToolboxViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
 
+const Wrapper = styled.div`
+  padding: 0 var(--spacing-medium) var(--spacing-medium);
+`
+
 const ListContainer = styled.ul`
   list-style: none;
   margin: 0.6rem 0 0;
@@ -98,7 +102,7 @@ type ToolboxItemsProps = {
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {
   return (
-    <div>
+    <Wrapper>
       {view === 'list' && (
         <ListContainer>
           {toolboxItems.map(toolboxItem => {
@@ -121,7 +125,7 @@ const ToolboxItems = ({ view }: ToolboxItemsProps) => {
           })}
         </GridContainer>
       )}
-    </div>
+    </Wrapper>
   )
 }
 

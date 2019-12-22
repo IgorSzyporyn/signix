@@ -33,13 +33,14 @@ const Text = styled.p`
 
 const LayersApiFixButton = () => {
   const { enabled: apiEnabled }: ApiStoreInterface = useStore(ApiStore)
-  const { tested: apiTested }: ApiQueryStoreInterface = useStore(ApiQueryStore)
+  const { tested: apiTested, valid: apiValid }: ApiQueryStoreInterface = useStore(ApiQueryStore)
   const { valid: apiLayersValid }: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
 
   const [fixing, setFixing] = useState(false)
 
+  const hideInner = apiEnabled ? apiLayersValid && apiTested && apiValid : false
   const hasApiItems = checkForApiItemsInModelStore()
-  const hideInner = apiEnabled ? apiLayersValid && apiTested : false
+  const hasApiErrors = !apiEnabled || !apiTested || !apiValid
 
   return (
     <div hidden={!hasApiItems}>
@@ -55,33 +56,27 @@ const LayersApiFixButton = () => {
         />
         {apiEnabled ? (
           <>
-            {apiTested ? (
+            {apiTested && apiValid ? (
               <>
-                <Text>One or more of your layers has a problem with the API data or model.</Text>
+                <Text>One or more of your layers has a problem with the API data or model</Text>
                 <Text>Try to auto fix by clicking button.</Text>
               </>
             ) : (
-              <>
-                <Text>
-                  API needs validation, all API functionality in layers has been disabled.
-                </Text>
-              </>
+              <Text>API needs validation, all API functionality in layers has been disabled</Text>
             )}
           </>
         ) : (
-          <>
-            <Text>API is disabled, all API layers has been disabled.</Text>
-          </>
+          <Text>API is disabled, all API layers has been disabled.</Text>
         )}
 
-        {apiTested && apiEnabled && (
+        {!hasApiErrors && (
           <Button
             variant="primary"
             onClick={() => {
               setFixing(true)
             }}
           >
-            AutoFix
+            Auto Fix
           </Button>
         )}
       </Inner>

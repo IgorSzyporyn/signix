@@ -45,6 +45,10 @@ h6 {
   margin: 0;
 }
 
+p {
+  line-height: 1.4em;
+}
+
 :root {
   --quarter-gutter: 0.2rem;
   --half-gutter: 0.4rem;

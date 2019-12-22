@@ -1,3 +1,8 @@
-type ApiErrorTypes = 'missingEnumKey' | 'unsupportedEnumKey' | 'api'
+type ApiErrorTypes =
+  | 'missingEnumKeyFromModel'
+  | 'enumKeyNotInModel'
+  | 'apiKeyNotInData'
+  | 'apiKeyNotInModel'
+  | 'api'
 
 export default ApiErrorTypes

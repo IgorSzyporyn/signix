@@ -46,7 +46,7 @@ const LayersApiFixing = ({ onClose }: LayersApiFixingProps) => {
 
   return (
     <Wrapper>
-      <Title>Attempt Auto Fix For These Layers</Title>
+      <Title>Auto Fix Layer API Problems</Title>
       {fixed ? (
         <div>I'm fixed</div>
       ) : (
@@ -75,7 +75,7 @@ const LayersApiFixing = ({ onClose }: LayersApiFixingProps) => {
               })
             }}
           >
-            Attempt AutoFix
+            Auto Fix
           </Button>
         )}
         <Button

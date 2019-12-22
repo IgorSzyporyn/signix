@@ -1,22 +1,25 @@
 import { useStore } from 'laco-react'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
 import ApiQueryStore from '../../stores/ApiQueryStore'
-import FieldOptionsOptionType from '../../types/FieldOptionsOptionType'
-import ModelInterface from '../../types/ModelInterface'
-import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
-import FieldEnumeration from '../FieldEnumeration/FieldEnumeration'
-import FieldOptions from '../FieldOptions/FieldOptions'
-import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
-import ModelCoreTypes from '../../types/ModelCoreTypes'
+import ApiStore from '../../stores/ApiStore'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ApiEnumerationInterface from '../../types/ApiEnumerationInterface'
-import WarningIcon from '@material-ui/icons/Warning'
-import Button from '../Button/Button'
-import styled from 'styled-components'
-import ApiQueryStoreModelInterface from '../../types/ApiQueryStoreModelInterface'
 import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface'
-import ApiLayerErrorStore from '../../stores/ApiLayerErrorStore'
-import MUIcon from '../MUIcon/MUIcon'
+import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
+import ApiQueryStoreModelInterface from '../../types/ApiQueryStoreModelInterface'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
+import FieldOptionsOptionType from '../../types/FieldOptionsOptionType'
+import ModelCoreTypes from '../../types/ModelCoreTypes'
+import ModelInterface from '../../types/ModelInterface'
+import apiFixLayer from '../../utils/apiFixLayer'
+import apiValidateLayers from '../../utils/apiValidateLayers'
+import FieldOptions from '../FieldOptions/FieldOptions'
+import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
+import PropertyApiKeyConfirm from '../PropertyApiKeyConfirm/PropertyApiKeyConfirm'
+import PropertyApiKeyEnumerations from '../PropertyApiKeyEnumerations/PropertyApiKeyEnumerations'
+import PropertyApiKeyError from '../PropertyApiKeyError/PropertyApiKeyError'
+import PropertyApiKeyTitle from '../PropertyApiKeyTitle/PropertyApiKeyTitle'
 
 const createEnum = (
   dataStoreModel: ApiQueryStoreModelInterface,
@@ -39,34 +42,6 @@ const createEnum = (
   return enumeration
 }
 
-const TitleContainer = styled.div`
-  display: flex;
-`
-
-const ConfirmContainer = styled.div`
-  margin-bottom: var(--spacing);
-`
-
-const ConfirmTitle = styled.h5`
-  margin-bottom: var(--gutter);
-`
-
-const ConfirmButtons = styled.div`
-  & > *:first-child {
-    margin-right: var(--gutter);
-  }
-`
-
-const ErrorContainer = styled.div`
-  margin-bottom: var(--spacing);
-`
-
-const EnumerationContainer = styled.div``
-
-const EnumerationTitle = styled.h5`
-  margin-bottom: var(--gutter);
-`
-
 type PropertyApiKeyEnumerationState = {
   confirmChange: boolean
   confirmChangeType: 'proceed' | 'cancel' | null
@@ -82,10 +57,13 @@ type PropertyApiKeyQueryProps = {
 
 const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
   const errorStore: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
-  const { dataKeys, model: dataStoreModel }: ApiQueryStoreInterface = useStore(ApiQueryStore)
-
-  const errors = errorStore.errors[model.id!]
-
+  const { enabled: apiEnabled }: ApiStoreInterface = useStore(ApiStore)
+  const {
+    dataKeys,
+    model: dataStoreModel,
+    valid: apiValid,
+    tested: apiTested
+  }: ApiQueryStoreInterface = useStore(ApiQueryStore)
   const [enumerationState, setEnumerationState] = useState<PropertyApiKeyEnumerationState>({
     confirmChangeType: null,
     confirmChange: false,
@@ -114,6 +92,7 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
           confirmChangeType: null,
           confirmChange: false
         })
+        apiValidateLayers()
       } else if (confirmChangeType === 'cancel') {
         setEnumerationState({
           ...enumerationState,
@@ -128,62 +107,48 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enumerationState.confirmChangeType])
 
+  const errors = errorStore.errors[model.id!]
+  const apiErrors = !apiEnabled || !apiValid || !apiTested
+  const layerErrors = errors && errors.length > 0
+
   return (
-    <PropertiesPanel
-      title={
-        <TitleContainer style={{ position: 'relative' }}>
-          {errors && errors.length > 0 && (
-            <MUIcon
-              size="small"
-              style={{
-                color: 'var(--color-warning)',
-                marginRight: 'var(--gutter)'
-              }}
-              render={p => <WarningIcon {...p} />}
-            />
-          )}
-          <div>API Connection</div>
-        </TitleContainer>
-      }
-      type="apiKey"
-    >
-      <ConfirmContainer hidden={!enumerationState.confirmChange}>
-        <ConfirmTitle>Your existing enumeration will be wiped</ConfirmTitle>
-        <ConfirmButtons>
-          <Button
-            variant="primary"
-            onClick={() => {
-              setEnumerationState({
-                ...enumerationState,
-                confirmChangeType: 'proceed'
-              })
-            }}
-          >
-            Proceed
-          </Button>
-          <Button
-            onClick={() => {
-              setEnumerationState({
-                ...enumerationState,
-                confirmChangeType: 'cancel'
-              })
-            }}
-          >
-            Cancel
-          </Button>
-        </ConfirmButtons>
-      </ConfirmContainer>
-      <ErrorContainer hidden={!(errors && errors.length > 0)}>errors here</ErrorContainer>
+    <PropertiesPanel title={<PropertyApiKeyTitle errors={errors} />} type="apiKey">
+      <PropertyApiKeyConfirm
+        hidden={!enumerationState.confirmChange}
+        onProceed={() => {
+          setEnumerationState({
+            ...enumerationState,
+            confirmChangeType: 'proceed'
+          })
+        }}
+        onCancel={() => {
+          setEnumerationState({
+            ...enumerationState,
+            confirmChangeType: 'cancel'
+          })
+        }}
+      />
+      <PropertyApiKeyError
+        hidden={enumerationState.confirmChange}
+        errors={errors}
+        layerErrors={layerErrors}
+        apiErrors={apiErrors}
+        onSyncClick={() => {
+          apiFixLayer(model.id!)
+        }}
+      />
       <FieldOptions
         id={`${enumerationState._stupidlyCreatedIdToForceRender}`}
-        hidden={enumerationState.confirmChange}
-        label="Pick API key for value"
+        hidden={enumerationState.confirmChange || apiErrors}
+        label="Select API key"
         value={model.value}
         options={dataKeys as FieldOptionsOptionType[]}
         onSelection={value => {
           const enumeration = createEnum(dataStoreModel, type, value)
 
           if (model.enumeration.length > 0) {
+            // UseState will invoke confirm key and UseEffect will
+            // run updateItemInModelStore and apiValidateLayers
             setEnumerationState({
               ...enumerationState,
               confirmChange: true,
@@ -192,15 +157,16 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
             })
           } else {
             updateItemInModelStore({ ...model, enumeration, value })
+            apiValidateLayers()
           }
         }}
       />
-      {model.enumeration.length > 0 && (
-        <EnumerationContainer hidden={enumerationState.confirmChange}>
-          <EnumerationTitle>API Key Enumerations</EnumerationTitle>
-          <FieldEnumeration enumeration={model.enumeration} />
-        </EnumerationContainer>
-      )}
+      <PropertyApiKeyEnumerations
+        hidden={enumerationState.confirmChange || apiErrors}
+        layerErrors={layerErrors}
+        apiErrors={apiErrors}
+        enumeration={model.enumeration}
+      />
     </PropertiesPanel>
   )
 }

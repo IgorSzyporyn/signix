@@ -6,8 +6,6 @@ import getFontSize from '../../utils/getFontSize'
 import MUIcon from '../MUIcon/MUIcon'
 import { uniqueId } from '../../utils/utilities'
 
-const Wrapper = styled.div``
-
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -33,7 +31,7 @@ type ApiErrorListProps = {
 
 const ApiErrorList = ({ errors, title }: ApiErrorListProps) => {
   return (
-    <Wrapper>
+    <div>
       {title && (
         <TitleContainer>
           <MUIcon
@@ -51,7 +49,7 @@ const ApiErrorList = ({ errors, title }: ApiErrorListProps) => {
           })}
         </List>
       )}
-    </Wrapper>
+    </div>
   )
 }
 

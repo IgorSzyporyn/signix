@@ -16,35 +16,38 @@ const validateModel = (
   queryModel: ApiQueryStoreModelInterface,
   sourceErrors: ApiLayerErrorStoreErrorsInterface
 ) => {
+  const apiKey = model.value || ''
+  const modelName = model.name || ''
   const modelErrors: ApiErrorInterface[] = []
   let errors: ApiLayerErrorStoreErrorsInterface = { ...sourceErrors }
 
   // Check for name in example data
-  if (model.api && model.value && !queryData[model.value]) {
+  if (model.api && apiKey && !queryData[apiKey]) {
     modelErrors.push({
       id: model.id!,
-      text: `API Key "${model.value}" does not exist in results from data API`,
+      text: `Used API key "${apiKey}" is not found in API Data`,
       errorLevel: 'critical',
-      name: model.name || ''
+      name: modelName,
+      errorType: 'apiKeyNotInData'
     })
   }
 
-  // Check if all enumerations matches up
+  // Check if all existing enumerations matches up
   if (model.enumeration.length > 0) {
     // Go through check for this API key in matching apiModel
-    if (model.value && queryModel[model.value]) {
-      const apiModelKeys = queryModel[model.value]
+    if (apiKey && queryModel[apiKey]) {
+      const apiModelKeys = queryModel[apiKey]
 
       // Make sure apiModel has a key for our enumeration
       model.enumeration.forEach(enumeration => {
         if (!apiModelKeys.includes(enumeration.key)) {
           modelErrors.push({
             id: model.id!,
-            text: `The enumeration key "${enumeration.key}" is missing in API model`,
+            text: `Enumeration key "${enumeration.key}" for "${apiKey}" is not found in API Model`,
             errorLevel: 'fixable',
             enumKey: enumeration.key,
-            errorType: 'unsupportedEnumKey',
-            name: model.name || ''
+            errorType: 'enumKeyNotInModel',
+            name: modelName
           })
         }
       })
@@ -52,27 +55,44 @@ const validateModel = (
       // Check if apiModel has a key we do not have in enumeration
       apiModelKeys.forEach(modelKey => {
         // Se if modelKey is use in enumeration
-        const modelKeyUsedInEnumeration = model.enumeration.find(enumeration => {
-          return enumeration.key === modelKey
-        })
+        const modelKeyUsedInEnumeration = model.enumeration.find(
+          enumeration => enumeration.key === modelKey
+        )
 
         if (!modelKeyUsedInEnumeration) {
           modelErrors.push({
             id: model.id!,
-            text: `Missing an enumeration for "${modelKey}" in "${model.value}""`,
+            text: `API Model has an enumeration key "${modelKey}" not used`,
             errorLevel: 'fixable',
             enumKey: modelKey,
-            errorType: 'missingEnumKey',
-            name: model.name || ''
+            errorType: 'missingEnumKeyFromModel',
+            name: modelName
           })
         }
       })
     } else {
       modelErrors.push({
         id: model.id!,
-        text: `Unmatched key (${model.value}) in the API model`,
-        errorLevel: 'critical',
-        name: model.name || ''
+        text: `API key "${apiKey}" uses enumerations not found in API Model`,
+        errorLevel: 'fixable',
+        errorType: 'apiKeyNotInModel',
+        name: modelName
+      })
+    }
+  } else {
+    // API Model may have enumerations while model has none
+    const queryModelEnums = queryModel[apiKey]
+
+    if (queryModelEnums && queryModelEnums.length > 0) {
+      queryModelEnums.forEach(queryModelEnum => {
+        modelErrors.push({
+          id: model.id!,
+          text: `API Model has an enumeration key "${queryModelEnum}" not used`,
+          errorLevel: 'fixable',
+          enumKey: queryModelEnum,
+          errorType: 'missingEnumKeyFromModel',
+          name: modelName
+        })
       })
     }
   }
