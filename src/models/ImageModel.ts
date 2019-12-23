@@ -4,11 +4,7 @@ import CoreModel from './CoreModel'
 const ImageModel: ModelInterface = {
   ...CoreModel,
   type: 'image',
-  coreType: 'image',
-  dimension: {
-    ...CoreModel.dimension,
-    disabled: true
-  }
+  coreType: 'image'
 }
 
 export default ImageModel

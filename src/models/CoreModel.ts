@@ -11,7 +11,7 @@ const CoreModel: ModelInterface = {
     right: 0
   },
   dimension: {
-    disabled: false,
+    disabled: true,
     width: 0,
     height: 0
   },

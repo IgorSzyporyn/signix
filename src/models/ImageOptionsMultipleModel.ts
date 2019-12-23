@@ -3,8 +3,7 @@ import ImageModel from './ImageModel'
 
 const ImageOptionsMultipleModel: ModelInterface = {
   ...ImageModel,
-  type: 'imageoptionsmultiple',
-  options: []
+  type: 'imageoptionsmultiple'
 }
 
 export default ImageOptionsMultipleModel
