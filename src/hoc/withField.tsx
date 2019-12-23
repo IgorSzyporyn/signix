@@ -107,6 +107,7 @@ const Title = styled.div`
 export interface WithFieldProps {
   style?: React.CSSProperties
   labelStyle?: React.CSSProperties
+  rootStyle?: React.CSSProperties
   active?: 'true' | 'false'
   disabled?: boolean
   hidden?: boolean
@@ -121,7 +122,7 @@ export interface WithFieldProps {
 const withField = <P extends object>(Component: React.ComponentType<P>) =>
   class WithFieldHOC extends React.Component<P & WithFieldProps> {
     render() {
-      const { labelStyle, nomargin, id, name, label, inline, ...rest } = this.props
+      const { labelStyle, rootStyle, nomargin, id, name, label, inline, ...rest } = this.props
       const safeId = uniqueId()
 
       const title = rest.title || label || ''
@@ -133,6 +134,7 @@ const withField = <P extends object>(Component: React.ComponentType<P>) =>
           disabled={rest.disabled}
           hidden={rest.hidden}
           title={title}
+          style={rootStyle || {}}
         >
           {label ? (
             <Label htmlFor={id || safeId}>

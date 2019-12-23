@@ -6,7 +6,6 @@ import AppStoreInterface from '../../types/AppStoreInterface'
 import ModelInterface from '../../types/ModelInterface'
 import CanvasBackground from '../CanvasBackground/CanvasBackground'
 import CanvasGroup from '../CanvasGroup/CanvasGroup'
-import CanvasImageDynamic from '../CanvasImageDynamic/CanvasImageDynamic'
 import CanvasImageOptions from '../CanvasImageOptions/CanvasImageOptions'
 import CanvasImageOptionsMultiple from '../CanvasImageOptionsMultiple/CanvasImageOptionsMultiple'
 import CanvasImageStatic from '../CanvasImageStatic/CanvasImageStatic'
@@ -53,9 +52,6 @@ const getComponent = ({ model, style, ...props }: CanvasItemProps, activeModelId
     case 'image':
     case 'imagestatic':
       Component = <CanvasImageStatic {...canvasProps} />
-      break
-    case 'imagedynamic':
-      Component = <CanvasImageDynamic {...canvasProps} />
       break
     case 'imageoptions':
       Component = <CanvasImageOptions {...canvasProps} />

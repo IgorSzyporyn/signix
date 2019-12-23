@@ -5,7 +5,7 @@ import withField from '../../hoc/withField'
 import FieldOptionsOptionType from '../../types/FieldOptionsOptionType'
 import getFontSize from '../../utils/getFontSize'
 
-const getOptionsType = (options: FieldOptionsOptionType[]) => {
+const getOptionsType = (options: FieldOptionsOptionType) => {
   let optionsType: OptionsType = 'object'
 
   if (options.length) {
@@ -37,12 +37,12 @@ const OptionsListItem = styled.li`
 
 type OptionsType = 'simple' | 'object'
 
-type FieldOptionsProps = {
+type FieldOptionsProps = InputHTMLAttributes<HTMLInputElement> & {
   value?: string
-  options: FieldOptionsOptionType[]
+  options: FieldOptionsOptionType
   searchable?: boolean
-  onSelection?: (value?: string) => void
-} & InputHTMLAttributes<HTMLInputElement>
+  onSelectChange?: (value?: string) => void
+}
 
 const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProps) => {
   const optionsType = getOptionsType(options)
@@ -51,7 +51,7 @@ const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProp
   return (
     <Downshift
       selectedItem={value}
-      onChange={(selection?: string) => props.onSelection && props.onSelection(selection)}
+      onChange={(selection?: string) => props.onSelectChange && props.onSelectChange(selection)}
       itemToString={item => (item ? (simpleType ? item : item.value) : '')}
     >
       {({
@@ -78,10 +78,12 @@ const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProp
             <OptionsList isOpen={isOpen} {...getMenuProps()}>
               {isOpen
                 ? options.map((item, index) => {
+                    const key = typeof item === 'string' ? item : item.value
+
                     return (
                       <OptionsListItem
                         {...getItemProps({
-                          key: simpleType ? item : item.value,
+                          key,
                           index,
                           item,
                           style: {
@@ -96,7 +98,7 @@ const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProp
                           }
                         })}
                       >
-                        {simpleType ? item : item.value}
+                        {key}
                       </OptionsListItem>
                     )
                   })
@@ -108,8 +110,5 @@ const FieldOptions = ({ value, options, searchable, ...props }: FieldOptionsProp
     </Downshift>
   )
 }
-
-FieldOptions.displayName = 'FieldOptions'
-FieldOptions.defaultProps = {}
 
 export default withField(FieldOptions)

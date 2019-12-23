@@ -2,16 +2,16 @@ import React from 'react'
 import PropertiesPropTypes from '../../types/PropertiesPropTypes'
 import PropertyColor from '../PropertyColor/PropertyColor'
 import PropertyFont from '../PropertyFont/PropertyFont'
+import PropertyOptions from '../PropertyOptions/PropertyOptions'
 import PropertyPosition from '../PropertyPosition/PropertyPosition'
-import PropertyTextStatic from '../PropertyTextStatic/PropertyTextStatic'
 
-const PropertiesTextStatic = (props: PropertiesPropTypes) => (
+const PropertiesTextOptions = (props: PropertiesPropTypes) => (
   <>
     <PropertyPosition {...props} />
     <PropertyColor {...props} />
     <PropertyFont {...props} />
-    <PropertyTextStatic {...props} />
+    <PropertyOptions {...props} />
   </>
 )
 
-export default PropertiesTextStatic
+export default PropertiesTextOptions

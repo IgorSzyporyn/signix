@@ -1,20 +1,20 @@
 import React from 'react'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
-import FieldInput from '../FieldInput/FieldInput'
+import FieldImage from '../FieldImage/FieldImage'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 
-type PropertyTextStaticProps = {
+type PropertyImageStaticProps = {
   model: ModelInterface
 }
 
-const PropertyTextStatic = ({ model }: PropertyTextStaticProps) => {
+const PropertyImageStatic = ({ model }: PropertyImageStaticProps) => {
   const { value } = model
 
   return (
-    <PropertiesPanel title="Text" type="textStatic">
-      <FieldInput
-        label="Text Value"
+    <PropertiesPanel title="Image" type="imageStatic">
+      <FieldImage
+        label="Pick Image"
         value={value}
         onChange={e => {
           updateItemInModelStore({
@@ -27,4 +27,4 @@ const PropertyTextStatic = ({ model }: PropertyTextStaticProps) => {
   )
 }
 
-export default PropertyTextStatic
+export default PropertyImageStatic

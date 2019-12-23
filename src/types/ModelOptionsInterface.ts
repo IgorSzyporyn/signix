@@ -1,5 +1,7 @@
 type ModelOptionsInterface = {
-  [key: string]: string
+  question: string
+  value: string
+  default: boolean
 }
 
 export default ModelOptionsInterface

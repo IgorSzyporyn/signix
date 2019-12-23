@@ -3,7 +3,6 @@ import ModelTypes from '../types/ModelTypes'
 import BackgroundModel from './BackgroundModel'
 import CoreModel from './CoreModel'
 import GroupModel from './GroupModel'
-import ImageDynamicModel from './ImageDynamicModel'
 import ImageModel from './ImageModel'
 import ImageOptionsModel from './ImageOptionsModel'
 import ImageOptionsMultipleModel from './ImageOptionsMultipleModel'
@@ -31,7 +30,6 @@ const Models: ModelsInterface = {
   textstaticquery: TextStaticQueryModel,
   image: ImageModel,
   imagestatic: ImageStaticModel,
-  imagedynamic: ImageDynamicModel,
   imageoptions: ImageOptionsModel,
   imageoptionsmultiple: ImageOptionsMultipleModel,
   imagestaticquery: ImageStaticQueryModel,

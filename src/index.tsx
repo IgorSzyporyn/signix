@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import App from './App'
 import './baseline.css'
 import './index.css'
-import App from './App'
 import * as serviceWorker from './serviceWorker'
 import AppApiProps from './types/AppApiProps'
 import ModelInterface from './types/ModelInterface'
+import UserInterface from './types/UserInterface'
 
 const apiExample: AppApiProps = {
   query: {
@@ -37,6 +38,7 @@ const apiExample: AppApiProps = {
 
 const modelExample: ModelInterface = {
   type: 'background',
+  coreType: 'core',
   position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
   dimension: { disabled: false, width: 640, height: 130 },
   color: { background: 'rgba(0, 0, 0, 0)', foreground: 'rgba(0, 0, 0, 0)' },
@@ -44,6 +46,7 @@ const modelExample: ModelInterface = {
   items: [
     {
       type: 'textstaticquery',
+      coreType: 'text',
       position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
       dimension: { disabled: false, width: 0, height: 0 },
       color: { foreground: '#000', background: 'rgba(255, 255, 255, 0)' },
@@ -60,8 +63,29 @@ const modelExample: ModelInterface = {
       background: { disabled: true, image: '', position: 'center' },
       options: [],
       value: 'rank',
+      api: true,
       id: '_0j7wbjxks',
       name: 'textstaticquery-_0j7wbjxks',
+      parentId: '_du2rlpvee',
+      level: 1
+    },
+    {
+      type: 'textoptions',
+      coreType: 'text',
+      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+      dimension: { disabled: false, width: 0, height: 0 },
+      color: { foreground: '#000', background: 'rgba(255, 255, 255, 0)' },
+      font: { size: 24, type: 'Arial' },
+      items: [],
+      enumeration: [],
+      background: { disabled: true, image: '', position: 'center' },
+      options: [
+        { question: 'question no 1', value: 'some value', default: false },
+        { question: 'question no 2', value: 'some other value', default: true }
+      ],
+      value: '',
+      id: '_39pg56zgc',
+      name: 'textoptions-_39pg56zgc',
       parentId: '_du2rlpvee',
       level: 1
     }
@@ -76,7 +100,14 @@ const modelExample: ModelInterface = {
   level: 0
 }
 
-ReactDOM.render(<App api={apiExample} model={modelExample} />, document.getElementById('root'))
+const userExample: UserInterface = {
+  id: 'jdhhsi8978734hjss'
+}
+
+ReactDOM.render(
+  <App user={userExample} api={apiExample} model={modelExample} />,
+  document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

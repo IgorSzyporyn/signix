@@ -9,6 +9,7 @@ import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import ApiStoreInterface from '../../types/ApiStoreInterface'
 import getFontSize from '../../utils/getFontSize'
 import Button from '../Button/Button'
+import { uniqueId } from '../../utils/utilities'
 
 const Wrapper = styled.div`
   font-size: ${getFontSize('xsmall')};
@@ -56,14 +57,18 @@ const getLayerErrorText = (errors?: ApiErrorInterface[]) => {
     text = errors
       .filter(error => error.errorLevel === 'critical')
       .map(error => {
-        return [<Text>{error.text}</Text>]
+        return [<Text key={`PropertyApiKeyError-${uniqueId()}`}>{error.text}</Text>]
       })
 
     text.push([<Text>Fix this by selecting another API key</Text>])
   } else {
     text = [
-      <Text>The enumerations and API Model has inconsistencies</Text>,
-      <Text>Re-Sync will require to add and/or remove fields</Text>
+      <Text key={`PropertyApiKeyError-${uniqueId()}`}>
+        The enumerations and API Model has inconsistencies
+      </Text>,
+      <Text key={`PropertyApiKeyError-${uniqueId()}`}>
+        Re-Sync will require to add and/or remove fields
+      </Text>
     ]
   }
 

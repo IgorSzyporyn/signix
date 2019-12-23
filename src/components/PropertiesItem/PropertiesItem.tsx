@@ -2,8 +2,11 @@ import React from 'react'
 import ModelInterface from '../../types/ModelInterface'
 import PropertiesBackground from '../PropertiesBackground/PropertiesBackground'
 import PropertiesGroup from '../PropertiesGroup/PropertiesGroup'
-import PropertiesImage from '../PropertiesImage/PropertiesImage'
+import PropertiesImageOptions from '../PropertiesImageOptions/PropertiesImageOptions'
+import PropertiesImageOptionsMultiple from '../PropertiesImageOptionsMultiple/PropertiesImageOptionsMultiple'
+import PropertiesImageStatic from '../PropertiesImageStatic/PropertiesImageStatic'
 import PropertiesTextDynamic from '../PropertiesTextDynamic/PropertiesTextDynamic'
+import PropertiesTextOptions from '../PropertiesTextOptions/PropertiesTextOptions'
 import PropertiesTextStatic from '../PropertiesTextStatic/PropertiesTextStatic'
 import PropertiesTextStaticQuery from '../PropertiesTextStaticQuery/PropertiesTextStaticQuery'
 
@@ -27,13 +30,20 @@ const getComponent = (model: ModelInterface) => {
     case 'textdynamic':
       Component = <PropertiesTextDynamic model={model} />
       break
+    case 'textoptions':
+      Component = <PropertiesTextOptions model={model} />
+      break
     case 'textstaticquery':
       Component = <PropertiesTextStaticQuery model={model} />
       break
-    case 'image':
     case 'imagestatic':
-    case 'imagedynamic':
-      Component = <PropertiesImage model={model} />
+      Component = <PropertiesImageStatic model={model} />
+      break
+    case 'imageoptions':
+      Component = <PropertiesImageOptions model={model} />
+      break
+    case 'imageoptionsmultiple':
+      Component = <PropertiesImageOptionsMultiple model={model} />
       break
     default:
       Component = null

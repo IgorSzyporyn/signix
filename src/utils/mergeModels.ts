@@ -20,6 +20,17 @@ const mergeModels = (first: ModelInterfacePartial, second: ModelInterfacePartial
     first.enumeration = []
   }
 
+  const firstHasOptions = first.options && first.options.length
+  const secondHasOptions = second.options && second.options.length
+
+  if (firstHasOptions && secondHasOptions) {
+    first.options = []
+  }
+
+  if (firstHasOptions && !secondHasOptions) {
+    first.options = []
+  }
+
   return merge(first, second)
 }
 

@@ -62,11 +62,6 @@ const toolboxItems: ToolboxItemProps[] = [
     type: 'imagestatic'
   },
   {
-    title: 'Image Input',
-    subtitle: 'User provides imag',
-    type: 'imagedynamic'
-  },
-  {
     title: 'Image From Options',
     subtitle: 'User selects from options',
     type: 'imageoptions'

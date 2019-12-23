@@ -25,6 +25,8 @@ import LayerItems from '../LayerItems/LayerItems'
 import LayerItemTitle from '../LayerItemTitle/LayerItemTitle'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import MUIcon from '../MUIcon/MUIcon'
+import ApiStoreInterface from '../../types/ApiStoreInterface'
+import ApiStore from '../../stores/ApiStore'
 
 const Wrapper = styled.div`
   user-select: none;
@@ -124,13 +126,16 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
   const { expanded }: LayerStoreInterface = useStore(LayerStore)
   const errorStore: ApiLayerErrorStoreInterface = useStore(ApiLayerErrorStore)
   const { activeModelId, editingModelId }: AppStoreInterface = useStore(AppStore)
-  const { tested: apiTested }: ApiQueryStoreInterface = useStore(ApiQueryStore)
+  const { enabled: apiEnabled }: ApiStoreInterface = useStore(ApiStore)
+  const { valid: apiValid, tested: apiTested }: ApiQueryStoreInterface = useStore(ApiQueryStore)
 
   const errors = errorStore.errors[id]
 
+  const apiErrors = model.api && (!apiEnabled || !apiValid || !apiTested)
+  const layerErrors = errors && errors.length > 0
+
   const level = model.level || 0
   const isActive = activeModelId === id
-  const hasApiErrors = model.api && ((errors && errors.length > 0) || !apiTested)
   const hasItems = items && items.length > 0
   const isEditingAny = !!editingModelId
   let isExpanded = expanded[id]
@@ -167,7 +172,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
                 marginRight: 'var(--gutter)'
               }}
             />
-            {hasApiErrors && (
+            {(apiErrors || layerErrors) && (
               <MUIcon
                 size="tiny"
                 style={{

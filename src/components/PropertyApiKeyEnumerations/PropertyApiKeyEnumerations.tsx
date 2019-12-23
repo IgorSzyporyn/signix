@@ -24,13 +24,15 @@ type PropertyApiKeyEnumerationsProps = {
   enumeration: ApiEnumerationInterface[]
   apiErrors?: boolean
   layerErrors?: boolean
+  onEnumerationChange?: (enumeration: ApiEnumerationInterface[]) => void
 }
 
 const PropertyApiKeyEnumerations = ({
   hidden,
   enumeration,
   apiErrors,
-  layerErrors
+  layerErrors,
+  onEnumerationChange
 }: PropertyApiKeyEnumerationsProps) => {
   const hasEnumerations = enumeration.length > 0
   const hasErrors = apiErrors || layerErrors
@@ -39,7 +41,7 @@ const PropertyApiKeyEnumerations = ({
     <div hidden={hidden || !hasEnumerations}>
       <Title>API Data Enumerations</Title>
       <Text>Enumerate values from API Data with options from API Model</Text>
-      {hasErrors ? (
+      {hasErrors && (
         <ErrorContainer>
           {apiErrors ? (
             <Text>Enumeration inactive because of API connection problems</Text>
@@ -50,9 +52,12 @@ const PropertyApiKeyEnumerations = ({
             </>
           )}
         </ErrorContainer>
-      ) : (
-        <FieldEnumeration enumeration={enumeration} />
       )}
+      <FieldEnumeration
+        hidden={hasErrors}
+        enumeration={enumeration}
+        onChange={onEnumerationChange}
+      />
     </div>
   )
 }

@@ -54,10 +54,6 @@ const Form = (props: DummyProps) => (
           <RequiredItemTitle>Text Options</RequiredItemTitle>
         </RequiredItem>
         <RequiredItem>
-          <ModelTypeIcon type={'imagedynamic'} size="large" />
-          <RequiredItemTitle>Image Input</RequiredItemTitle>
-        </RequiredItem>
-        <RequiredItem>
           <ModelTypeIcon type={'imageoptions'} size="large" />
           <RequiredItemTitle>Image Options</RequiredItemTitle>
         </RequiredItem>

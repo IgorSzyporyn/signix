@@ -15,7 +15,6 @@ type ModelInterface = {
   id?: string
   level?: number
   name?: string
-  options?: ModelOptionsInterface[]
   parentId?: string
   value?: string
   hidden?: boolean
@@ -24,6 +23,7 @@ type ModelInterface = {
   coreType?: ModelCoreTypes
   font: ModelFontInterface
   background: ModelBackgroundInterface
+  options: ModelOptionsInterface[]
   color: ModelColorInterface
   dimension: ModelDimensionInterface
   items: ModelInterfacePartial[]

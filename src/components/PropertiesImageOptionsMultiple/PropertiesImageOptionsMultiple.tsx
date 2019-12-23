@@ -1,15 +1,15 @@
 import React from 'react'
 import PropertiesPropTypes from '../../types/PropertiesPropTypes'
 import PropertyColor from '../PropertyColor/PropertyColor'
-import PropertyDimension from '../PropertyDimension/PropertyDimension'
+import PropertyOptions from '../PropertyOptions/PropertyOptions'
 import PropertyPosition from '../PropertyPosition/PropertyPosition'
 
-const PropertiesImage = (props: PropertiesPropTypes) => (
+const PropertiesImageOptionsMultiple = (props: PropertiesPropTypes) => (
   <>
-    <PropertyDimension {...props} />
     <PropertyPosition {...props} />
     <PropertyColor {...props} />
+    <PropertyOptions {...props} />
   </>
 )
 
-export default PropertiesImage
+export default PropertiesImageOptionsMultiple

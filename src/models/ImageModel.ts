@@ -7,8 +7,7 @@ const ImageModel: ModelInterface = {
   coreType: 'image',
   dimension: {
     ...CoreModel.dimension,
-    width: 48,
-    height: 48
+    disabled: true
   }
 }
 

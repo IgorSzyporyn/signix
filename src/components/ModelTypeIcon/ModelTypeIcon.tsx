@@ -1,14 +1,13 @@
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 import CropOriginalIcon from '@material-ui/icons/CropOriginal'
 import Folder from '@material-ui/icons/Folder'
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined'
 import FolderOutlined from '@material-ui/icons/FolderOutlined'
 import GridOnOutlinedIcon from '@material-ui/icons/GridOnOutlined'
-import ImageIcon from '@material-ui/icons/Image'
 import ListIcon from '@material-ui/icons/List'
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary'
 import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined'
 import TextFormatIcon from '@material-ui/icons/TextFormat'
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate'
 import React from 'react'
 import ModelTypes from '../../types/ModelTypes'
 import SizeTypes from '../../types/SizeTypes'
@@ -66,10 +65,6 @@ const getModelTypeIcon = (
     case 'imagestatic':
       iconProps.style.fill = 'var(--color-persianred)'
       Component = <CropOriginalIcon {...iconProps} />
-      break
-    case 'imagedynamic':
-      iconProps.style.fill = 'var(--color-persianred)'
-      Component = <ImageIcon {...iconProps} />
       break
     case 'imageoptions':
       iconProps.style.fill = 'var(--color-persianred)'

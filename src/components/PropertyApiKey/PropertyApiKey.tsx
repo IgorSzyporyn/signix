@@ -9,10 +9,10 @@ import ApiLayerErrorStoreInterface from '../../types/ApiLayerErrorStoreInterface
 import ApiQueryStoreInterface from '../../types/ApiQueryStoreInterface'
 import ApiQueryStoreModelInterface from '../../types/ApiQueryStoreModelInterface'
 import ApiStoreInterface from '../../types/ApiStoreInterface'
-import FieldOptionsOptionType from '../../types/FieldOptionsOptionType'
 import ModelCoreTypes from '../../types/ModelCoreTypes'
 import ModelInterface from '../../types/ModelInterface'
 import apiFixLayer from '../../utils/apiFixLayer'
+import apiLayerErrorsContainsBadApiKey from '../../utils/apiLayerErrorsContainsBadApiKey'
 import apiValidateLayers from '../../utils/apiValidateLayers'
 import FieldOptions from '../FieldOptions/FieldOptions'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
@@ -107,12 +107,16 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enumerationState.confirmChangeType])
 
-  const errors = errorStore.errors[model.id!]
+  const errors = errorStore.errors[model.id!] || []
   const apiErrors = !apiEnabled || !apiValid || !apiTested
-  const layerErrors = errors && errors.length > 0
+  const layerErrors = errors.length > 0
+  const hasInvalidApiKey = apiLayerErrorsContainsBadApiKey(errors)
 
   return (
-    <PropertiesPanel title={<PropertyApiKeyTitle errors={errors} />} type="apiKey">
+    <PropertiesPanel
+      title={<PropertyApiKeyTitle hasError={apiErrors || layerErrors} />}
+      type="apiKey"
+    >
       <PropertyApiKeyConfirm
         hidden={!enumerationState.confirmChange}
         onProceed={() => {
@@ -141,9 +145,9 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
         id={`${enumerationState._stupidlyCreatedIdToForceRender}`}
         hidden={enumerationState.confirmChange || apiErrors}
         label="Select API key"
-        value={model.value}
-        options={dataKeys as FieldOptionsOptionType[]}
-        onSelection={value => {
+        value={hasInvalidApiKey ? '' : model.value}
+        options={dataKeys}
+        onSelectChange={value => {
           const enumeration = createEnum(dataStoreModel, type, value)
 
           if (model.enumeration.length > 0) {
@@ -166,6 +170,9 @@ const PropertyApiKey = ({ type, model }: PropertyApiKeyQueryProps) => {
         layerErrors={layerErrors}
         apiErrors={apiErrors}
         enumeration={model.enumeration}
+        onEnumerationChange={enumeration => {
+          updateItemInModelStore({ ...model, enumeration })
+        }}
       />
     </PropertiesPanel>
   )

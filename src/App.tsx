@@ -12,8 +12,10 @@ import { initApiQueryStore } from './stores/ApiQueryStore'
 import updateApiQueryStore from './stores/apiQueryStore/updateApiQueryStore'
 import { initApiStore } from './stores/ApiStore'
 import initModelStore from './stores/model/initModelStore'
+import { initUserStore } from './stores/UserStore'
 import AppApiProps from './types/AppApiProps'
 import ModelInterfacePartial from './types/ModelInterfacePartial'
+import UserInterface from './types/UserInterface'
 
 const Root = styled.div`
   height: 100vh;
@@ -36,9 +38,10 @@ const MainContainer = styled.main`
 type AppProps = {
   model?: ModelInterfacePartial
   api?: AppApiProps
+  user?: UserInterface
 }
 
-const App = ({ model, api }: AppProps) => {
+const App = ({ model, api, user }: AppProps) => {
   const [showValidation, setShowValidation] = useState(false)
 
   useEffect(() => {
@@ -54,6 +57,12 @@ const App = ({ model, api }: AppProps) => {
       setShowValidation(true)
     }
   }, [api])
+
+  useEffect(() => {
+    if (user) {
+      initUserStore(user)
+    }
+  }, [user])
 
   return (
     <Root>

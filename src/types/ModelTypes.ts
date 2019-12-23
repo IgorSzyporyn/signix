@@ -8,7 +8,6 @@ type ModelTypes =
   | 'textoptions'
   | 'image'
   | 'imagestatic'
-  | 'imagedynamic'
   | 'imageoptions'
   | 'imageoptionsmultiple'
   | 'imagestaticquery'
