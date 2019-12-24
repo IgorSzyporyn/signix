@@ -45,7 +45,7 @@ const Wrapper = styled.div<WrapperProps>`
   .FieldInput {
     min-height: var(--spacing-large);
     font-size: ${getFontSize('xsmall')};
-    padding: var(--half-gutter) var(--gutter);
+    padding: 1.2rem;
     border-radius: 0.3rem;
     border: 0.1rem solid var(--color-lighter);
     background-color: var(--color-dark);

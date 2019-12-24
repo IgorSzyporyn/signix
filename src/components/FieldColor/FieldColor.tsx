@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 const ActionSquare = styled.div`
   position: relative;
   display: flex;
-  height: 1.8rem;
-  width: 2.2rem;
+  height: 3.8rem;
+  width: 3.8rem;
 `
 
 const Picker = styled.div`

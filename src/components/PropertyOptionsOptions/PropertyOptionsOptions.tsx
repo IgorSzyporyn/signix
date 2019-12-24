@@ -5,7 +5,7 @@ import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
 import ModelOptionsInterface from '../../types/ModelOptionsInterface'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
-import FieldImage from '../FieldImage/FieldImage'
+import FieldImagePicker from '../FieldImagePicker/FieldImagePicker'
 import FieldInput from '../FieldInput/FieldInput'
 import MUIcon from '../MUIcon/MUIcon'
 
@@ -81,12 +81,11 @@ const PropertyOptionsOptions = ({ model }: PropertyOptionsOptionsProps) => {
                   />
                 )}
                 {model.coreType === 'image' && (
-                  <FieldImage
+                  <FieldImagePicker
                     rootStyle={{ marginBottom: 'var(--half-gutter)' }}
                     label="Value"
                     value={option.value}
-                    onChange={e => {
-                      const value = e.currentTarget.value
+                    onSelectChange={(value = '') => {
                       const newOptions = [...options]
                       newOptions[index] = { ...newOptions[index], value }
 

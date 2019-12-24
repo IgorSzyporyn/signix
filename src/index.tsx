@@ -88,6 +88,23 @@ const modelExample: ModelInterface = {
       name: 'textoptions-_39pg56zgc',
       parentId: '_du2rlpvee',
       level: 1
+    },
+    {
+      type: 'imagestatic',
+      coreType: 'image',
+      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+      dimension: { disabled: true, width: 0, height: 0 },
+      color: { background: 'rgba(0, 0, 0, 0)', foreground: 'rgba(0, 0, 0, 0)' },
+      font: { size: 24, type: 'Arial' },
+      items: [],
+      enumeration: [],
+      background: { disabled: true, image: '', position: 'center' },
+      options: [],
+      value: 'flags/flag_albania.png',
+      id: '_4xxx99qv3',
+      name: 'imagestatic-_4xxx99qv3',
+      parentId: '_du2rlpvee',
+      level: 1
     }
   ],
   enumeration: [],

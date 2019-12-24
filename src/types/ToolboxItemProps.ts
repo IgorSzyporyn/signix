@@ -1,9 +1,9 @@
 import ModelTypes from './ModelTypes'
-import ToolboxViewTypes from './ToolboxViewTypes'
+import ViewTypes from './ViewTypes'
 
 type ToolboxItemProps = {
   type: ModelTypes
-  view?: ToolboxViewTypes
+  view?: ViewTypes
   title?: string
   subtitle?: string
   api?: boolean

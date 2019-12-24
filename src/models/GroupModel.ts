@@ -7,6 +7,7 @@ const GroupModel: ModelInterface = {
   group: true,
   dimension: {
     ...CoreModel.dimension,
+    disabled: false,
     width: 250,
     height: 250
   },

@@ -1,27 +1,21 @@
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined'
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined'
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import ToolboxViewTypes from '../../types/ToolboxViewTypes'
+import ViewTypes from '../../types/ViewTypes'
 import MUIcon from '../MUIcon/MUIcon'
 import Panel from '../Panel/Panel'
 import PanelBody from '../PanelBody/PanelBody'
 import PanelHeader from '../PanelHeader/PanelHeader'
 import ToolboxItems from '../ToolboxItems/ToolboxItems'
 
-const handleSetGridView = (
-  view: ToolboxViewTypes,
-  setView: Dispatch<SetStateAction<ToolboxViewTypes>>
-) => {
+const handleSetGridView = (view: ViewTypes, setView: Dispatch<SetStateAction<ViewTypes>>) => {
   if (view !== 'grid') {
     setView('grid')
     // @TODO - Update SettingsStore
   }
 }
 
-const handleSetListView = (
-  view: ToolboxViewTypes,
-  setView: Dispatch<SetStateAction<ToolboxViewTypes>>
-) => {
+const handleSetListView = (view: ViewTypes, setView: Dispatch<SetStateAction<ViewTypes>>) => {
   if (view !== 'list') {
     setView('list')
     // @TODO - Update SettingsStore
@@ -29,15 +23,15 @@ const handleSetListView = (
 }
 
 type ToolboxProps = {
-  view?: ToolboxViewTypes
+  view?: ViewTypes
 }
 
-const getViewTypeIconStyle = (view: ToolboxViewTypes, currentView: ToolboxViewTypes) => ({
+const getViewTypeIconStyle = (view: ViewTypes, currentView: ViewTypes) => ({
   color: view === currentView ? 'var(--color-blue)' : 'currentColor'
 })
 
 const Toolbox = (props: ToolboxProps) => {
-  const [view, setView] = useState<ToolboxViewTypes>(props.view || 'list')
+  const [view, setView] = useState<ViewTypes>(props.view || 'list')
 
   return (
     <Panel>
@@ -87,7 +81,7 @@ const Toolbox = (props: ToolboxProps) => {
         }
       />
       <PanelBody>
-        <ToolboxItems view={view as ToolboxViewTypes} />
+        <ToolboxItems view={view as ViewTypes} />
       </PanelBody>
     </Panel>
   )

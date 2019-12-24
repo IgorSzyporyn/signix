@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
-import ToolboxViewTypes from '../../types/ToolboxViewTypes'
+import ViewTypes from '../../types/ViewTypes'
 import ToolboxItem from '../ToolboxItem/ToolboxItem'
 
 const Wrapper = styled.div`
@@ -92,7 +92,7 @@ const toolboxItems: ToolboxItemProps[] = [
 ]
 
 type ToolboxItemsProps = {
-  view?: ToolboxViewTypes
+  view?: ViewTypes
 }
 
 const ToolboxItems = ({ view }: ToolboxItemsProps) => {

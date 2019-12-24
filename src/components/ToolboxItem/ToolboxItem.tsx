@@ -8,7 +8,7 @@ import getModelById from '../../stores/model/getModelById'
 import ModelStore from '../../stores/ModelStore'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ToolboxItemProps from '../../types/ToolboxItemProps'
-import ToolboxViewTypes from '../../types/ToolboxViewTypes'
+import ViewTypes from '../../types/ViewTypes'
 import ModelTypeIcon from '../ModelTypeIcon/ModelTypeIcon'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 import AppStoreInterface from '../../types/AppStoreInterface'
@@ -16,7 +16,7 @@ import AppStore from '../../stores/AppStore'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
 import createModelFromTemplate from '../../utils/createModelFromTemplate'
 
-type WrapperProps = { view?: ToolboxViewTypes; isDragging: boolean }
+type WrapperProps = { view?: ViewTypes; isDragging: boolean }
 
 const Wrapper = styled.div`
   display: flex;

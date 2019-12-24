@@ -2,14 +2,14 @@ import PropertyStoreInterface from '../../types/PropertyStoreInterface'
 
 const propertyStoreDefaults: PropertyStoreInterface = {
   expanded: {
-    dimension: true,
-    color: true,
-    backgroundImage: true,
-    font: true,
-    position: true,
-    apiKey: true,
-    options: true,
-    textStatic: true,
+    dimension: false,
+    color: false,
+    backgroundImage: false,
+    font: false,
+    position: false,
+    apiKey: false,
+    options: false,
+    textStatic: false,
     imageStatic: true
   }
 }

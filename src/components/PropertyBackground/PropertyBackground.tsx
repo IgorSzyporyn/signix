@@ -3,7 +3,7 @@ import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
 import ModelPositionTypes from '../../types/ModelPositionTypes'
 import FieldCheckbox from '../FieldCheckbox/FieldCheckbox'
-import FieldImage from '../FieldImage/FieldImage'
+import FieldImagePicker from '../FieldImagePicker/FieldImagePicker'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 import PropertyPositionType from '../PropertyPositionType/PropertyPositionType'
 
@@ -50,7 +50,7 @@ const PropertyBackground = ({ model }: PropertyBackgroundProps) => {
             type={background.position}
             onChange={(position: ModelPositionTypes) => handlePositionChange(position, model)}
           />
-          <FieldImage
+          <FieldImagePicker
             disabled={disabled}
             label="Image"
             value={image}

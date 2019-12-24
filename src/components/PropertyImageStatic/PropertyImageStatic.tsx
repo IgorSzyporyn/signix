@@ -1,7 +1,7 @@
 import React from 'react'
 import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelInterface from '../../types/ModelInterface'
-import FieldImage from '../FieldImage/FieldImage'
+import FieldImagePicker from '../FieldImagePicker/FieldImagePicker'
 import PropertiesPanel from '../PropertiesPanel/PropertiesPanel'
 
 type PropertyImageStaticProps = {
@@ -13,13 +13,13 @@ const PropertyImageStatic = ({ model }: PropertyImageStaticProps) => {
 
   return (
     <PropertiesPanel title="Image" type="imageStatic">
-      <FieldImage
+      <FieldImagePicker
         label="Pick Image"
         value={value}
-        onChange={e => {
+        onSelectChange={value => {
           updateItemInModelStore({
             id: model.id,
-            value: e.currentTarget.value
+            value
           })
         }}
       />

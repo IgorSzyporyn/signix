@@ -50,7 +50,7 @@ const Main = () => {
   }: AppTabStoreInterface = useStore(AppTabStore)
 
   return (
-    <SplitPane split="vertical" primary="second" maxSize={600} minSize={350} defaultSize={350}>
+    <SplitPane split="vertical" primary="second" maxSize={600} minSize={350} defaultSize={400}>
       <PaneContainerPrimary>
         <UtilityAreaContainer>
           <VerticalTabPanel

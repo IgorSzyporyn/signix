@@ -87,6 +87,7 @@ p {
   --color-darkslate: #2e454b;
 
   --color-active: #2a69dd;
+  --color-hover: rgba(42, 105, 221, 0.781);
   --color-success: #00ad2b;
   --color-failure: #bd2323;
   --color-warning: #ffa500;
