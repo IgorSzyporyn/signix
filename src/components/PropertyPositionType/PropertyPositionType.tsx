@@ -25,7 +25,7 @@ const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPosi
         }}
         active={type === 'top-left' ? 'true' : 'false'}
       >
-        <MUIcon size="medium" render={p => <BorderStyleOutlinedIcon {...p} />} />
+        <MUIcon size="large" render={p => <BorderStyleOutlinedIcon {...p} />} />
       </FieldPositionType>
       <FieldPositionType
         nomargin="true"
@@ -37,7 +37,7 @@ const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPosi
         active={type === 'top-right' ? 'true' : 'false'}
       >
         <MUIcon
-          size="medium"
+          size="large"
           style={{ transform: 'rotate(90deg)' }}
           render={p => <BorderStyleOutlinedIcon {...p} />}
         />
@@ -52,7 +52,7 @@ const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPosi
           }}
           active={type === 'center' ? 'true' : 'false'}
         >
-          <MUIcon size="medium" render={p => <FilterCenterFocusOutlinedIcon {...p} />} />
+          <MUIcon size="large" render={p => <FilterCenterFocusOutlinedIcon {...p} />} />
         </FieldPositionType>
       )}
       <FieldPositionType
@@ -65,7 +65,7 @@ const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPosi
         active={type === 'bottom-left' ? 'true' : 'false'}
       >
         <MUIcon
-          size="medium"
+          size="large"
           style={{ transform: 'rotate(270deg)' }}
           render={p => <BorderStyleOutlinedIcon {...p} />}
         />
@@ -80,7 +80,7 @@ const PropertyPositionType = ({ type, onChange, center, disabled }: PropertyPosi
         active={type === 'bottom-right' ? 'true' : 'false'}
       >
         <MUIcon
-          size="medium"
+          size="large"
           style={{ transform: 'rotate(180deg)' }}
           render={p => <BorderStyleOutlinedIcon {...p} />}
         />

@@ -71,9 +71,8 @@ const Wrapper = styled.div<WrapperProps>`
   }
 
   & button {
-    min-height: var(--spacing-large);
+    min-height: 4rem;
     font-size: ${getFontSize('xsmall')};
-    padding: var(--gutter) var(--gutter);
     border-radius: 0.3rem;
     border: 0.1rem solid var(--color-lighter);
     background-color: var(--color-dark);
@@ -82,6 +81,10 @@ const Wrapper = styled.div<WrapperProps>`
     box-sizing: border-box;
     width: 100%;
     outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
     &[active='true'] {
       background-color: var(--color-lighter);
