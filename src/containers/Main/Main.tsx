@@ -5,13 +5,13 @@ import { useStore } from 'laco-react'
 import React from 'react'
 import SplitPane from 'react-split-pane'
 import styled from 'styled-components'
+import Api from '../../components/Api/Api'
 import Canvas from '../../components/Canvas/Canvas'
-import Form from '../../components/Form/Form'
 import Layers from '../../components/Layers/Layers'
 import MUIcon from '../../components/MUIcon/MUIcon'
 import Properties from '../../components/Properties/Properties'
-import Api from '../../components/Api/Api'
 import Settings from '../../components/Settings/Settings'
+import SignatureForm from '../../components/SignatureForm/SignatureForm'
 import TabPanel from '../../components/TabPanel/TabPanel'
 import Toolbox from '../../components/Toolbox/Toolbox'
 import VerticalTabPanel from '../../components/VerticalTabPanel/VerticalTabPanel'
@@ -75,7 +75,7 @@ const Main = () => {
             }}
             titles={['Canvas with the signature items', 'The form user uses']}
             tabs={['Canvas', 'Form']}
-            panels={[<Canvas />, <Form />]}
+            panels={[<Canvas />, <SignatureForm />]}
           />
         </MainAreaContainer>
       </PaneContainerPrimary>

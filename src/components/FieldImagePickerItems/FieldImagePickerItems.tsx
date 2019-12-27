@@ -45,7 +45,7 @@ const FieldImagePickerItems = ({
       autoHide
       renderThumbVertical={ScrollbarThumb}
       renderThumbHorizontal={ScrollbarThumb}
-      style={{ backgroundColor: 'var(--color-dark)' }}
+      style={{ backgroundColor: 'var(--color-dark)', zIndex: 2 }}
     >
       {data
         .filter(item => !inputValue || item.path.toLowerCase().includes(inputValue.toLowerCase()))

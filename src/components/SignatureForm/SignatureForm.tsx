@@ -39,7 +39,7 @@ const RequiredItemTitle = styled.div`
 
 type DummyProps = {}
 
-const Form = (props: DummyProps) => (
+const SignatureForm = (props: DummyProps) => (
   <Wrapper>
     <NoFormRequired>
       <p>No layers requires user interaction.</p>
@@ -66,4 +66,4 @@ const Form = (props: DummyProps) => (
   </Wrapper>
 )
 
-export default Form
+export default SignatureForm

@@ -10,9 +10,15 @@ import UserInterface from '../../types/UserInterface'
 import FieldImagePickerItems from '../FieldImagePickerItems/FieldImagePickerItems'
 import MUIcon from '../MUIcon/MUIcon'
 
+const getSplitFromValue = (value: string) => {
+  const valueSplit: string[] | undefined = value.split('/').filter(a => a)
+
+  return valueSplit
+}
+
 const getFolderFromValue = (value: string) => {
   let folder = ''
-  let valueSplit: string[] | undefined = value.split('/').filter(a => a)
+  let valueSplit = getSplitFromValue(value)
 
   if (valueSplit.length > 1) {
     valueSplit = valueSplit.slice(0, -1)
@@ -21,6 +27,15 @@ const getFolderFromValue = (value: string) => {
   folder = valueSplit.join('/')
 
   return folder
+}
+
+const getFileFromValue = (value: string) => {
+  let file: string | undefined = ''
+  let valueSplit = getSplitFromValue(value)
+
+  file = valueSplit.pop()
+
+  return file
 }
 
 const Wrapper = styled.div`
@@ -77,7 +92,9 @@ const Menu = styled.div`
   height: 20rem;
   margin: 0;
   padding: 0;
+  margin-top: -0.1rem;
   list-style: none;
+  z-index: 1;
 `
 
 type FieldImagePickerProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -89,12 +106,13 @@ const FieldImagePicker = ({ value, onSelectChange }: FieldImagePickerProps) => {
   const { id: userId }: UserInterface = useStore(UserStore)
   const _folder = getFolderFromValue(value || '')
   const [folder, setFolder] = useState(_folder)
+  const initialInputValue = getFileFromValue(value || '')
   let isChangingFolder = false
 
   return (
     <Wrapper>
       <Downshift
-        initialInputValue={value}
+        initialInputValue={initialInputValue}
         itemToString={item => (item ? item.name : '')}
         onStateChange={(state, helpers) => {
           const { selectedItem, inputValue } = state
