@@ -1,11 +1,12 @@
 import AutorenewIcon from '@material-ui/icons/Autorenew'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import Downshift from 'downshift'
 import { useStore } from 'laco-react'
 import React, { InputHTMLAttributes, Suspense, useState } from 'react'
-import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import styled from 'styled-components'
 import withField from '../../hoc/withField'
 import UserStore from '../../stores/UserStore'
+import ExplorerResponse from '../../types/ExplorerResponse'
 import UserInterface from '../../types/UserInterface'
 import FieldImagePickerItems from '../FieldImagePickerItems/FieldImagePickerItems'
 import MUIcon from '../MUIcon/MUIcon'
@@ -54,7 +55,7 @@ type PreviewContainerProps = {
 const PreviewContainer = styled.div<PreviewContainerProps>`
   background-image: ${({ userId, path }) =>
     userId && path ? `url(http://localhost:8001/users/${userId}/${path})` : 'none'};
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   width: 3.2rem;
@@ -99,7 +100,7 @@ const Menu = styled.div`
 
 type FieldImagePickerProps = InputHTMLAttributes<HTMLInputElement> & {
   value?: string
-  onSelectChange?: (value?: string) => void
+  onSelectChange?: (item?: ExplorerResponse) => void
 }
 
 const FieldImagePicker = ({ value, onSelectChange }: FieldImagePickerProps) => {
@@ -134,7 +135,8 @@ const FieldImagePicker = ({ value, onSelectChange }: FieldImagePickerProps) => {
           }
 
           if (!isChangingFolder && isSelection && !isDirectory) {
-            onSelectChange && onSelectChange(selectedItem ? selectedItem.path : '')
+            const response: ExplorerResponse | undefined = selectedItem ? selectedItem : undefined
+            onSelectChange && onSelectChange(response)
           }
         }}
       >

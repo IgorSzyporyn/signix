@@ -1,5 +1,6 @@
 const DragAndDropTypes = {
-  TOOLBOX: 'toolboxItem'
+  TOOLBOX: 'toolboxItem',
+  LAYER: 'layer'
 }
 
 export default DragAndDropTypes

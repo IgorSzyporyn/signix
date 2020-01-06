@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react'
 import ModelBackgroundInterface from '../types/ModelBackgroundInterface'
+import getUserUrl from './getUserUrl'
 
 export type BackgroundCSSProperties = Pick<
   CSSProperties,
@@ -41,7 +42,9 @@ const convertBackgroundToCSS = (source?: ModelBackgroundInterface) => {
       break
   }
 
-  style.backgroundImage = `url(${image})`
+  const url = getUserUrl(image)
+
+  style.backgroundImage = `url(${url})`
   style.backgroundPosition = stylePosition
   style.backgroundSize = 'auto'
   style.backgroundRepeat = 'no-repeat'

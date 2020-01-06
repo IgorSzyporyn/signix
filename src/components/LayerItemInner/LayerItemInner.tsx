@@ -116,10 +116,11 @@ const LayerItemsBar = styled.span<WithLevelProps>`
 
 type LayerItemInnerProps = {
   model: ModelInterface
+  moveLayer: (dragId: string, hoverId: string) => void
 }
 
 const LayerItemInner = (props: LayerItemInnerProps) => {
-  const { model } = props
+  const { model, moveLayer } = props
   const { items, group, hidden } = model
   const id = model.id!
 
@@ -257,7 +258,7 @@ const LayerItemInner = (props: LayerItemInnerProps) => {
       </Heading>
       {hasItems && (
         <Body hidden={!isExpanded}>
-          <LayerItems items={items as ModelInterface[]} />
+          <LayerItems items={items as ModelInterface[]} moveLayer={moveLayer} />
           {level > 0 && <LayerItemsBar level={level} />}
         </Body>
       )}

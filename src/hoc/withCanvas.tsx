@@ -2,38 +2,19 @@ import React, { CSSProperties, MouseEvent } from 'react'
 import updateActiveModelInAppStore from '../stores/appStore/updateActiveModelInAppStore'
 import updateActiveTabInAppTabStore from '../stores/appTabStore/updateActiveTabInAppTabStore'
 import ModelInterface from '../types/ModelInterface'
-import convertBackgroundToCSS from '../utils/convertBackgroundToCSS'
-import convertColorToCSS, { ColorCSSProperties } from '../utils/convertColorToCSS'
-import convertDimensionToCSS, { DimensionCSSProperties } from '../utils/convertDimensionToCSS'
-import convertPositionToCSS, { PositionCSSProperties } from '../utils/convertPositionToCSS'
-
-type CanvasCSSProperties = Pick<
-  CSSProperties,
-  keyof ColorCSSProperties | keyof PositionCSSProperties | keyof DimensionCSSProperties
->
-
-const createCanvasStyle = ({ dimension, position, color, background }: ModelInterface) => {
-  const style: CanvasCSSProperties = {
-    ...convertDimensionToCSS(dimension),
-    ...convertPositionToCSS(position),
-    ...convertColorToCSS(color),
-    ...convertBackgroundToCSS(background)
-  }
-
-  return style
-}
 
 export interface WithCanvasProps {
   model: ModelInterface
-  style?: CanvasCSSProperties
+  container: { width: number; height: number }
   className?: string
+  forwardedRef?: React.MutableRefObject<HTMLDivElement | null>
+  style?: CSSProperties
 }
 
 const withCanvas = <P extends object>(Component: React.ComponentType<P>) =>
   class WithCanvasHOC extends React.Component<P & WithCanvasProps> {
     render() {
       const { model, ...rest } = this.props
-      const style = createCanvasStyle(model)
 
       return (
         <Component
@@ -46,7 +27,6 @@ const withCanvas = <P extends object>(Component: React.ComponentType<P>) =>
             updateActiveTabInAppTabStore({ actionAreaActiveTab: 1 })
           }}
           hidden={model.hidden}
-          style={style}
           model={model}
           {...(rest as P)}
         />

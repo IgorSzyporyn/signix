@@ -85,11 +85,15 @@ const PropertyOptionsOptions = ({ model }: PropertyOptionsOptionsProps) => {
                     rootStyle={{ marginBottom: 'var(--half-gutter)' }}
                     label="Value"
                     value={option.value}
-                    onSelectChange={(value = '') => {
-                      const newOptions = [...options]
-                      newOptions[index] = { ...newOptions[index], value }
+                    onSelectChange={response => {
+                      if (response) {
+                        const value = response.path
 
-                      updateItemInModelStore({ id: model.id, options: newOptions })
+                        const newOptions = [...options]
+                        newOptions[index] = { ...newOptions[index], value }
+
+                        updateItemInModelStore({ id: model.id, options: newOptions })
+                      }
                     }}
                   />
                 )}

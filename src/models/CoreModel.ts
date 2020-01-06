@@ -5,10 +5,8 @@ const CoreModel: ModelInterface = {
   coreType: 'core',
   position: {
     type: 'top-left',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
+    x: 0,
+    y: 0
   },
   dimension: {
     disabled: true,
@@ -31,7 +29,8 @@ const CoreModel: ModelInterface = {
     position: 'center'
   },
   options: [],
-  value: ''
+  value: '',
+  scale: 1
 }
 
 export default CoreModel

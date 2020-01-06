@@ -1,21 +1,22 @@
-import React, { ImgHTMLAttributes } from 'react'
+import React from 'react'
 import { WithCanvasProps } from '../../hoc/withCanvas'
+import getUserUrl from '../../utils/getUserUrl'
+import styled from 'styled-components'
 
-const CanvasImageStatic = ({ style = {}, model, ...props }: WithCanvasProps) => {
-  const dimensions: Pick<ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height'> = {
-    width: 0,
-    height: 0
-  }
+type ImageProps = {
+  src: string
+}
 
-  if (style.width) {
-    dimensions.width = style.width
-  }
+const Image = styled.div<ImageProps>`
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-repeat: no-repeat;
+`
 
-  if (style.height) {
-    dimensions.height = style.height
-  }
+const CanvasImageStatic = ({ style = {}, model, forwardedRef, ...props }: WithCanvasProps) => {
+  const url = getUserUrl(model.value)
 
-  return <img alt={model.type} src={model.value} {...dimensions} style={style} {...props} />
+  return <Image ref={forwardedRef} src={url} style={style} {...props} />
 }
 
 export default CanvasImageStatic

@@ -1,41 +1,20 @@
 import { CSSProperties } from 'react'
+import SizeInterface from '../types/SizeInterface'
 import ModelPositionInterface from '../types/ModelPositionInterface'
+import convertPositionToTranslate from './convertPositionToTranslate'
 
-export type PositionCSSProperties = Pick<
-  CSSProperties,
-  'bottom' | 'left' | 'right' | 'top' | 'position'
->
+export type PositionCSSProperties = Pick<CSSProperties, 'position' | 'transform'>
 
-const convertPositionToCSS = (source?: ModelPositionInterface) => {
+const convertPositionToCSS = (
+  source: ModelPositionInterface,
+  parent: SizeInterface,
+  size: SizeInterface
+) => {
+  const { x: xTranslate, y: yTranslate } = convertPositionToTranslate(source, parent, size)
+
   const position: PositionCSSProperties = {
-    position: 'absolute'
-  }
-
-  if (!source) {
-    return position
-  }
-
-  const { type, bottom, left, right, top } = source
-
-  switch (type) {
-    case 'bottom-left':
-      position.bottom = bottom
-      position.left = left
-      break
-    case 'bottom-right':
-      position.bottom = bottom
-      position.right = right
-      break
-    case 'top-right':
-      position.top = top
-      position.right = right
-      break
-    case 'top-left':
-      position.top = top
-      position.left = left
-      break
-    default:
-      break
+    position: 'absolute',
+    transform: `translate(${xTranslate}px, ${yTranslate}px)`
   }
 
   return position

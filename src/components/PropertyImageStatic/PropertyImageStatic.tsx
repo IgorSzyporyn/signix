@@ -16,11 +16,24 @@ const PropertyImageStatic = ({ model }: PropertyImageStaticProps) => {
       <FieldImagePicker
         label="Pick Image"
         value={value}
-        onSelectChange={value => {
-          updateItemInModelStore({
-            id: model.id,
-            value
-          })
+        onSelectChange={response => {
+          if (response) {
+            const values: Partial<ModelInterface> = {
+              id: model.id,
+              value: response.path
+            }
+
+            if (response.dimensions && model.dimension.disabled) {
+              values.dimension = {
+                ...model.dimension,
+                disabled: false,
+                height: response.dimensions.height,
+                width: response.dimensions.width
+              }
+            }
+
+            updateItemInModelStore(values)
+          }
         }}
       />
     </PropertiesPanel>

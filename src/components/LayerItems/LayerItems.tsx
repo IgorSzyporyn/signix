@@ -9,11 +9,16 @@ const Wrapper = styled.ul`
   padding: 0;
 `
 
-const createLayerItems = (items: ModelInterface[]) => {
+const createLayerItems = (
+  items: ModelInterface[],
+  moveLayer: (dragId: string, hoverId: string) => void
+) => {
   let children: React.ReactNode = []
 
   if (items && items.length) {
-    children = items.map(item => <LayerItem key={`layer-item-${item.id}}`} model={item} />)
+    children = items.map(item => (
+      <LayerItem key={`layer-item-${item.id}}`} model={item} moveLayer={moveLayer} />
+    ))
   }
 
   return children
@@ -21,10 +26,11 @@ const createLayerItems = (items: ModelInterface[]) => {
 
 type LayerItemsProps = {
   items: ModelInterface[]
+  moveLayer: (dragId: string, hoverId: string) => void
 }
 
-const LayerItems = ({ items }: LayerItemsProps) => {
-  const layerItems = createLayerItems(items)
+const LayerItems = ({ items, moveLayer }: LayerItemsProps) => {
+  const layerItems = createLayerItems(items, moveLayer)
 
   return <Wrapper>{layerItems}</Wrapper>
 }

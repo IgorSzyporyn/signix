@@ -7,10 +7,10 @@ import PropertyPosition from '../PropertyPosition/PropertyPosition'
 
 const PropertiesTextStaticQuery = (props: PropertiesPropTypes) => (
   <>
+    <PropertyApiKey type="text" {...props} />
     <PropertyPosition {...props} />
     <PropertyColor {...props} />
     <PropertyFont {...props} />
-    <PropertyApiKey type="text" {...props} />
   </>
 )
 

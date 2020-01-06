@@ -54,14 +54,13 @@ const PropertyBackground = ({ model }: PropertyBackgroundProps) => {
             disabled={disabled}
             label="Image"
             value={image}
-            onChange={e => {
-              updateItemInModelStore({
-                ...model,
-                background: {
-                  ...model.background!,
-                  image: e.currentTarget.value
-                }
-              })
+            onSelectChange={response => {
+              if (response) {
+                updateItemInModelStore({
+                  id: model.id,
+                  background: { ...model.background, image: response.path }
+                })
+              }
             }}
           />
         </>

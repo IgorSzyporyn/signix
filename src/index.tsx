@@ -39,7 +39,7 @@ const apiExample: AppApiProps = {
 const modelExample: ModelInterface = {
   type: 'background',
   coreType: 'core',
-  position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+  position: { type: 'top-left', x: 0, y: 0 },
   dimension: { disabled: false, width: 640, height: 130 },
   color: { background: 'rgba(0, 0, 0, 0)', foreground: 'rgba(0, 0, 0, 0)' },
   font: { size: 24, type: 'Arial' },
@@ -47,7 +47,7 @@ const modelExample: ModelInterface = {
     {
       type: 'textstaticquery',
       coreType: 'text',
-      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+      position: { type: 'top-left', x: 0, y: 0 },
       dimension: { disabled: false, width: 0, height: 0 },
       color: { foreground: '#000', background: 'rgba(255, 255, 255, 0)' },
       font: { size: 24, type: 'Arial' },
@@ -65,14 +65,14 @@ const modelExample: ModelInterface = {
       value: 'rank',
       api: true,
       id: '_0j7wbjxks',
-      name: 'textstaticquery-_0j7wbjxks',
+      name: 'Rank from API',
       parentId: '_du2rlpvee',
       level: 1
     },
     {
       type: 'textoptions',
       coreType: 'text',
-      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
+      position: { type: 'top-left', x: 0, y: 0 },
       dimension: { disabled: false, width: 0, height: 0 },
       color: { foreground: '#000', background: 'rgba(255, 255, 255, 0)' },
       font: { size: 24, type: 'Arial' },
@@ -85,15 +85,15 @@ const modelExample: ModelInterface = {
       ],
       value: '',
       id: '_39pg56zgc',
-      name: 'textoptions-_39pg56zgc',
+      name: 'List of texts',
       parentId: '_du2rlpvee',
       level: 1
     },
     {
       type: 'imagestatic',
       coreType: 'image',
-      position: { type: 'top-left', top: 0, left: 0, bottom: 0, right: 0 },
-      dimension: { disabled: true, width: 0, height: 0 },
+      position: { type: 'top-left', x: 32, y: 32 },
+      dimension: { disabled: false, width: 64, height: 64 },
       color: { background: 'rgba(0, 0, 0, 0)', foreground: 'rgba(0, 0, 0, 0)' },
       font: { size: 24, type: 'Arial' },
       items: [],
@@ -102,7 +102,7 @@ const modelExample: ModelInterface = {
       options: [],
       value: 'flags/flag_albania.png',
       id: '_4xxx99qv3',
-      name: 'imagestatic-_4xxx99qv3',
+      name: 'Flag',
       parentId: '_du2rlpvee',
       level: 1
     }

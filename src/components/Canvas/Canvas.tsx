@@ -26,7 +26,7 @@ const Canvas = () => {
       }}
     >
       <TransparencyBackground>
-        <CanvasItem model={model} />
+        <CanvasItem model={model} container={{ width: 0, height: 0 }} />
       </TransparencyBackground>
     </Wrapper>
   )

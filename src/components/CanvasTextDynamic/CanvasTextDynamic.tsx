@@ -3,19 +3,19 @@ import { WithCanvasProps } from '../../hoc/withCanvas'
 import updateActiveModelInAppStore from '../../stores/appStore/updateActiveModelInAppStore'
 import convertModelToQueryString from '../../utils/convertModelToQueryString'
 
-const CanvasTextDynamic = ({ model, ...props }: WithCanvasProps) => {
+const CanvasTextDynamic = ({ model, forwardedRef, ...props }: WithCanvasProps) => {
   const { font, color, value } = model
   const textQuery = convertModelToQueryString({ font, color, value })
 
+  // @TODO - need to make this a div element somehow!
   return (
-    <img
+    <div
+      ref={forwardedRef}
       onClick={e => {
         e.stopPropagation()
         updateActiveModelInAppStore(model.id)
       }}
       {...props}
-      alt={model.value}
-      src={`http://localhost:8000/render/text.png?model=${textQuery}`}
     />
   )
 }

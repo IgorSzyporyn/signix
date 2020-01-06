@@ -20,7 +20,7 @@ export const searchItemsForModelById = (id: string | undefined, items: ModelInte
   return found
 }
 
-const getModelById = (id: string | undefined, model: ModelInterface) => {
+const getModelById = (id: string | undefined, model: ModelInterface, noClone?: boolean) => {
   let found: ModelInterface | null = null
 
   if (model.id === id) {
@@ -29,14 +29,14 @@ const getModelById = (id: string | undefined, model: ModelInterface) => {
     found = searchItemsForModelById(id, model.items)
   }
 
-  return found ? ({ ...found } as ModelInterface) : null
+  return found ? (noClone ? found : ({ ...found } as ModelInterface)) : null
 }
 
 export const searchModelById = (id: string) => {
   const { model } = ModelStore.get()
   const found = getModelById(id, model)
 
-  return found ? ({ ...found } as ModelInterface) : null
+  return found ? (found as ModelInterface) : null
 }
 
 export default getModelById

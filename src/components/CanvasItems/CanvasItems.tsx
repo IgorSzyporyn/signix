@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDrop } from 'react-dnd'
+import { useMeasure } from 'react-use'
 import DragAndDropTypes from '../../types/DragAndDropTypes'
 import ModelInterface from '../../types/ModelInterface'
 import CanvasDropContainer from '../CanvasDropContainer/CanvasDropContainer'
@@ -27,20 +28,29 @@ const CanvasItems = ({ model }: CanvasItemsProps) => {
     })
   })
 
+  const [ref, { width, height }] = useMeasure()
+
+  const container = { width, height }
+
   return (
-    <>
-      {model.items.length > 0 &&
-        model.items.map(item => (
-          <CanvasItem key={`canvas-key${item.id}`} model={item as ModelInterface} />
+    <div ref={ref} style={{ height: '100%' }}>
+      <>
+        {model.items.map(item => (
+          <CanvasItem
+            key={`canvas-key${item.id}`}
+            model={item as ModelInterface}
+            container={container}
+          />
         ))}
-      <CanvasDropContainer
-        hidden={!canDrop}
-        ref={drop}
-        isActive={canDrop && isOverCurrent}
-        canDrop={canDrop}
-        level={model.level}
-      />
-    </>
+        <CanvasDropContainer
+          hidden={!canDrop}
+          ref={drop}
+          isActive={canDrop && isOverCurrent}
+          canDrop={canDrop}
+          level={model.level}
+        />
+      </>
+    </div>
   )
 }
 

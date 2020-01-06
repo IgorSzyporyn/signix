@@ -2,10 +2,8 @@ import ModelPositionTypes from './ModelPositionTypes'
 
 type ModelPositionInterface = {
   type: ModelPositionTypes
-  left: number
-  top: number
-  bottom: number
-  right: number
+  x: number
+  y: number
 }
 
 export default ModelPositionInterface

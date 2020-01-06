@@ -1,21 +1,27 @@
-import React, { ImgHTMLAttributes } from 'react'
+import React from 'react'
+import styled from 'styled-components'
 import { WithCanvasProps } from '../../hoc/withCanvas'
+import getUserUrl from '../../utils/getUserUrl'
 
-const CanvasImageOptionsMultiple = ({ style = {}, model, ...props }: WithCanvasProps) => {
-  const dimensions: Pick<ImgHTMLAttributes<HTMLImageElement>, 'width' | 'height'> = {
-    width: 0,
-    height: 0
-  }
+type ImageProps = {
+  src: string
+}
+const Image = styled.div<ImageProps>`
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-repeat: no-repeat;
+`
 
-  if (style.width) {
-    dimensions.width = style.width
-  }
+const CanvasImageOptionsMultiple = ({
+  style = {},
+  model,
+  forwardedRef,
+  ...props
+}: WithCanvasProps) => {
+  // @TODO - Can't use model.value - have to find default in options array
+  const url = getUserUrl(model.value)
 
-  if (style.height) {
-    dimensions.height = style.height
-  }
-
-  return <img alt={model.type} src={model.value} {...dimensions} style={style} {...props} />
+  return <Image ref={forwardedRef} src={url} style={style} {...props} />
 }
 
 export default CanvasImageOptionsMultiple

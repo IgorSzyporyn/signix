@@ -16,15 +16,10 @@ const Wrapper = styled.div<WrapperProps>`
   align-items: center;
 `
 
-type ImageProps = {
-  path?: string
-  id?: string
-}
-
 const Image = styled.div`
   min-width: 3.2rem;
   min-height: 3.2rem;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 `

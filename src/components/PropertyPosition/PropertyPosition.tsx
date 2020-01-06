@@ -10,7 +10,7 @@ import HorizontalFieldContainer from '../PropertyHorizontalContainer/HorizontalF
 const handleYChange = (y: string, model: ModelInterface) => {
   const newModel = {
     ...model,
-    position: { ...model.position, top: +y, bottom: +y }
+    position: { ...model.position, y: +y }
   }
 
   updateItemInModelStore(newModel)
@@ -19,7 +19,7 @@ const handleYChange = (y: string, model: ModelInterface) => {
 const handleXChange = (x: string, model: ModelInterface) => {
   const newModel = {
     ...model,
-    position: { ...model.position, left: +x, right: +x }
+    position: { ...model.position, x: +x }
   }
 
   updateItemInModelStore(newModel)
@@ -51,14 +51,16 @@ const PropertyPosition = ({ model }: PropertyPositionProps) => {
       <HorizontalFieldContainer>
         <FieldInput
           label="X Offset"
-          value={position.left}
+          type="number"
+          value={position.x}
           onChange={e => {
             handleXChange(e.target.value, model)
           }}
         />
         <FieldInput
           label="Y Offset"
-          value={position.top}
+          value={position.y}
+          type="number"
           onChange={e => {
             handleYChange(e.target.value, model)
           }}

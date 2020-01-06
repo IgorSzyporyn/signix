@@ -16,6 +16,7 @@ type ModelInterface = {
   level?: number
   name?: string
   parentId?: string
+  scale?: number
   value?: string
   hidden?: boolean
   disabled?: boolean

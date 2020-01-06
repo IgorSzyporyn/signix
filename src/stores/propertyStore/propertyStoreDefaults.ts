@@ -10,7 +10,8 @@ const propertyStoreDefaults: PropertyStoreInterface = {
     apiKey: false,
     options: false,
     textStatic: false,
-    imageStatic: true
+    imageStatic: true,
+    scale: true
   }
 }
 

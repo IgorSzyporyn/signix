@@ -2,9 +2,11 @@ import LayersOutlinedIcon from '@material-ui/icons/LayersOutlined'
 import UnfoldLessIcon from '@material-ui/icons/UnfoldLess'
 import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore'
 import { useStore } from 'laco-react'
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import updateAllExpandedInLayerStore from '../../stores/layerStore/updateAllExpandedInLayerStore'
+import getModelById from '../../stores/model/getModelById'
+import updateItemInModelStore from '../../stores/model/updateItemInModelStore'
 import ModelStore from '../../stores/ModelStore'
 import ModelStoreInterface from '../../types/ModelStoreInterface'
 import LayerItem from '../LayerItem/LayerItem'
@@ -28,6 +30,43 @@ const PanelBodyInner = styled.div`
 
 const Layers = () => {
   const { model }: ModelStoreInterface = useStore(ModelStore)
+
+  const moveLayer = useCallback(
+    (dragId: string, hoverId: string) => {
+      // If hoverId is root - then do nothing
+      if (hoverId === model.id) {
+        return false
+      }
+
+      const hoverItem = getModelById(hoverId, model)
+      const dragItem = getModelById(dragId, model)
+
+      if (hoverItem && dragItem) {
+        const hoverParent = getModelById(hoverItem.parentId, model)
+        const dragParent = getModelById(dragItem.parentId, model)
+
+        if (hoverParent && dragParent) {
+          const sameParent = hoverParent.id === dragParent.id
+
+          const hoverIndex = hoverParent.items.findIndex(item => item.id === hoverItem.id)
+          const dragIndex = dragParent.items.findIndex(item => item.id === dragItem.id)
+
+          dragParent.items.splice(dragIndex, 1)
+
+          if (sameParent) {
+            dragParent.items.splice(hoverIndex, 0, dragItem)
+            updateItemInModelStore(dragParent)
+          } else {
+            dragItem.parentId = hoverParent.id
+            hoverParent.items.splice(hoverIndex, 0, dragItem)
+            updateItemInModelStore(dragParent)
+            updateItemInModelStore(hoverParent)
+          }
+        }
+      }
+    },
+    [model]
+  )
 
   return (
     <Panel>
@@ -55,7 +94,7 @@ const Layers = () => {
       <PanelBody>
         <LayersApiFixButton />
         <PanelBodyInner>
-          <LayerItem model={model} />
+          <LayerItem model={model} moveLayer={moveLayer} />
         </PanelBodyInner>
       </PanelBody>
     </Panel>
