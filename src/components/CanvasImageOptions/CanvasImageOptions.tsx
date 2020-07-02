@@ -6,6 +6,7 @@ import getUserUrl from '../../utils/getUserUrl'
 type ImageProps = {
   src: string
 }
+
 const Image = styled.div<ImageProps>`
   background-image: url(${({ src }) => src});
   background-size: cover;
